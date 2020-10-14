@@ -9,13 +9,12 @@ public class CharacterController : MonoBehaviour
     public float speed = 10.0f;
     private float translation;
     private float strafe;
-    // Start is called before the first frame update
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
         // Input.GetAxis() is used to get the user's input
