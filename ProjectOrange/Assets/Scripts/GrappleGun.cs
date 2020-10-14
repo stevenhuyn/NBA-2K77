@@ -11,23 +11,23 @@ public class GrappleGun : MonoBehaviour
 
     void Update()
     {
-        // On left click, either shoot a new hook or pull the player towards
-        // an existing hook stuck in a wall
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
-            if (!hook) {
-                // Shoot a new hook
-                hook = Instantiate(grapplingHookPrefab);
-                hook.transform.position = transform.position;
-                hook.transform.rotation = transform.rotation;
-            } else if (hook.GetComponent<GrapplingHook>().InWall) {
-                // Pull the player towards the hook
-                var player = GetComponentInParent<CharacterController>();
-                Vector3 dir = (hook.transform.position + upwardTilt * Vector3.up - player.transform.position).normalized;
-                player.GetComponent<Rigidbody>().AddForce(dir * pullSpeed);
-
+            // Shoot a new hook, discarding any previous hook
+            if (hook) {
                 Destroy(hook);
-                hook = null;
             }
+            hook = Instantiate(grapplingHookPrefab);
+            hook.transform.position = transform.position;
+            hook.transform.rotation = transform.rotation;
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse1) && hook && hook.GetComponent<GrapplingHook>().InWall) {
+            // Pull the player towards the last shot hook
+            var player = GetComponentInParent<CharacterController>();
+            Vector3 dir = (hook.transform.position + upwardTilt * Vector3.up - player.transform.position).normalized;
+            player.GetComponent<Rigidbody>().AddForce(dir * pullSpeed);
+
+            Destroy(hook);
+            hook = null;
         }
     }
 }
