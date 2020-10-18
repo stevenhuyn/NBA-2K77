@@ -17,8 +17,10 @@ public class GrapplingHook : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other) {
-        // Stick in the wall
-        InWall = true;
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        if (other.CompareTag("Surface")) {
+            // Stick in the wall
+            InWall = true;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        }
     }
 }
