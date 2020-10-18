@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Ball : MonoBehaviour {
-    public float speed;
+    public float speed = 15;
     public Vector3? Target { get; set; }
 
     void Start() {

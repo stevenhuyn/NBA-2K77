@@ -5,12 +5,10 @@ using UnityEngine;
 /* Adapted from: https://github.com/jiankaiwang/FirstPersonController */
 
 public class CharacterController : MonoBehaviour {
-    public float speed, jumpSpeed, ballHeightDiff;
-    public Vector3 ballBottomPos;
-    private float translation, strafe;
+    public float speed = 10, jumpSpeed = 1.5f, ballHeightDiff = 0.8f;
+    public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
     private bool grounded = false;
     private List<Ball> balls = new List<Ball>();
-
 
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
@@ -19,8 +17,8 @@ public class CharacterController : MonoBehaviour {
     void Update() {
         // Input.GetAxis() is used to get the user's input
         // You can further set it on Unity. (Edit, Project Settings, Input)
-        translation = Input.GetAxis("Vertical") * speed * Time.deltaTime;
-        strafe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+        float translation = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+        float strafe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         transform.Translate(strafe, 0, translation);
         // FIXME: ^ is it ok to be modifying the transform directly here
         // when we have a RigidBody?
