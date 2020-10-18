@@ -213,6 +213,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &794754449 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3367243864214348452, guid: a122b204c05a89542a7d3a8ef18270fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 3367243863461912373}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &794754454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794754449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84bed3666d3b61b40a6fd54eb7320422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 200
 --- !u!1 &925925684
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,8 +564,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grapplingHookPrefab: {fileID: 3656998199048275825, guid: f06b86c037fa5c74b9c9221cc90794d6,
     type: 3}
-  pullSpeed: 250
-  upwardTilt: 5
 --- !u!23 &1141074232
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -879,6 +896,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 3367243864214348455, guid: a122b204c05a89542a7d3a8ef18270fb,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a122b204c05a89542a7d3a8ef18270fb, type: 3}
