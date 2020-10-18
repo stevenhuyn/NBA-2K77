@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 925925686}
   - component: {fileID: 925925685}
   m_Layer: 0
-  m_Name: Platform
+  m_Name: Ground
   m_TagString: Surface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -787,6 +787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  jumpSpeed: 1.5
   ballHeightDiff: 0.8
   ballBottomPos: {x: -0.8, y: -0.5, z: 0.7}
 --- !u!1 &1739638302
