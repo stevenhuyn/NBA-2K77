@@ -787,8 +787,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  ballHeightDiff: 1
-  ballBottomPos: {x: 0, y: 0, z: 3}
+  ballHeightDiff: 0.8
+  ballBottomPos: {x: -0.8, y: -0.5, z: 0.7}
 --- !u!1 &1739638302
 GameObject:
   m_ObjectHideFlags: 0

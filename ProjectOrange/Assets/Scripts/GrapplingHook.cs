@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour {
-    public float shootSpeed = 40, playerPullSpeed = 300, upwardTilt = 5;
+    public float shootSpeed, playerPullSpeed, upwardTilt;
     
     private bool stuck = false;
     private GameObject ball = null;

@@ -5,7 +5,7 @@ using UnityEngine;
 /* Thanks Brackeys: https://www.youtube.com/watch?v=_QajrabyTJc */
 
 public class MouseLook : MonoBehaviour {
-    public float mouseSensitivity = 300;
+    public float mouseSensitivity;
 
     float xRotation = 0f;
 

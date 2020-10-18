@@ -5,8 +5,8 @@ using UnityEngine;
 /* Adapted from: https://github.com/jiankaiwang/FirstPersonController */
 
 public class CharacterController : MonoBehaviour {
-    public float speed = 10.0f, ballHeightDiff = 1;
-    public Vector3 ballBottomPos = new Vector3(-10, -1, 1);
+    public float speed, ballHeightDiff;
+    public Vector3 ballBottomPos;
     private float translation, strafe;
     private List<Ball> balls = new List<Ball>();
 
@@ -29,8 +29,7 @@ public class CharacterController : MonoBehaviour {
 
     public void GiveBall(Ball ball) {
         ball.transform.parent = transform;
-        ball.transform.localPosition = ballBottomPos + Vector3.up * balls.Count * ballHeightDiff;
-        ball.Moving = false;
+        ball.Target = ballBottomPos + Vector3.up * balls.Count * ballHeightDiff;
         balls.Add(ball);
     }
 }
