@@ -5,9 +5,10 @@ using UnityEngine;
 /* Adapted from: https://github.com/jiankaiwang/FirstPersonController */
 
 public class CharacterController : MonoBehaviour {
-    public float speed = 10.0f;
-    private float translation;
-    private float strafe;
+    public float speed = 10.0f, ballHeightDiff = 1;
+    public Vector3 ballBottomPos = new Vector3(-10, -1, 1);
+    private float translation, strafe;
+    private List<Ball> balls = new List<Ball>();
 
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
@@ -24,5 +25,12 @@ public class CharacterController : MonoBehaviour {
             // turn on the cursor
             Cursor.lockState = CursorLockMode.None;
         }
+    }
+
+    public void GiveBall(Ball ball) {
+        ball.transform.parent = transform;
+        ball.transform.localPosition = ballBottomPos + Vector3.up * balls.Count * ballHeightDiff;
+        ball.Moving = false;
+        balls.Add(ball);
     }
 }
