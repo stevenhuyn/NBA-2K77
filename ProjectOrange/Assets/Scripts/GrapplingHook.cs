@@ -3,53 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour {
-    public float shootSpeed = 40, playerPullSpeed = 300, upwardTilt = 5;
+    public float shootSpeed = 40, playerPullSpeed = 300;
     
-    private bool stuck = false;
-    private GameObject ball = null;
+    public CharacterController Player { get; set; }
 
-    // TODO: need to make the hook disappear if it falls into the void or something
-    // (you can't shoot again until it hits the wall)
-    // Another option: allow multiple hooks to exist at once but only allowing
-    // pulling towards the most recently fired one
+    private bool stuck = false;
 
     void Start() {
         GetComponent<Rigidbody>().AddForce(transform.up * shootSpeed, ForceMode.Impulse);
     }
 
-    private void BecomeStuck() {
-        stuck = true;
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+    void Update() {
+        if (stuck && Player) {
+            // Pull on the player until they reach us
+            Vector3 dir = (transform.position - Player.transform.position).normalized;
+            Player.GetComponent<Rigidbody>().AddForce(dir * playerPullSpeed * Time.deltaTime);
+        }
     }
 
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Surface")) {
-            BecomeStuck();
+            // Stick into the wall and begin pulling on the player
+            stuck = true;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            Player.GetComponent<Rigidbody>().useGravity = false;
         } else if (other.CompareTag("Ball")) {
-            BecomeStuck();
-            ball = other.gameObject;
-        }
-    }
-
-    /* Attempt to either pull the player holding the given grappling gun to a
-     * wall, or a caught ball towards that same player. If the pull is
-     * succesfuly, self-destruct and return true. Otherwise do nothing and
-     * return false.
-     */
-    public bool TryPull(GrappleGun gun) {
-        if (stuck) {
-            var player = gun.GetComponentInParent<CharacterController>();
-            if (ball) {
-                // Stuck in a ball: pull the ball towards the player
-                ball.GetComponent<Ball>().Target = player.transform.position;
-            } else {
-                // Stuck in a non-ball surface: pull the player towards the hook
-                Vector3 dir = (transform.position + upwardTilt * Vector3.up - player.transform.position).normalized;
-                player.GetComponent<Rigidbody>().AddForce(dir * playerPullSpeed);
-            }
+            // Pull the ball towards the player
+            other.GetComponent<Ball>().Target = Player.transform.position;
+        } else if (Player && Player.gameObject == other.gameObject) {
+            // Disappear when contacted by the player
             Destroy(gameObject);
-            return true;
         }
-        return false;
     }
 }
