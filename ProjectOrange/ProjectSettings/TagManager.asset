@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Surface
   - Ball
+  - GrappleGun
   layers:
   - Default
   - TransparentFX
