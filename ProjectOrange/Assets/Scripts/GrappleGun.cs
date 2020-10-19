@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class GrappleGun : MonoBehaviour {
     public GameObject grapplingHookPrefab;
+    public CharacterController Player { get; private set; }
 
     private GameObject hook = null;
-    private CharacterController player = null;
 
     void Start() {
-        player = GetComponentInParent<CharacterController>();
+        Player = GetComponentInParent<CharacterController>();
     }
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
             // Shoot a new hook on left click
             hook = Instantiate(grapplingHookPrefab);
-            hook.GetComponent<GrapplingHook>().Player = player;
+            hook.GetComponent<GrapplingHook>().Gun = this;
             hook.transform.position = transform.position;
             hook.transform.rotation = transform.rotation;
         } else if (hook && Input.GetKeyUp(KeyCode.Mouse0)) {
@@ -25,7 +25,7 @@ public class GrappleGun : MonoBehaviour {
             hook = null;
         }
         if (!hook) {
-            player.GetComponent<Rigidbody>().useGravity = true;
+            Player.GetComponent<Rigidbody>().useGravity = true;
         }
     }
 }
