@@ -9,6 +9,11 @@ public class ScoreSystem : MonoBehaviour
     public Transform player;
     public TextMeshProUGUI scoreText;
 
+    private int score = 0;
+
+    private int multiplier = 0;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +23,20 @@ public class ScoreSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float score = player.position.y - 2;
         scoreText.text = score.ToString("0");
+    }
+
+    public void UpdateScore(int delta)
+    {
+        StartCoroutine(UpdateScoreSlowly(delta));
+    }
+
+    private IEnumerator UpdateScoreSlowly(int delta)
+    {
+        for (int i = 0; i < delta; i++)
+        {
+            score++;
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 }
