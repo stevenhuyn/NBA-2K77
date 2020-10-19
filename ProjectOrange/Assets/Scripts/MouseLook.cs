@@ -4,16 +4,14 @@ using UnityEngine;
 
 /* Thanks Brackeys: https://www.youtube.com/watch?v=_QajrabyTJc */
 
-public class MouseLook : MonoBehaviour
-{
+public class MouseLook : MonoBehaviour {
     public float mouseSensitivity = 300;
 
     float xRotation = 0f;
 
     public Transform playerBody;
 
-    void Update()
-    {
+    void Update() {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
