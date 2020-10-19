@@ -7,6 +7,7 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour {
     public float speed = 10, jumpSpeed = 1.5f, ballHeightDiff = 0.8f;
     public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
+    public ScoreSystem scoreSystem;
     private bool grounded = false;
     private List<Ball> balls = new List<Ball>();
 
