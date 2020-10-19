@@ -925,8 +925,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 100
+  m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -971,7 +971,7 @@ MonoBehaviour:
     spaceCount: 1
     wordCount: 2
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1126,7 +1126,6 @@ MonoBehaviour:
   jumpSpeed: 1.5
   ballHeightDiff: 0.8
   ballBottomPos: {x: -0.8, y: -0.5, z: 0.7}
-  scoreSystem: {fileID: 933657536}
 --- !u!1 &1739638302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,5 +1291,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5766497438792142127, guid: a122b204c05a89542a7d3a8ef18270fb,
+        type: 3}
+      propertyPath: scoreSystem
+      value: 
+      objectReference: {fileID: 933657536}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a122b204c05a89542a7d3a8ef18270fb, type: 3}
