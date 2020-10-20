@@ -20,6 +20,7 @@ public class Ball : MonoBehaviour {
         if (other.CompareTag("Player")) {
             other.GetComponent<CharacterController>().GiveBall(this);
             ScoreSystem.UpdateScore(10);
+            ScoreSystem.UpdateMultiplier(1);
         }
     }
 }

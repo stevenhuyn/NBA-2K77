@@ -10,7 +10,13 @@ public class ScoreSystem : MonoBehaviour
     public Transform player;
     public TextMeshProUGUI scoreText;
 
+    public TextMeshProUGUI multiplierText;
+
+    public RawImage thumbsUp;
+
     private int score = 0;
+
+    private int multiplier = 1;
 
     // Called when an instance awakes in the game
     void Awake() {
@@ -26,11 +32,28 @@ public class ScoreSystem : MonoBehaviour
     // Update is called once per frame
     void Update() {
         scoreText.text = score.ToString("0");
+        multiplierText.text = string.Format("x{0}", multiplier);
+    }
+
+    // Currently our fixed update is 0.02 per frame or 50fps
+    void FixedUpdate() {
+        if (!player.GetComponent<CharacterController>().grounded) {
+            score += multiplier;
+        }
+    }
+
+    static public void UpdateMultiplier(int delta) {
+        instance.multiplier += delta;
+    }
+
+    static public void ResetMultiplier() {
+        instance.multiplier = 1;
     }
 
     static public void UpdateScore(int delta) {
         instance.StartCoroutine(instance.UpdateScoreSlowly(delta));
         instance.StartCoroutine(instance.PulseScore());
+        // instance.StartCoroutine(instance.PulseThumbsUp());
     }
 
     private IEnumerator UpdateScoreSlowly(int delta) {
@@ -51,4 +74,9 @@ public class ScoreSystem : MonoBehaviour
             yield return new WaitForSeconds(0.001f);
         }
     }
+
+    // private IEnumerator PulseThumbsUp() {
+    //     RawImage thumb = Instantiate(thumbsUp, gameObject.transform);
+    //     yield return new WaitForSeconds(0.001f);
+    // }
 }
