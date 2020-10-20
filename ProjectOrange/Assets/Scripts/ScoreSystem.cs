@@ -44,6 +44,7 @@ public class ScoreSystem : MonoBehaviour
 
     static public void UpdateMultiplier(int delta) {
         instance.multiplier += delta;
+        instance.StartCoroutine(instance.PulseText(instance.multiplierText));
     }
 
     static public void ResetMultiplier() {
@@ -52,7 +53,7 @@ public class ScoreSystem : MonoBehaviour
 
     static public void UpdateScore(int delta) {
         instance.StartCoroutine(instance.UpdateScoreSlowly(delta));
-        instance.StartCoroutine(instance.PulseScore());
+        instance.StartCoroutine(instance.PulseText(instance.scoreText));
         // instance.StartCoroutine(instance.PulseThumbsUp());
     }
 
@@ -63,14 +64,14 @@ public class ScoreSystem : MonoBehaviour
         }
     }
 
-    private IEnumerator PulseScore() {
+    private IEnumerator PulseText(TextMeshProUGUI text) {
         for (float i = 1f; i <= 1.5f; i += 0.01f) {
-            scoreText.rectTransform.localScale = new Vector3(i, i, i);
+            text.rectTransform.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.001f);
         }
 
         for (float i = 1.5f; i >= 1f; i -= 0.01f) {
-            scoreText.rectTransform.localScale = new Vector3(i, i, i);
+            text.rectTransform.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.001f);
         }
     }
