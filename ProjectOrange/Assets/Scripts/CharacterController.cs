@@ -8,6 +8,7 @@ public class CharacterController : MonoBehaviour {
     public float speed = 10, jumpSpeed = 1.5f, ballHeightDiff = 0.8f;
     public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
     private bool grounded = false;
+
     private List<Ball> balls = new List<Ball>();
 
     void Start() {
@@ -50,11 +51,33 @@ public class CharacterController : MonoBehaviour {
         if (collision.gameObject.name == "Ground") {
             grounded = true;
         }
+        if (collision.gameObject.name == "Hoop") {
+            HoopController hoop = collision.gameObject.GetComponent<HoopController>();
+            if (balls.Count > 0) {
+                hoop.HandleDunk(balls);
+                ExplodeAwayFrom(hoop);
+                ResetHeldBalls();
+            }
+        }
     }
 
     void OnCollisionExit(Collision collision){
         if (collision.gameObject.name == "Ground") {
             grounded = false;
         }
+    }
+
+    void ResetHeldBalls() {
+        foreach(Ball ball in balls) {
+            ball.reset();
+        }
+        balls.Clear();
+
+    }
+
+    void ExplodeAwayFrom(HoopController hoop) {
+        Rigidbody body = this.gameObject.GetComponent<Rigidbody>();
+        Vector3 hoopPosition = hoop.gameObject.transform.position;
+        body.AddExplosionForce(300.0f, hoopPosition, 0.0f, 2.0f);
     }
 }
