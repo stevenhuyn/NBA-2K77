@@ -53,7 +53,11 @@ public class CharacterController : MonoBehaviour {
         }
         if (collision.gameObject.name == "Hoop") {
             HoopController hoop = collision.gameObject.GetComponent<HoopController>();
-            ResetHeldBalls();
+            if (balls.Count > 0) {
+                hoop.HandleDunk(balls);
+                ExplodeAwayFrom(hoop);
+                ResetHeldBalls();
+            }
         }
     }
 
@@ -63,7 +67,6 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
-
     void ResetHeldBalls() {
         foreach(Ball ball in balls) {
             ball.reset();
@@ -71,9 +74,10 @@ public class CharacterController : MonoBehaviour {
         balls.Clear();
 
     }
-    void DunkBalls() {
-        foreach (Ball ball in balls) {
-            Object.Destroy(ball.gameObject);
-        }
+
+    void ExplodeAwayFrom(HoopController hoop) {
+        Rigidbody body = this.gameObject.GetComponent<Rigidbody>();
+        Vector3 hoopPosition = hoop.gameObject.transform.position;
+        body.AddExplosionForce(300.0f, hoopPosition, 0.0f, 2.0f);
     }
 }

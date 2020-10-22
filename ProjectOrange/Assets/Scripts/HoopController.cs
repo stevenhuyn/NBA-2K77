@@ -16,4 +16,9 @@ public class HoopController : MonoBehaviour
         
     }
 
+    public void HandleDunk(List<Ball> balls) {
+
+
+    }
+
 }
