@@ -43,6 +43,8 @@ public class CharacterController : MonoBehaviour {
             ball.transform.parent = transform;
             ball.Target = ballBottomPos + Vector3.up * balls.Count * ballHeightDiff;
             balls.Add(ball);
+            ScoreSystem.UpdateScore(10);
+            ScoreSystem.UpdateMultiplier(1);
         }
     }
 
@@ -56,7 +58,6 @@ public class CharacterController : MonoBehaviour {
     void OnCollisionExit(Collision collision){
         if (collision.gameObject.name == "Ground") {
             grounded = false;
-
         }
     }
 }
