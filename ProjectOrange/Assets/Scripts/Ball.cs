@@ -19,6 +19,7 @@ public class Ball : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Player")) {
             other.GetComponent<CharacterController>().GiveBall(this);
+            ScoreSystem.UpdateScore(10);
         }
     }
 }

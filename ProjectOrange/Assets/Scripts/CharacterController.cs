@@ -35,10 +35,15 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
+    /* Add a ball to the stack the player is holding.
+     * Note: This is idempotent (won't add the same ball twice).
+     */
     public void GiveBall(Ball ball) {
-        ball.transform.parent = transform;
-        ball.Target = ballBottomPos + Vector3.up * balls.Count * ballHeightDiff;
-        balls.Add(ball);
+        if (!balls.Contains(ball)) {
+            ball.transform.parent = transform;
+            ball.Target = ballBottomPos + Vector3.up * balls.Count * ballHeightDiff;
+            balls.Add(ball);
+        }
     }
 
     void OnCollisionEnter(Collision collision) {
