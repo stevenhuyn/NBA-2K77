@@ -51,17 +51,40 @@ Remember that _"this document"_ should be `well written` and formatted **appropr
 | Student Name 2    | Shader      |  Testing |
 | Student Name 3    | README Format      |  Amazing! |
 
-## Explanation of the game
+## Explanation
 Our game is a first person shooter (FPS) that....
 
 You can use emojis :+1: but do not over use it, we are looking for professional work. If you would not add them in your job, do not use them here! :shipit:
 
-	
+# How to Play
+
 ## Technologies
 Project is created with:
 * Unity 2019.4.3f1
 * Ipsum version: 2.33
 * Ament library version: 999
+
+## Modelling Objects and Entities
+
+## Graphics Pipeline
+
+## Camera Motion
+
+## Shaders
+
+# Shader 1
+
+# Shader 2
+
+# Special Effects
+
+## Querying and Observational Methods
+
+## Changes after Evaluation
+
+## External Resources
+
+## Individual Contributions
 
 ## Using Images
 
