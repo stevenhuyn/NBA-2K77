@@ -14,6 +14,7 @@ public class Ball : MonoBehaviour {
     }
 
     void Update() {
+        // transform.LookAt(Camera.main.transform.position);
         if (Target.HasValue) {
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, Target.Value, speed * Time.deltaTime);
         }
