@@ -24,6 +24,8 @@ public class CharacterController : MonoBehaviour {
         rigidbody = GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
         gun = GetComponentInChildren<GrappleGun>();
+
+        Cursor.visible = false;
     }
 
     void Update() {
