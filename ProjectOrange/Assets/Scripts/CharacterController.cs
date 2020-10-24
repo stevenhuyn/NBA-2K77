@@ -79,8 +79,8 @@ public class CharacterController : MonoBehaviour {
         if (collision.gameObject.name == "Ground") {
             grounded = true;
         }
-        if (collision.gameObject.name == "Hoop") {
-            HoopController hoop = collision.gameObject.GetComponent<HoopController>();
+        if (collision.gameObject.name == "Torus" || collision.gameObject.name == "Hoop Hitbox") {
+            HoopController hoop = collision.gameObject.transform.parent.gameObject.GetComponent<HoopController>();
             if (balls.Count > 0) {
                 grounded = false;
                 hoop.HandleDunk(balls);
