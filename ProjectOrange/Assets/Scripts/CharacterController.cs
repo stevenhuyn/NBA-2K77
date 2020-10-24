@@ -82,8 +82,8 @@ public class CharacterController : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.name == "Hoop") {
-            HoopController hoop = collision.gameObject.GetComponent<HoopController>();
+        if (collision.gameObject.name == "Torus" || collision.gameObject.name == "Hoop Inside") {
+            HoopController hoop = collision.gameObject.transform.parent.gameObject.GetComponent<HoopController>();
             if (balls.Count > 0) {
                 hoop.HandleDunk(balls);
                 ExplodeAwayFrom(hoop);
