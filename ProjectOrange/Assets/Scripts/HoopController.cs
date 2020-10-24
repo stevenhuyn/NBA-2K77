@@ -13,7 +13,7 @@ public class HoopController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void HandleDunk(List<Ball> balls) {
@@ -21,6 +21,7 @@ public class HoopController : MonoBehaviour
         particles = Object.Instantiate(particleSystem, gameObject.transform.position, Quaternion.identity);
         particles.transform.SetParent(transform);
         particles.Play();
+        ScoreSystem.UpdateScore(500 * balls.Count);
     }
 
 }

@@ -19,6 +19,8 @@ public class ScoreSystem : MonoBehaviour
 
     private int frameCounter = 0;
 
+    private Color scoreColor;
+
     // Called when an instance awakes in the game
     void Awake() {
         instance = this;
@@ -48,7 +50,7 @@ public class ScoreSystem : MonoBehaviour
 
     static public void UpdateMultiplier(int delta) {
         instance.multiplier += delta;
-        instance.StartCoroutine(instance.GlowText(instance.scoreText));
+        instance.StartCoroutine(instance.PulseText(instance.scoreText));
     }
 
     static public void ResetMultiplier() {
@@ -81,18 +83,17 @@ public class ScoreSystem : MonoBehaviour
     }
 
     private IEnumerator GlowText(TextMeshProUGUI text) {
-        Color color;
         for (float i = 0.5f; i <= 1f; i += 0.01f) {
             text.GetComponent<UIShadow>().blurFactor = i;
-            color = Color.HSVToRGB(.0722f, 1f, 1f);
-            color.a = i;
-            text.GetComponent<UIShadow>().effectColor = color;
+            scoreColor = Color.HSVToRGB(.0722f, 1f, 1f);
+            scoreColor.a = i;
+            text.GetComponent<UIShadow>().effectColor = scoreColor;
             yield return new WaitForSeconds(0.001f);
         }
         text.GetComponent<UIShadow>().blurFactor = 0f;
-        color = Color.HSVToRGB(.26f, 1f, 1f);
-        color.a = 0f;
-        text.GetComponent<UIShadow>().effectColor = color;
+        scoreColor = Color.HSVToRGB(.26f, 1f, 1f);
+        scoreColor.a = 0f;
+        text.GetComponent<UIShadow>().effectColor = scoreColor;
         yield return new WaitForSeconds(0.001f);
     }
 }
