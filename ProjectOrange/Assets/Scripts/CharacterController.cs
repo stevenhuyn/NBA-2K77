@@ -5,24 +5,27 @@ using UnityEngine;
 /* Adapted from: https://github.com/jiankaiwang/FirstPersonController */
 
 public class CharacterController : MonoBehaviour {
-    public float speed = 10, jumpSpeed = 1.5f, ballHeightDiff = 0.8f;
+    public float jumpSpeed = 1.5f, ballHeightDiff = 0.8f;
     public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
     private bool grounded = false;
 
     private List<Ball> balls = new List<Ball>();
+    private Rigidbody body;
 
+    private float moveForce = 1.0f;
+    public float groundSpeed = 1.0f, airSpeed = 0.1f;
+
+
+    public float maxGroundSpeed = 6.0f;
+    public float brakeStrength = 1.0f;
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
+        body = this.GetComponent<Rigidbody>();
     }
 
     void Update() {
         // Input.GetAxis() is used to get the user's input
         // You can further set it on Unity. (Edit, Project Settings, Input)
-        float translation = Input.GetAxis("Vertical") * speed * Time.deltaTime;
-        float strafe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        transform.Translate(strafe, 0, translation);
-        // FIXME: ^ is it ok to be modifying the transform directly here
-        // when we have a RigidBody?
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
             // Turn on the cursor
@@ -33,6 +36,44 @@ public class CharacterController : MonoBehaviour {
             // Jump by adding force to the RigidBody (so we handle gravity)
             var rigidBody = GetComponent<Rigidbody>();
             rigidBody.AddForce(jumpSpeed * Vector3.up, ForceMode.Impulse);
+        }
+    }
+
+    void FixedUpdate() {
+        Vector3 directionVector = new Vector3();
+
+        // Calculate unit vector of desired direction in the XZ plane
+        directionVector.z = Input.GetAxis("Vertical") * moveForce * Time.deltaTime;
+        directionVector.x = Input.GetAxis("Horizontal") * moveForce * Time.deltaTime;
+        directionVector = Camera.main.transform.TransformDirection(directionVector);
+        directionVector.y = 0;
+        directionVector = Vector3.Normalize(directionVector);
+
+        body.AddForce(moveForce * directionVector, ForceMode.VelocityChange);
+        
+
+        if (grounded) {
+            capMovement();
+            moveForce = groundSpeed;
+        } else {
+            moveForce = airSpeed;
+        }
+    }
+
+    void capMovement() {
+        float speed = Vector3.Magnitude(body.velocity);
+
+        if (speed > maxGroundSpeed)
+        {
+            float brakeSpeed = speed - maxGroundSpeed;
+
+            // Calculate vector of current movement in xz plane
+            Vector3 horizontalVelocity = new Vector3 (body.velocity.x, 0, body.velocity.z);
+            Vector3 normalizedVelocity = Vector3.Normalize(horizontalVelocity);
+            Vector3 brakeVelocity = normalizedVelocity * brakeSpeed;
+
+            // Apply force in reverse direction to slow player down
+            body.AddForce(-brakeVelocity * brakeStrength, ForceMode.VelocityChange);
         }
     }
 
@@ -54,6 +95,7 @@ public class CharacterController : MonoBehaviour {
         if (collision.gameObject.name == "Hoop") {
             HoopController hoop = collision.gameObject.GetComponent<HoopController>();
             if (balls.Count > 0) {
+                grounded = false;
                 hoop.HandleDunk(balls);
                 ExplodeAwayFrom(hoop);
                 ResetHeldBalls();
