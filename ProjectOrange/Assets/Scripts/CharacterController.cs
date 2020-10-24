@@ -76,6 +76,8 @@ public class CharacterController : MonoBehaviour {
             ball.transform.parent = transform;
             ball.Target = ballBottomPos + Vector3.up * balls.Count * ballHeightDiff;
             balls.Add(ball);
+            ScoreSystem.UpdateMultiplier(1);
+            ScoreSystem.UpdateScore(100);
         }
     }
 
@@ -86,6 +88,7 @@ public class CharacterController : MonoBehaviour {
                 hoop.HandleDunk(balls);
                 ExplodeAwayFrom(hoop);
                 ResetHeldBalls();
+                ScoreSystem.UpdateScore(300);
             }
         }
     }
