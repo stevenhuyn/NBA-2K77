@@ -10,7 +10,6 @@ public class Ball : MonoBehaviour {
     void Start() {
         Target = null;
         startPosition = transform.position;
-        Debug.Log(startPosition);
     }
 
     void Update() {
@@ -26,8 +25,8 @@ public class Ball : MonoBehaviour {
         }
     }
 
-    //Reset position of ball
-    public void reset() {
+    // Reset position of ball
+    public void Reset() {
         // Make object top level component
         transform.SetParent(null);
 
