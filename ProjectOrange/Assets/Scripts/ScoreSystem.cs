@@ -10,6 +10,8 @@ public class ScoreSystem : MonoBehaviour
     public Transform player;
     public TextMeshProUGUI scoreText;
 
+    public TextMeshProUGUI multiplierText;
+
     private int score = 0;
 
     private int multiplier = 1;
@@ -28,7 +30,7 @@ public class ScoreSystem : MonoBehaviour
     // Update is called once per frame
     void Update() {
         scoreText.text = score.ToString("0");
-        // multiplierText.text = string.Format("x{0}", multiplier);
+        multiplierText.text = string.Format("x{0}", multiplier);
     }
 
     // Currently our fixed update is 0.02 per frame or 50fps
@@ -40,7 +42,7 @@ public class ScoreSystem : MonoBehaviour
 
     static public void UpdateMultiplier(int delta) {
         instance.multiplier += delta;
-        // instance.StartCoroutine(instance.PulseText(instance.multiplierText));
+        instance.StartCoroutine(instance.PulseText(instance.multiplierText));
     }
 
     static public void ResetMultiplier() {

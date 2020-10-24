@@ -85,12 +85,15 @@ public class CharacterController : MonoBehaviour {
             ball.transform.parent = transform;
             ball.Target = ballBottomPos + Vector3.up * balls.Count * ballHeightDiff;
             balls.Add(ball);
+            ScoreSystem.UpdateMultiplier(1);
+            ScoreSystem.UpdateScore(100);
         }
     }
 
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.name == "Ground") {
             grounded = true;
+            ScoreSystem.ResetMultiplier();
         }
         if (collision.gameObject.name == "Hoop") {
             HoopController hoop = collision.gameObject.GetComponent<HoopController>();
@@ -99,6 +102,7 @@ public class CharacterController : MonoBehaviour {
                 hoop.HandleDunk(balls);
                 ExplodeAwayFrom(hoop);
                 ResetHeldBalls();
+                ScoreSystem.UpdateScore(300);
             }
         }
     }
