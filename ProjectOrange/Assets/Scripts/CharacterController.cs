@@ -80,7 +80,7 @@ public class CharacterController : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.name == "Torus" || collision.gameObject.name == "Hoop Hitbox") {
+        if (collision.gameObject.name == "Torus" || collision.gameObject.name == "Hoop Inside") {
             HoopController hoop = collision.gameObject.transform.parent.gameObject.GetComponent<HoopController>();
             if (balls.Count > 0) {
                 hoop.HandleDunk(balls);
