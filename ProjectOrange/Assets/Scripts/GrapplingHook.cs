@@ -20,11 +20,16 @@ public class GrapplingHook : MonoBehaviour {
             // Pull on the player until they reach us
             Vector3 dir = (transform.position - Gun.Player.transform.position).normalized;
             Gun.Player.GetComponent<Rigidbody>().AddForce(dir * playerPullSpeed);
-        } else if (ball && !ball.Target.HasValue) {
-            // Move back towards the player, pulling on the ball
-            Vector3 velocity = ballPullSpeed * (Gun.Player.transform.position - transform.position).normalized;
-            transform.position += velocity;
-            ball.transform.position += velocity;
+        } else if (ball) {
+            if (ball.Target.HasValue) {
+                // Ball has been picked up by the player
+                Destroy(gameObject);
+            } else {
+                // Move back towards the player, pulling on the ball
+                Vector3 velocity = ballPullSpeed * (Gun.Player.transform.position - transform.position).normalized;
+                transform.position += velocity;
+                ball.transform.position += velocity;
+            }
         }
 
         // Draw the line to the gun
