@@ -60,7 +60,7 @@ public class ScoreSystem : MonoBehaviour
     }
 
     static public void UpdateScore(int delta) {
-        instance.StartCoroutine(instance.UpdateScoreSlowly(delta));
+        instance.StartCoroutine(instance.UpdateScoreSlowly(delta * instance.multiplier));
         instance.StartCoroutine(instance.PulseText(instance.scoreText));
         instance.StartCoroutine(instance.GlowText(instance.scoreText));
     }
