@@ -2,19 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HoopController : MonoBehaviour
-{
-    public ParticleSystem particleSystem;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+public class HoopController : MonoBehaviour {
+    public new ParticleSystem particleSystem;
 
     public void HandleDunk(List<Ball> balls) {
         ParticleSystem particles;
@@ -22,5 +11,4 @@ public class HoopController : MonoBehaviour
         particles.transform.SetParent(transform);
         particles.Play();
     }
-
 }

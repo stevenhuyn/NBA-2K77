@@ -26,8 +26,8 @@ public class Ball : MonoBehaviour {
         }
     }
 
-    //Reset position of ball
-    public void reset() {
+    // Reset position of ball
+    public void Reset() {
         // Make object top level component
         transform.SetParent(null);
 

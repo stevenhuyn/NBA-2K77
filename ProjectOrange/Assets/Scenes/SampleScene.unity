@@ -1302,11 +1302,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpSpeed: 1.5
   ballHeightDiff: 0.8
-  ballBottomPos: {x: -0.8, y: -0.5, z: 0.7}
   groundSpeed: 2.5
   airSpeed: 0.2
   maxGroundSpeed: 5
   brakeStrength: 1
+  ballBottomPos: {x: -0.8, y: -0.5, z: 0.7}
 --- !u!1 &1739638302
 GameObject:
   m_ObjectHideFlags: 0
