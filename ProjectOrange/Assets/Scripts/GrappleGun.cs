@@ -14,14 +14,12 @@ public class GrappleGun : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
             // Shoot a new Hook on left click
-            if (Hook) {
-                Destroy(Hook);
-            }
+            DestroyHook();
             Hook = Instantiate(grapplingHookPrefab);
             Hook.GetComponent<GrapplingHook>().Gun = this;
             Hook.transform.position = Player.transform.position;
             Hook.transform.rotation = transform.rotation;
-        } else if (Hook && Input.GetKeyUp(KeyCode.Mouse0)) {
+        } else if (Input.GetKeyUp(KeyCode.Mouse0)) {
             // Destroy the Hook if left click is released
             DestroyHook();
         }
@@ -31,7 +29,9 @@ public class GrappleGun : MonoBehaviour {
     }
 
     public void DestroyHook() {
-        Destroy(Hook);
-        Hook = null;
+        if (Hook) {
+            Destroy(Hook);
+            Hook = null;
+        }
     }
 }
