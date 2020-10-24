@@ -16,7 +16,7 @@ public class CharacterController : MonoBehaviour {
     public float groundSpeed = 1.0f, airSpeed = 0.1f;
 
 
-    public float maxVelocity = 3.0f;
+    public float maxGroundSpeed = 6.0f;
     public float brakeStrength = 1.0f;
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
@@ -60,10 +60,10 @@ public class CharacterController : MonoBehaviour {
     void capMovement() {
         float speed = Vector3.Magnitude(body.velocity);
 
-        if (speed > maxVelocity)
+        if (speed > maxGroundSpeed)
         {
             Debug.Log("Brake");
-            float brakeSpeed = speed - maxVelocity;
+            float brakeSpeed = speed - maxGroundSpeed;
             Vector3 horizontalVelocity = new Vector3 (body.velocity.x, 0, body.velocity.z);
             Vector3 normalizedVelocity = Vector3.Normalize(horizontalVelocity);
             Vector3 brakeVelocity = normalizedVelocity * brakeSpeed;
