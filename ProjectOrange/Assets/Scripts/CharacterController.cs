@@ -9,7 +9,7 @@ public class CharacterController : MonoBehaviour {
         jumpSpeed = 1.5f, ballHeightDiff = 0.8f,
         groundSpeed = 8, airSpeed = 1.5f,
         maxGroundSpeed = 10, maxAirSpeed = 50,
-        brakeStrength = 5,
+        brakeStrength = 0,
         groundDrag = 3, airDrag = 0;
     public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
     public bool Grounded { get; private set; }
