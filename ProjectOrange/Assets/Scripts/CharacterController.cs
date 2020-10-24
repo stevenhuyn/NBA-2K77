@@ -26,6 +26,20 @@ public class CharacterController : MonoBehaviour {
     void Update() {
         // Input.GetAxis() is used to get the user's input
         // You can further set it on Unity. (Edit, Project Settings, Input)
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            // Turn on the cursor
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && grounded) {
+            // Jump by adding force to the RigidBody (so we handle gravity)
+            var rigidBody = GetComponent<Rigidbody>();
+            rigidBody.AddForce(jumpSpeed * Vector3.up, ForceMode.Impulse);
+        }
+    }
+
+    void FixedUpdate() {
         Vector3 directionVector = new Vector3();
         directionVector.z = Input.GetAxis("Vertical") * moveForce * Time.deltaTime;
         directionVector.x = Input.GetAxis("Horizontal") * moveForce * Time.deltaTime;
@@ -41,21 +55,6 @@ public class CharacterController : MonoBehaviour {
         } else {
             moveForce = airSpeed;
         }
-
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            // Turn on the cursor
-            Cursor.lockState = CursorLockMode.None;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && grounded) {
-            // Jump by adding force to the RigidBody (so we handle gravity)
-            var rigidBody = GetComponent<Rigidbody>();
-            rigidBody.AddForce(jumpSpeed * Vector3.up, ForceMode.Impulse);
-        }
-    }
-
-    void FixedUpdate() {
-
     }
 
     void capMovement() {
