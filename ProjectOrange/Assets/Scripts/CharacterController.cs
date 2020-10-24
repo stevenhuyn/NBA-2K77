@@ -7,8 +7,9 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour {
     public float
         jumpSpeed = 1.5f, ballHeightDiff = 0.8f,
-        groundSpeed = 1.0f, airSpeed = 0.1f,
-        maxGroundSpeed = 6.0f, brakeStrength = 2.0f;
+        groundSpeed = 8f, airSpeed = 1.5f,
+        maxGroundSpeed = 10.0f, brakeStrength = 5.0f,
+        groundDrag = 3f, airDrag = 0;
     public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
 
     private bool grounded = false;
@@ -45,7 +46,10 @@ public class CharacterController : MonoBehaviour {
         rigidbody.AddForce(moveSpeed * directionVector);
 
         if (grounded) {
+            rigidbody.drag = groundDrag;
             capMovement();
+        } else {
+            rigidbody.drag = airDrag;
         }
     }
 
