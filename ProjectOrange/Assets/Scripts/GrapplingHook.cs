@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour {
-    public float shootSpeed = 40, playerPullSpeed = 20, ballPullSpeed = 0.4f;
+    public float shootSpeed = 40, playerPullSpeed = 20, ballPullSpeed = 0.4f, ballAcceleration = 0.01f;
     public GrappleGun Gun { get; set; }
     public bool Stuck { get; private set; }
 
+    private float ballSpeed;
     private Ball ball = null;
     private LineRenderer line = null;
 
     void Start() {
         GetComponent<Rigidbody>().AddForce(transform.up * shootSpeed, ForceMode.Impulse);
         line = gameObject.GetComponent<LineRenderer>();
+        ballSpeed = ballPullSpeed;
     }
 
     void FixedUpdate() {
@@ -25,10 +27,11 @@ public class GrapplingHook : MonoBehaviour {
                 // Ball has been picked up by the player
                 Destroy(gameObject);
             } else {
+                // Ball moves faster the longer you hold onto it
+                ballSpeed += ballAcceleration;
                 // Move back towards the player, pulling on the ball
-                Vector3 velocity = ballPullSpeed * (Gun.Player.transform.position - transform.position).normalized;
-                transform.position += velocity;
-                ball.transform.position += velocity;
+                ball.transform.position = Vector3.MoveTowards(ball.transform.position, Gun.Player.transform.position, ballSpeed);
+                transform.position = Vector3.MoveTowards(transform.position, Gun.Player.transform.position, ballSpeed);
             }
         }
 
