@@ -41,10 +41,12 @@ public class ScoreSystem : MonoBehaviour
     // Currently our fixed update is 0.02 per frame or 50fps
     void FixedUpdate() {
         frameCounter++;
-        if (!player.GetComponent<CharacterController>().grounded) {
+        if (!player.GetComponent<CharacterController>().Grounded) {
             if (frameCounter % 3 == 0) {
                 score += multiplier;
             }
+        } else {
+            ResetMultiplier();
         }
     }
 
@@ -90,7 +92,7 @@ public class ScoreSystem : MonoBehaviour
             text.GetComponent<UIShadow>().effectColor = scoreColor;
             yield return new WaitForSeconds(0.001f);
         }
-        text.GetComponent<UIShadow>().blurFactor = 0f;
+        text.GetComponent<UIShadow>().blurFactor = 0.5f;
         scoreColor = Color.HSVToRGB(.26f, 1f, 1f);
         scoreColor.a = 0f;
         text.GetComponent<UIShadow>().effectColor = scoreColor;
