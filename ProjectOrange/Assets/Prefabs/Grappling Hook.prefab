@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootSpeed: 40
   playerPullSpeed: 15
-  ballPullSpeed: 0.3
+  ballPullSpeed: 0.4
 --- !u!54 &3816073498085782883
 Rigidbody:
   m_ObjectHideFlags: 0
