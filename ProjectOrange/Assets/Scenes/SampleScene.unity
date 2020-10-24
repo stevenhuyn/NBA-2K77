@@ -1263,8 +1263,8 @@ MonoBehaviour:
   m_BlurFactor: 1
   m_Style: 3
   m_AdditionalShadows: []
-  m_EffectColor: {r: 1, g: 0.43921572, b: 0, a: 0.87058824}
-  m_EffectDistance: {x: 5, y: 5}
+  m_EffectColor: {r: 1, g: 0.43921572, b: 0, a: 0}
+  m_EffectDistance: {x: 8, y: 8}
   m_UseGraphicAlpha: 0
 --- !u!1 &1371445940
 GameObject:

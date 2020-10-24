@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Coffee.UIExtensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,8 @@ public class ScoreSystem : MonoBehaviour
     private int score = 0;
 
     private int multiplier = 1;
+
+    private int frameCounter = 0;
 
     // Called when an instance awakes in the game
     void Awake() {
@@ -35,14 +38,17 @@ public class ScoreSystem : MonoBehaviour
 
     // Currently our fixed update is 0.02 per frame or 50fps
     void FixedUpdate() {
+        frameCounter++;
         if (!player.GetComponent<CharacterController>().grounded) {
-            score += multiplier;
+            if (frameCounter % 3 == 0) {
+                score += multiplier;
+            }
         }
     }
 
     static public void UpdateMultiplier(int delta) {
         instance.multiplier += delta;
-        instance.StartCoroutine(instance.PulseText(instance.multiplierText));
+        instance.StartCoroutine(instance.GlowText(instance.scoreText));
     }
 
     static public void ResetMultiplier() {
@@ -52,7 +58,7 @@ public class ScoreSystem : MonoBehaviour
     static public void UpdateScore(int delta) {
         instance.StartCoroutine(instance.UpdateScoreSlowly(delta));
         instance.StartCoroutine(instance.PulseText(instance.scoreText));
-        // instance.StartCoroutine(instance.PulseThumbsUp());
+        instance.StartCoroutine(instance.GlowText(instance.scoreText));
     }
 
     private IEnumerator UpdateScoreSlowly(int delta) {
@@ -72,5 +78,21 @@ public class ScoreSystem : MonoBehaviour
             text.rectTransform.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.001f);
         }
+    }
+
+    private IEnumerator GlowText(TextMeshProUGUI text) {
+        Color color;
+        for (float i = 0.5f; i <= 1f; i += 0.01f) {
+            text.GetComponent<UIShadow>().blurFactor = i;
+            color = Color.HSVToRGB(.0722f, 1f, 1f);
+            color.a = i;
+            text.GetComponent<UIShadow>().effectColor = color;
+            yield return new WaitForSeconds(0.001f);
+        }
+        text.GetComponent<UIShadow>().blurFactor = 0f;
+        color = Color.HSVToRGB(.26f, 1f, 1f);
+        color.a = 0f;
+        text.GetComponent<UIShadow>().effectColor = color;
+        yield return new WaitForSeconds(0.001f);
     }
 }
