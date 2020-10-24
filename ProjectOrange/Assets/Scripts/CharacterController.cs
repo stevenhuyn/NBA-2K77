@@ -7,9 +7,10 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour {
     public float
         jumpSpeed = 1.5f, ballHeightDiff = 0.8f,
-        groundSpeed = 8f, airSpeed = 1.5f,
-        maxGroundSpeed = 10.0f, brakeStrength = 5.0f,
-        groundDrag = 3f, airDrag = 0;
+        groundSpeed = 8, airSpeed = 1.5f,
+        maxGroundSpeed = 10, maxAirSpeed = 50,
+        brakeStrength = 5,
+        groundDrag = 3, airDrag = 0;
     public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
 
     private bool grounded = false;
@@ -33,10 +34,17 @@ public class CharacterController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        float moveSpeed = grounded ? groundSpeed : airSpeed;
-        Vector3 directionVector = new Vector3();
+        float moveSpeed;
+        if (grounded) {
+            moveSpeed = groundSpeed;
+            rigidbody.drag = groundDrag;
+        } else {
+            moveSpeed = airSpeed;
+            rigidbody.drag = airDrag;
+        }
 
         // Calculate unit vector of desired direction in the XZ plane
+        Vector3 directionVector = new Vector3();
         directionVector.z = Input.GetAxis("Vertical") * moveSpeed;
         directionVector.x = Input.GetAxis("Horizontal") * moveSpeed;
         directionVector = Camera.main.transform.TransformDirection(directionVector);
@@ -45,19 +53,12 @@ public class CharacterController : MonoBehaviour {
 
         rigidbody.AddForce(moveSpeed * directionVector);
 
-        if (grounded) {
-            rigidbody.drag = groundDrag;
-            capMovement();
-        } else {
-            rigidbody.drag = airDrag;
-        }
-    }
-
-    private void capMovement() {
+        // Cap movement speed
         float speed = rigidbody.velocity.magnitude;
-        if (speed > maxGroundSpeed) {
+        float maxSpeed = grounded ? maxGroundSpeed : maxAirSpeed;
+        if (speed > maxSpeed) {
             // Apply force in reverse direction to slow player down
-            float brakeSpeed = speed - maxGroundSpeed;
+            float brakeSpeed = speed - maxSpeed;
             Vector3 horizontalDir = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z).normalized;
             rigidbody.AddForce(-horizontalDir * brakeSpeed * brakeStrength);
         }
