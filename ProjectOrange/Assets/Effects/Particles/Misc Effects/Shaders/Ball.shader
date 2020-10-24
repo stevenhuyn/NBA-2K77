@@ -26,7 +26,7 @@ Shader "Custom/Ball" {
 		Tags { "Queue"="AlphaTest" "RenderType"="TransparentCutout" "IgnoreProjector"="True" }
 		Cull Off
 
-		LOD 200
+		LOD 350
 		
 		CGPROGRAM
 
