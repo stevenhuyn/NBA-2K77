@@ -490,10 +490,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 1000
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -938,10 +938,10 @@ RectTransform:
   m_Father: {fileID: 933657535}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 250}
-  m_SizeDelta: {x: 300, y: 50}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 175, y: -100}
+  m_SizeDelta: {x: 250, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1227815607
 MonoBehaviour:
@@ -1103,7 +1103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0848bff101191904ead4bb831f7084db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BlurFactor: 0.517
+  m_BlurFactor: 0.498
   m_Style: 3
   m_AdditionalShadows: []
   m_EffectColor: {r: 1, g: 0.43740615, b: 0, a: 0.57254905}
