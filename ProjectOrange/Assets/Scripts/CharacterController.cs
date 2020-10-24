@@ -59,8 +59,7 @@ public class CharacterController : MonoBehaviour {
         if (speed > maxSpeed) {
             // Apply force in reverse direction to slow player down
             float brakeSpeed = speed - maxSpeed;
-            Vector3 horizontalDir = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z).normalized;
-            rigidbody.AddForce(-horizontalDir * brakeSpeed * brakeStrength);
+            rigidbody.AddForce(-rigidbody.velocity.normalized * brakeSpeed * brakeStrength);
         }
     }
 
