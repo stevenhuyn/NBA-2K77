@@ -265,14 +265,14 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 513
+  m_textAlignment: 516
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -346,16 +346,16 @@ RectTransform:
   m_GameObject: {fileID: 129163611}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 933657535}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 105.4, y: -274.4}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -100, y: -274.40002}
   m_SizeDelta: {x: 250, y: 50}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!1001 &304220607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1411,11 +1411,11 @@ RectTransform:
   m_Father: {fileID: 933657535}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100.00006, y: -150}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -100, y: -150}
   m_SizeDelta: {x: 1800, y: 25}
-  m_Pivot: {x: -0.00000001816079, y: 0.5}
+  m_Pivot: {x: 1, y: 0}
 --- !u!114 &1227815607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1471,7 +1471,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 513
+  m_textAlignment: 516
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -1554,8 +1554,8 @@ MonoBehaviour:
   m_ColorFactor: 0
   m_BlurFactor: 0
   m_EffectMode: 2
-  m_ColorMode: 0
-  m_BlurMode: 3
+  m_ColorMode: 1
+  m_BlurMode: 2
   m_AdvancedBlur: 0
   m_ShadowBlur: 1
   m_ShadowStyle: 0
@@ -1579,7 +1579,7 @@ MonoBehaviour:
   m_BlurFactor: 1
   m_Style: 3
   m_AdditionalShadows: []
-  m_EffectColor: {r: 1, g: 0.43921572, b: 0, a: 0}
+  m_EffectColor: {r: 1, g: 0.43921572, b: 0, a: 0.5019608}
   m_EffectDistance: {x: 8, y: 8}
   m_UseGraphicAlpha: 0
 --- !u!1 &1371445940
@@ -1900,12 +1900,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpSpeed: 1.5
   ballHeightDiff: 0.8
-  ballBottomPos: {x: -0.8, y: -0.5, z: 0.7}
-  grounded: 0
   groundSpeed: 2.5
   airSpeed: 0.2
   maxGroundSpeed: 5
+  maxAirSpeed: 50
   brakeStrength: 1
+  groundDrag: 3
+  airDrag: 0
+  ballBottomPos: {x: -0.8, y: -0.5, z: 0.7}
 --- !u!1 &1739638302
 GameObject:
   m_ObjectHideFlags: 0

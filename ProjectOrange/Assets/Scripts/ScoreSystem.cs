@@ -93,8 +93,8 @@ public class ScoreSystem : MonoBehaviour
             yield return new WaitForSeconds(0.001f);
         }
         text.GetComponent<UIShadow>().blurFactor = 0.5f;
-        scoreColor = Color.HSVToRGB(.26f, 1f, 1f);
-        scoreColor.a = 0f;
+        scoreColor = Color.HSVToRGB(.0722f, 1f, 1f);
+        scoreColor.a = 0.5f;
         text.GetComponent<UIShadow>().effectColor = scoreColor;
         yield return new WaitForSeconds(0.001f);
     }
