@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour {
-    public float shootSpeed = 40, playerPullSpeed = 600, ballPullSpeed = 2000;
+    public float shootSpeed = 40, playerPullSpeed = 20, ballPullSpeed = 0.4f;
     public GrappleGun Gun { get; set; }
 
     private bool stuck = false;
@@ -15,17 +15,16 @@ public class GrapplingHook : MonoBehaviour {
         line = gameObject.GetComponent<LineRenderer>();
     }
 
-    void Update() {
+    void FixedUpdate() {
         if (stuck) {
             // Pull on the player until they reach us
             Vector3 dir = (transform.position - Gun.Player.transform.position).normalized;
-            Gun.Player.GetComponent<Rigidbody>().AddForce(dir * playerPullSpeed * Time.deltaTime);
+            Gun.Player.GetComponent<Rigidbody>().AddForce(dir * playerPullSpeed);
         } else if (ball && !ball.Target.HasValue) {
             // Move back towards the player, pulling on the ball
-            Vector3 dir = (Gun.Player.transform.position - transform.position).normalized;
-            var rigidbody = GetComponent<Rigidbody>();
-            rigidbody.AddForce(dir * ballPullSpeed * Time.deltaTime);
-            ball.transform.position += rigidbody.velocity * Time.deltaTime;
+            Vector3 velocity = ballPullSpeed * (Gun.Player.transform.position - transform.position).normalized;
+            transform.position += velocity;
+            ball.transform.position += velocity;
         }
 
         // Draw the line to the gun
@@ -37,7 +36,7 @@ public class GrapplingHook : MonoBehaviour {
             if (other.CompareTag("Surface")) {
                 // Stick into the wall and begin pulling on the player
                 stuck = true;
-                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                Destroy(GetComponent<Rigidbody>());
                 Gun.Player.GetComponent<Rigidbody>().useGravity = false;
             } else if (other.CompareTag("Ball")) {
                 // Pull the ball towards the player
