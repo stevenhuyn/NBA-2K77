@@ -5,16 +5,6 @@ using UnityEngine;
 public class HoopController : MonoBehaviour
 {
     public ParticleSystem particleSystem;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void HandleDunk(List<Ball> balls) {
         ParticleSystem particles;
