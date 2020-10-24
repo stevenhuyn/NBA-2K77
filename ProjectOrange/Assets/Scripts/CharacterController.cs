@@ -14,15 +14,18 @@ public class CharacterController : MonoBehaviour {
     public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
 
     private bool grounded = false;
+    private float distToGround;
     private List<Ball> balls = new List<Ball>();
     private new Rigidbody rigidbody;
 
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         rigidbody = GetComponent<Rigidbody>();
+        distToGround = GetComponent<Collider>().bounds.extents.y;
     }
 
     void Update() {
+        grounded = IsGrounded();
         if (Input.GetKeyDown(KeyCode.Escape)) {
             // Turn on the cursor
             Cursor.lockState = CursorLockMode.None;
@@ -31,6 +34,10 @@ public class CharacterController : MonoBehaviour {
             // Jump by adding force to the Rigidbody (so we handle gravity)
             rigidbody.AddForce(jumpSpeed * Vector3.up, ForceMode.Impulse);
         }
+    }
+
+    private bool IsGrounded() {
+        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
     }
 
     void FixedUpdate() {
@@ -75,23 +82,13 @@ public class CharacterController : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.name == "Ground") {
-            grounded = true;
-        }
         if (collision.gameObject.name == "Hoop") {
             HoopController hoop = collision.gameObject.GetComponent<HoopController>();
             if (balls.Count > 0) {
-                grounded = false;
                 hoop.HandleDunk(balls);
                 ExplodeAwayFrom(hoop);
                 ResetHeldBalls();
             }
-        }
-    }
-
-    void OnCollisionExit(Collision collision){
-        if (collision.gameObject.name == "Ground") {
-            grounded = false;
         }
     }
 
