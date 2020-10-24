@@ -1226,7 +1226,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &1566563736
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1305,7 +1305,8 @@ MonoBehaviour:
   groundSpeed: 8
   airSpeed: 1.5
   maxGroundSpeed: 10
-  brakeStrength: 5
+  maxAirSpeed: 50
+  brakeStrength: 10
   groundDrag: 3
   airDrag: 0
   ballBottomPos: {x: -0.8, y: -0.5, z: 0.7}
