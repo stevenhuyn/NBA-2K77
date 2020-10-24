@@ -166,7 +166,7 @@ PrefabInstance:
     - target: {fileID: 8911798218274960405, guid: b2c83af78d24c69098fc894928a0a3cb,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8911798218274960405, guid: b2c83af78d24c69098fc894928a0a3cb,
         type: 3}
@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 933657536}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Surface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1723,9 +1723,9 @@ MonoBehaviour:
   jumpSpeed: 1.5
   ballHeightDiff: 0.8
   ballBottomPos: {x: -0.8, y: -0.5, z: 0.7}
-  groundSpeed: 2.5
-  airSpeed: 0.2
-  maxGroundSpeed: 5
+  groundSpeed: 1
+  airSpeed: 0.1
+  maxGroundSpeed: 6
   brakeStrength: 1
 --- !u!1001 &1626087866
 PrefabInstance:
@@ -1827,8 +1827,8 @@ Transform:
   - {fileID: 1327008960}
   - {fileID: 1259762094}
   - {fileID: 1237801274}
-  - {fileID: 1795113405}
   - {fileID: 1398432299}
+  - {fileID: 1795113405}
   - {fileID: 874015144}
   - {fileID: 1198545859}
   - {fileID: 948908103}
@@ -1968,7 +1968,7 @@ PrefabInstance:
     - target: {fileID: 8911798218274960405, guid: b2c83af78d24c69098fc894928a0a3cb,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8911798218274960405, guid: b2c83af78d24c69098fc894928a0a3cb,
         type: 3}
