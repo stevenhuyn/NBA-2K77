@@ -16,11 +16,13 @@ public class CharacterController : MonoBehaviour {
     private float distToGround;
     private List<Ball> balls = new List<Ball>();
     private new Rigidbody rigidbody;
+    private GrappleGun gun;
 
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         rigidbody = GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
+        gun = GetComponentInChildren<GrappleGun>();
     }
 
     void Update() {
@@ -40,8 +42,7 @@ public class CharacterController : MonoBehaviour {
     }
 
     private bool IsPullingPlayer() {
-        var hook = GetComponentInChildren<GrappleGun>().Hook;
-        return hook && hook.GetComponent<GrapplingHook>().Stuck;
+        return gun.Hook && gun.Hook.GetComponent<GrapplingHook>().Stuck;
     }
 
     void FixedUpdate() {
@@ -86,6 +87,7 @@ public class CharacterController : MonoBehaviour {
                 hoop.HandleDunk(balls);
                 ExplodeAwayFrom(hoop);
                 ResetHeldBalls();
+                gun.DestroyHook();
             }
         }
     }
