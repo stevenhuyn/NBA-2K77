@@ -45,8 +45,12 @@ public class GrapplingHook : MonoBehaviour {
                 Gun.Player.GetComponent<Rigidbody>().useGravity = false;
             } else if (other.CompareTag("Ball")) {
                 // Pull the ball towards the player
-                ball = other.GetComponent<Ball>();
-                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                Ball ball = other.GetComponent<Ball>();
+                if (!ball.Target.HasValue) {
+                    // Only stick into balls that have not been picked up yet
+                    this.ball = ball;
+                    GetComponent<Rigidbody>().velocity = Vector3.zero;
+                }
             }
         } else if (Gun.Player.gameObject == other.gameObject) {
             // Self-destruct when touched by the player

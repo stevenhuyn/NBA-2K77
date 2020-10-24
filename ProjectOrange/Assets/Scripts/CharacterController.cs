@@ -45,7 +45,6 @@ public class CharacterController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        // TODO: stop grapple touching the ball
         float moveSpeed = Grounded ? groundSpeed : airSpeed;
         rigidbody.drag = Grounded && !IsPullingPlayer() ? groundDrag : airDrag;
 
