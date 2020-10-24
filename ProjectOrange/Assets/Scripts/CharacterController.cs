@@ -41,11 +41,14 @@ public class CharacterController : MonoBehaviour {
 
     void FixedUpdate() {
         Vector3 directionVector = new Vector3();
+
+        // Calculate unit vector of desired direction in the XZ plane
         directionVector.z = Input.GetAxis("Vertical") * moveForce * Time.deltaTime;
         directionVector.x = Input.GetAxis("Horizontal") * moveForce * Time.deltaTime;
         directionVector = Camera.main.transform.TransformDirection(directionVector);
         directionVector.y = 0;
         directionVector = Vector3.Normalize(directionVector);
+
         body.AddForce(moveForce * directionVector, ForceMode.VelocityChange);
         
 
@@ -62,11 +65,14 @@ public class CharacterController : MonoBehaviour {
 
         if (speed > maxGroundSpeed)
         {
-            Debug.Log("Brake");
             float brakeSpeed = speed - maxGroundSpeed;
+
+            // Calculate vector of current movement in xz plane
             Vector3 horizontalVelocity = new Vector3 (body.velocity.x, 0, body.velocity.z);
             Vector3 normalizedVelocity = Vector3.Normalize(horizontalVelocity);
             Vector3 brakeVelocity = normalizedVelocity * brakeSpeed;
+
+            // Apply force in reverse direction to slow player down
             body.AddForce(-brakeVelocity * brakeStrength, ForceMode.VelocityChange);
         }
     }
