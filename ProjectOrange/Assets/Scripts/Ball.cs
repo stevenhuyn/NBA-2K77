@@ -10,10 +10,10 @@ public class Ball : MonoBehaviour {
     void Start() {
         Target = null;
         startPosition = transform.position;
-        Debug.Log(startPosition);
     }
 
     void Update() {
+        // transform.LookAt(Camera.main.transform.position);
         if (Target.HasValue) {
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, Target.Value, speed * Time.deltaTime);
         }
@@ -25,8 +25,8 @@ public class Ball : MonoBehaviour {
         }
     }
 
-    //Reset position of ball
-    public void reset() {
+    // Reset position of ball
+    public void Reset() {
         // Make object top level component
         transform.SetParent(null);
 

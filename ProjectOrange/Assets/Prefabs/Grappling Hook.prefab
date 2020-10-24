@@ -93,7 +93,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 1
+  m_Radius: 4
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
@@ -110,8 +110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootSpeed: 40
-  playerPullSpeed: 600
-  ballPullSpeed: 2500
+  playerPullSpeed: 15
+  ballPullSpeed: 0.4
 --- !u!54 &3816073498085782883
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -190,9 +190,9 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.735849, g: 0.73237807, b: 0.73237807, a: 1}
-      key1: {r: 0.8301887, g: 0.81060874, b: 0.81060874, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 1, g: 0.7921569, b: 0.5372549, a: 1}
+      key1: {r: 1, g: 0.7939059, b: 0.53900003, a: 1}
+      key2: {r: 1, g: 0.7939059, b: 0.53900003, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -200,7 +200,7 @@ LineRenderer:
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
       ctime1: 65535
-      ctime2: 0
+      ctime2: 65535
       ctime3: 0
       ctime4: 0
       ctime5: 0

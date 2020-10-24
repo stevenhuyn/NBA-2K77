@@ -5,8 +5,7 @@ using UnityEngine;
 public class GrappleGun : MonoBehaviour {
     public GameObject grapplingHookPrefab;
     public CharacterController Player { get; private set; }
-
-    private GameObject hook = null;
+    public GameObject Hook { get; private set; }
 
     void Start() {
         Player = GetComponentInParent<CharacterController>();
@@ -14,17 +13,17 @@ public class GrappleGun : MonoBehaviour {
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
-            // Shoot a new hook on left click
-            hook = Instantiate(grapplingHookPrefab);
-            hook.GetComponent<GrapplingHook>().Gun = this;
-            hook.transform.position = Player.transform.position;
-            hook.transform.rotation = transform.rotation;
-        } else if (hook && Input.GetKeyUp(KeyCode.Mouse0)) {
-            // Destroy the hook if left click is released
-            Destroy(hook);
-            hook = null;
+            // Shoot a new Hook on left click
+            Hook = Instantiate(grapplingHookPrefab);
+            Hook.GetComponent<GrapplingHook>().Gun = this;
+            Hook.transform.position = Player.transform.position;
+            Hook.transform.rotation = transform.rotation;
+        } else if (Hook && Input.GetKeyUp(KeyCode.Mouse0)) {
+            // Destroy the Hook if left click is released
+            Destroy(Hook);
+            Hook = null;
         }
-        if (!hook) {
+        if (!Hook) {
             Player.GetComponent<Rigidbody>().useGravity = true;
         }
     }
