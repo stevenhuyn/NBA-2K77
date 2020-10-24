@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /* Adapted from: https://github.com/jiankaiwang/FirstPersonController */
 
@@ -35,6 +36,12 @@ public class CharacterController : MonoBehaviour {
             // Jump by adding force to the Rigidbody (so we handle gravity)
             rigidbody.AddForce(jumpSpeed * Vector3.up, ForceMode.Impulse);
         }
+
+        if(Input.GetKeyDown(KeyCode.R)) {
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
+        }
+
     }
 
     private bool IsGrounded() {
@@ -65,7 +72,7 @@ public class CharacterController : MonoBehaviour {
         if (speed > maxSpeed) {
             // Apply force in reverse direction to slow player down
             float brakeSpeed = speed - maxSpeed;
-            rigidbody.AddForce(-rigidbody.velocity.normalized * brakeSpeed * brakeStrength);
+            // rigidbody.AddForce(-rigidbody.velocity.normalized * brakeSpeed * brakeStrength);
         }
     }
 
