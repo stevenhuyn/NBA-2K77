@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class HoopController : MonoBehaviour {
     public new ParticleSystem particleSystem;
-    public AudioSource audioSource;
     public AudioClip explosion;
     public void HandleDunk(List<Ball> balls) {
         ParticleSystem particles;
