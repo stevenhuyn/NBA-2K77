@@ -5,8 +5,8 @@ using UnityEngine;
 public class GrapplingHook : MonoBehaviour {
     public float shootSpeed = 40, playerPullSpeed = 20, ballPullSpeed = 0.4f;
     public GrappleGun Gun { get; set; }
+    public bool Stuck { get; private set; }
 
-    private bool stuck = false;
     private Ball ball = null;
     private LineRenderer line = null;
 
@@ -16,7 +16,7 @@ public class GrapplingHook : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        if (stuck) {
+        if (Stuck) {
             // Pull on the player until they reach us
             Vector3 dir = (transform.position - Gun.Player.transform.position).normalized;
             Gun.Player.GetComponent<Rigidbody>().AddForce(dir * playerPullSpeed);
@@ -37,10 +37,10 @@ public class GrapplingHook : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
-        if (!stuck && !ball) {
+        if (!Stuck && !ball) {
             if (other.CompareTag("Surface")) {
                 // Stick into the wall and begin pulling on the player
-                stuck = true;
+                Stuck = true;
                 Destroy(GetComponent<Rigidbody>());
                 Gun.Player.GetComponent<Rigidbody>().useGravity = false;
             } else if (other.CompareTag("Ball")) {

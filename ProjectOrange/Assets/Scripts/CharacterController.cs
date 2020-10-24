@@ -12,8 +12,7 @@ public class CharacterController : MonoBehaviour {
         brakeStrength = 5,
         groundDrag = 3, airDrag = 0;
     public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
-
-    private bool grounded = false;
+    public bool Grounded { get; private set; }
     private float distToGround;
     private List<Ball> balls = new List<Ball>();
     private new Rigidbody rigidbody;
@@ -25,12 +24,12 @@ public class CharacterController : MonoBehaviour {
     }
 
     void Update() {
-        grounded = IsGrounded();
+        Grounded = IsGrounded();
         if (Input.GetKeyDown(KeyCode.Escape)) {
             // Turn on the cursor
             Cursor.lockState = CursorLockMode.None;
         }
-        if (Input.GetKeyDown(KeyCode.Space) && grounded) {
+        if (Input.GetKeyDown(KeyCode.Space) && Grounded) {
             // Jump by adding force to the Rigidbody (so we handle gravity)
             rigidbody.AddForce(jumpSpeed * Vector3.up, ForceMode.Impulse);
         }
@@ -40,15 +39,15 @@ public class CharacterController : MonoBehaviour {
         return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
     }
 
+    private bool IsPullingPlayer() {
+        var hook = GetComponentInChildren<GrappleGun>().Hook;
+        return hook && hook.GetComponent<GrapplingHook>().Stuck;
+    }
+
     void FixedUpdate() {
-        float moveSpeed;
-        if (grounded) {
-            moveSpeed = groundSpeed;
-            rigidbody.drag = groundDrag;
-        } else {
-            moveSpeed = airSpeed;
-            rigidbody.drag = airDrag;
-        }
+        // TODO: stop grapple touching the ball
+        float moveSpeed = Grounded ? groundSpeed : airSpeed;
+        rigidbody.drag = Grounded && !IsPullingPlayer() ? groundDrag : airDrag;
 
         // Calculate unit vector of desired direction in the XZ plane
         Vector3 directionVector = new Vector3();
@@ -62,7 +61,7 @@ public class CharacterController : MonoBehaviour {
 
         // Cap movement speed
         float speed = rigidbody.velocity.magnitude;
-        float maxSpeed = grounded ? maxGroundSpeed : maxAirSpeed;
+        float maxSpeed = Grounded ? maxGroundSpeed : maxAirSpeed;
         if (speed > maxSpeed) {
             // Apply force in reverse direction to slow player down
             float brakeSpeed = speed - maxSpeed;
