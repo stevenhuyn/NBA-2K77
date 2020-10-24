@@ -7,7 +7,7 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour {
     public float jumpSpeed = 1.5f, ballHeightDiff = 0.8f;
     public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
-    private bool grounded = false;
+    public bool grounded = false;
 
     private List<Ball> balls = new List<Ball>();
     private Rigidbody body;
@@ -50,7 +50,7 @@ public class CharacterController : MonoBehaviour {
         directionVector = Vector3.Normalize(directionVector);
 
         body.AddForce(moveForce * directionVector, ForceMode.VelocityChange);
-        
+
 
         if (grounded) {
             capMovement();
