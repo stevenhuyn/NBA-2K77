@@ -5,75 +5,62 @@ using UnityEngine;
 /* Adapted from: https://github.com/jiankaiwang/FirstPersonController */
 
 public class CharacterController : MonoBehaviour {
-    public float jumpSpeed = 1.5f, ballHeightDiff = 0.8f;
+    public float
+        jumpSpeed = 1.5f, ballHeightDiff = 0.8f,
+        groundSpeed = 8, airSpeed = 1.5f,
+        maxGroundSpeed = 10, maxAirSpeed = 50,
+        brakeStrength = 5,
+        groundDrag = 3, airDrag = 0;
     public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
+
     private bool grounded = false;
-
     private List<Ball> balls = new List<Ball>();
-    private Rigidbody body;
+    private new Rigidbody rigidbody;
 
-    private float moveForce = 1.0f;
-    public float groundSpeed = 1.0f, airSpeed = 0.1f;
-
-
-    public float maxGroundSpeed = 6.0f;
-    public float brakeStrength = 1.0f;
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
-        body = this.GetComponent<Rigidbody>();
+        rigidbody = GetComponent<Rigidbody>();
     }
 
     void Update() {
-        // Input.GetAxis() is used to get the user's input
-        // You can further set it on Unity. (Edit, Project Settings, Input)
-
         if (Input.GetKeyDown(KeyCode.Escape)) {
             // Turn on the cursor
             Cursor.lockState = CursorLockMode.None;
         }
-
         if (Input.GetKeyDown(KeyCode.Space) && grounded) {
-            // Jump by adding force to the RigidBody (so we handle gravity)
-            var rigidBody = GetComponent<Rigidbody>();
-            rigidBody.AddForce(jumpSpeed * Vector3.up, ForceMode.Impulse);
+            // Jump by adding force to the Rigidbody (so we handle gravity)
+            rigidbody.AddForce(jumpSpeed * Vector3.up, ForceMode.Impulse);
         }
     }
 
     void FixedUpdate() {
-        Vector3 directionVector = new Vector3();
+        float moveSpeed;
+        if (grounded) {
+            moveSpeed = groundSpeed;
+            rigidbody.drag = groundDrag;
+        } else {
+            moveSpeed = airSpeed;
+            rigidbody.drag = airDrag;
+        }
 
         // Calculate unit vector of desired direction in the XZ plane
-        directionVector.z = Input.GetAxis("Vertical") * moveForce * Time.deltaTime;
-        directionVector.x = Input.GetAxis("Horizontal") * moveForce * Time.deltaTime;
+        Vector3 directionVector = new Vector3();
+        directionVector.z = Input.GetAxis("Vertical") * moveSpeed;
+        directionVector.x = Input.GetAxis("Horizontal") * moveSpeed;
         directionVector = Camera.main.transform.TransformDirection(directionVector);
         directionVector.y = 0;
-        directionVector = Vector3.Normalize(directionVector);
+        directionVector.Normalize();
 
-        body.AddForce(moveForce * directionVector, ForceMode.VelocityChange);
-        
+        rigidbody.AddForce(moveSpeed * directionVector);
 
-        if (grounded) {
-            capMovement();
-            moveForce = groundSpeed;
-        } else {
-            moveForce = airSpeed;
-        }
-    }
-
-    void capMovement() {
-        float speed = Vector3.Magnitude(body.velocity);
-
-        if (speed > maxGroundSpeed)
-        {
-            float brakeSpeed = speed - maxGroundSpeed;
-
-            // Calculate vector of current movement in xz plane
-            Vector3 horizontalVelocity = new Vector3 (body.velocity.x, 0, body.velocity.z);
-            Vector3 normalizedVelocity = Vector3.Normalize(horizontalVelocity);
-            Vector3 brakeVelocity = normalizedVelocity * brakeSpeed;
-
+        // Cap movement speed
+        float speed = rigidbody.velocity.magnitude;
+        float maxSpeed = grounded ? maxGroundSpeed : maxAirSpeed;
+        if (speed > maxSpeed) {
             // Apply force in reverse direction to slow player down
-            body.AddForce(-brakeVelocity * brakeStrength, ForceMode.VelocityChange);
+            float brakeSpeed = speed - maxSpeed;
+            Vector3 horizontalDir = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z).normalized;
+            rigidbody.AddForce(-horizontalDir * brakeSpeed * brakeStrength);
         }
     }
 
@@ -110,16 +97,14 @@ public class CharacterController : MonoBehaviour {
     }
 
     void ResetHeldBalls() {
-        foreach(Ball ball in balls) {
-            ball.reset();
+        foreach (Ball ball in balls) {
+            ball.Reset();
         }
         balls.Clear();
-
     }
 
     void ExplodeAwayFrom(HoopController hoop) {
-        Rigidbody body = this.gameObject.GetComponent<Rigidbody>();
         Vector3 hoopPosition = hoop.gameObject.transform.position;
-        body.AddExplosionForce(300.0f, hoopPosition, 0.0f, 2.0f);
+        rigidbody.AddExplosionForce(300.0f, hoopPosition, 0.0f, 2.0f);
     }
 }
