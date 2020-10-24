@@ -15,6 +15,10 @@ public class GrapplingHook : MonoBehaviour {
         line = gameObject.GetComponent<LineRenderer>();
     }
 
+    void Update() {
+        // Draw the line to the gun
+        line.SetPositions(new [] {transform.position, Gun.transform.position});
+    }
     void FixedUpdate() {
         if (stuck) {
             // Pull on the player until they reach us
@@ -27,8 +31,6 @@ public class GrapplingHook : MonoBehaviour {
             ball.transform.position += velocity;
         }
 
-        // Draw the line to the gun
-        line.SetPositions(new [] {transform.position, Gun.transform.position});
     }
 
     void OnTriggerEnter(Collider other) {

@@ -1177,6 +1177,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3448123039663304184, guid: fb52718cd9198d2568541937bf72e06b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f3e71173759e129cabf3d44f271d0ebc, type: 2}
     - target: {fileID: 3448123039663304186, guid: fb52718cd9198d2568541937bf72e06b,
         type: 3}
       propertyPath: m_Name
@@ -1832,5 +1837,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Body
       objectReference: {fileID: 0}
+    - target: {fileID: 7064671743562626985, guid: 361e5a2faaa203c64a1d9e288bc976f3,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 74320d99341bf8ca88eb641e814d0d03, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 361e5a2faaa203c64a1d9e288bc976f3, type: 3}
