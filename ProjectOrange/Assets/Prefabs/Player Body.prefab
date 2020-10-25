@@ -385,8 +385,8 @@ MonoBehaviour:
   groundSpeed: 12
   airSpeed: 1.5
   maxGroundSpeed: 10
-  maxAirSpeed: 50
-  brakeStrength: 30
+  maxAirSpeed: 60
+  brakeStrength: 3
   groundDrag: 5
   airDrag: 0
   ballBottomPos: {x: -0.8, y: -0.5, z: 0.7}
