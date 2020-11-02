@@ -43,7 +43,7 @@ public class GrapplingHook : MonoBehaviour {
         line.material.SetVector("_GunLocation", Gun.transform.position);
         line.material.SetVector("_HookLocation", transform.position);
 
-        if (Stuck){
+        if (Stuck || ball){
             line.material.SetFloat("_Amplitude", Mathf.Lerp(1, 0, (float) framesSinceTaut / tautAnimationLength));
         } else {
             line.material.SetFloat("_Amplitude", 1.0f);
@@ -80,6 +80,7 @@ public class GrapplingHook : MonoBehaviour {
                 Destroy(GetComponent<Rigidbody>());
                 Gun.Player.GetComponent<Rigidbody>().useGravity = false;
             } else if (other.CompareTag("Ball")) {
+                framesSinceTaut = 0;
                 // Pull the ball towards the player
                 Ball ball = other.GetComponent<Ball>();
                 if (!ball.Target.HasValue) {
