@@ -1,32 +1,52 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GrappleGun : MonoBehaviour {
     public GameObject grapplingHookPrefab;
-    public bool aimAssist = true;
-    public float aimAssistSize = 1f;
+    public Color crosshairNormalColor = new Color(0.6352941f, 0.6352941f, 0.6352941f);
+    public Color crosshairTargetingColor = new Color(0.9716981f, 0.3745972f, 0.06875221f);
+    public float aimAssistSize = 10f;
+    public float aimAssistMaxDegrees = 10f;
     public CharacterController Player { get; private set; }
     public GameObject Hook { get; private set; }
 
+    private Image crosshairImage;
+
     void Start() {
         Player = GetComponentInParent<CharacterController>();
+        crosshairImage = GameObject.Find("Crosshair").GetComponent<Image>();
     }
 
     void Update() {
+        // Check if we're aiming at a ball
+        RaycastHit? hitBall = null;
+        foreach (RaycastHit hit in Physics.SphereCastAll(Player.transform.position, aimAssistSize, transform.up)) {
+            if (hit.transform.CompareTag("Ball")
+                && Vector3.Angle(transform.up, hit.transform.position - Player.transform.position) <= aimAssistMaxDegrees) {
+                hitBall = hit;
+                break;
+            }
+        }
+        if (hitBall.HasValue) {
+            crosshairImage.color = crosshairTargetingColor;
+        } else {
+            crosshairImage.color = crosshairNormalColor;
+        }
+
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
-            // Shoot a new Hook on left click
+            // Shoot a new hook on left click
             DestroyHook();
             Hook = Instantiate(grapplingHookPrefab);
             Hook.GetComponent<GrapplingHook>().Gun = this;
             Hook.transform.position = Player.transform.position;
-            RaycastHit hit;
-            if (aimAssist
-                && Physics.SphereCast(Hook.transform.position, aimAssistSize, transform.forward, out hit)
-                && hit.transform.CompareTag("Ball")) {
+            
+            if (hitBall.HasValue) {
                 // Aim towards the ball
-                Debug.Log("Aim assist!");
-                Hook.transform.rotation = Quaternion.LookRotation(hit.transform.position - Hook.transform.position);
+                Hook.GetComponent<LineRenderer>().endColor = Color.red;
+                Hook.transform.LookAt(hitBall.Value.transform);
+                Hook.transform.Rotate(Vector3.right, 90);
             } else {
                 Hook.transform.rotation = transform.rotation;
             }
