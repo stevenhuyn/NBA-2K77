@@ -25,10 +25,10 @@ public class GrappleGun : MonoBehaviour {
     void Update() {
         // Check if we're aiming at a ball
         RaycastHit? hitBall = null;
-        foreach (RaycastHit hit in Physics.SphereCastAll(Player.transform.position, aimAssistSize, Camera.main.transform.up)) {
+        foreach (RaycastHit hit in Physics.SphereCastAll(Player.transform.position, aimAssistSize, Camera.main.transform.forward)) {
             if (hit.transform.CompareTag("Ball")) {
                 // Rotate the maximum amount of degrees towards the target ball and check for line of sight
-                Vector3 shiftedDir = Vector3.RotateTowards(Camera.main.transform.up, hit.transform.position - Player.transform.position, Mathf.Deg2Rad * aimAssistMaxDegrees, 0);
+                Vector3 shiftedDir = Vector3.RotateTowards(Camera.main.transform.forward, hit.transform.position - Player.transform.position, Mathf.Deg2Rad * aimAssistMaxDegrees, 0);
                 RaycastHit checkHit;
                 if (Physics.Raycast(Player.transform.position, shiftedDir, out checkHit)
                     && checkHit.transform.CompareTag("Ball")) {
@@ -49,7 +49,6 @@ public class GrappleGun : MonoBehaviour {
             Hook = Instantiate(grapplingHookPrefab);
             Hook.GetComponent<GrapplingHook>().Gun = this;
             Hook.transform.position = Player.transform.position;
-            Hook.transform.Rotate(Vector3.right, 90);
             
             if (hitBall.HasValue) {
                 // Use aim assist to aim towards the ball
@@ -59,6 +58,7 @@ public class GrappleGun : MonoBehaviour {
             } else {
                 // Aim normally
                 Hook.transform.rotation = Camera.main.transform.rotation;
+                Hook.transform.Rotate(Vector3.right, 90);
             }
         } else if (Input.GetKeyUp(KeyCode.Mouse0)) {
             // Destroy the Hook if left click is released
