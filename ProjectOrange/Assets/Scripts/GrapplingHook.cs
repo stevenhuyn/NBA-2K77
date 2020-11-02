@@ -3,13 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour {
-    public float shootSpeed = 40, playerPullSpeed = 20, ballPullSpeed = 0.4f, ballAcceleration = 0.01f;
+    public float shootSpeed = 40, playerPullSpeed = 20, ballPullSpeed = 0.4f, ballAcceleration = 0.1f;
     public GrappleGun Gun { get; set; }
     public bool Stuck { get; private set; }
+
+    public CharacterController character;
 
     private float ballSpeed;
     private Ball ball = null;
     private LineRenderer line = null;
+
+    private bool isTauting = false;
+    private int framesSinceTaut = 0;
+
+    // In physics count
+    private int tautAnimationLength = 8;
 
     void Start() {
         GetComponent<Rigidbody>().AddForce(transform.up * shootSpeed, ForceMode.Impulse);
@@ -19,7 +27,28 @@ public class GrapplingHook : MonoBehaviour {
 
     void Update() {
         // Draw the line to the gun
-        line.SetPositions(new [] {transform.position, Gun.transform.position});
+        int lineSegments = 1000;
+        Vector3[] pathNodes = new Vector3[lineSegments + 1];
+        line.positionCount = lineSegments + 1;
+
+        Vector3 direction = transform.position - Gun.transform.position;
+        for (int i = 0; i <= lineSegments; i++) {
+            pathNodes[i] = Gun.transform.position + (direction * ((float) i/lineSegments));
+        }
+        line.SetPositions(pathNodes);
+
+
+        //Update reference vectors
+        line.material.SetVector("_Up", Camera.main.transform.up);
+        line.material.SetVector("_GunLocation", Gun.transform.position);
+        line.material.SetVector("_HookLocation", transform.position);
+
+        if (Stuck || ball){
+            line.material.SetFloat("_Amplitude", Mathf.Lerp(1, 0, (float) framesSinceTaut / tautAnimationLength));
+        } else {
+            line.material.SetFloat("_Amplitude", 1.0f);
+        }
+
     }
     void FixedUpdate() {
         if (Stuck) {
@@ -38,17 +67,20 @@ public class GrapplingHook : MonoBehaviour {
                 transform.position = Vector3.MoveTowards(transform.position, Gun.Player.transform.position, ballSpeed);
             }
         }
-
+        framesSinceTaut++;
     }
 
     void OnTriggerEnter(Collider other) {
         if (!Stuck && !ball) {
             if (other.CompareTag("Surface")) {
+
                 // Stick into the wall and begin pulling on the player
                 Stuck = true;
+                framesSinceTaut = 0;
                 Destroy(GetComponent<Rigidbody>());
                 Gun.Player.GetComponent<Rigidbody>().useGravity = false;
             } else if (other.CompareTag("Ball")) {
+                framesSinceTaut = 0;
                 // Pull the ball towards the player
                 Ball ball = other.GetComponent<Ball>();
                 if (!ball.Target.HasValue) {
