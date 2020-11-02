@@ -96,6 +96,10 @@ MonoBehaviour:
   grapplingHookPrefab: {fileID: 3656998199048275825, guid: f06b86c037fa5c74b9c9221cc90794d6,
     type: 3}
   rotationSpeed: 1.5
+  crosshairNormalColor: {r: 0.6352941, g: 0.6352941, b: 0.6352941, a: 1}
+  crosshairTargetingColor: {r: 1, g: 0.5882353, b: 0.20392159, a: 1}
+  aimAssistSize: 3
+  aimAssistMaxDegrees: 2.7
 --- !u!1 &8890891803384392667
 GameObject:
   m_ObjectHideFlags: 0
