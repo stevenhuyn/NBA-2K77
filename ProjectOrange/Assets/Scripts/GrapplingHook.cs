@@ -38,7 +38,7 @@ public class GrapplingHook : MonoBehaviour {
         //Update reference vectors
         Vector4 up = Camera.main.transform.up;
         line.material.SetVector("_Up", up);
-        line.material.SetVector("_CameraLocation", playerCamera.transform.position);
+        line.material.SetVector("_GunLocation", Gun.transform.position);
     }
     void FixedUpdate() {
         if (Stuck) {
