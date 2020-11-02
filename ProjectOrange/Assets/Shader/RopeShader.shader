@@ -43,7 +43,7 @@ Shader "Unlit/RopeShader"
 				v.vertex = mul(UNITY_MATRIX_M, v.vertex);
 
 				float lengthA  = distance(v.vertex, _GunLocation);
-				float4 displacement = sin(lengthA) * _Up;
+				float4 displacement = sin(lengthA - 0.98f) * _Up;
 				v.vertex += displacement;
 
 				vertOut o;
