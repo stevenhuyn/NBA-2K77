@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mathf;
 
 /* Adapted from: https://github.com/jiankaiwang/FirstPersonController */
 
@@ -14,7 +13,7 @@ public class CharacterController : MonoBehaviour {
         groundDrag = 3, airDrag = 0;
     public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
     public bool Grounded { get; private set; }
-    public const float gracePeriod = 2.0f;
+    public const float gracePeriod = 0.2f;
     private float gracePeriodRemaining = 0.0f;
     private float distToGround;
     private List<Ball> balls = new List<Ball>();
@@ -31,7 +30,9 @@ public class CharacterController : MonoBehaviour {
     }
 
     void Update() {
-        Grounded = IsGrounded();
+        gracePeriodRemaining = Mathf.Max(0.0f, gracePeriodRemaining -= Time.deltaTime);
+        UpdateGrounded();
+
         if (Input.GetKeyDown(KeyCode.Escape)) {
             // Turn on the cursor
             Cursor.lockState = CursorLockMode.None;
@@ -42,19 +43,26 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
-    private void IsGrounded() {
+    private void UpdateGrounded() {
+        // Draw a short downwards ray
         RaycastHit hit;
-        Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround + 0.1f);
+        bool didCollide = Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround + 0.1f);
         
-        // Short grace period if you're above a hoop holding a ball
-        if (gracePeriodRemaining == 0.0f) {
-            if (isHoop(hit.transform.gameObject)) {
-                gracePeriodRemaining = 2.0f;
-            } else {
-                gracePeriodRemaining = max(0.0f, gracePeriodRemaining);
-            }
+        // Case 1: Within the dunking grace period
+        if (gracePeriodRemaining > 0.0f) {
+            Grounded = false;
+            return;
+        };
+
+        // Case 2: Just collected a ball whilst standing on the hoop
+        if (didCollide && isHoop(hit.transform.gameObject) && (balls.Count > 0)) {
+            Grounded = false;
+            OnDunk(hit.transform.gameObject);
+            return;
         }
-        return hit.transform.CompareTag("Surface"); || isHoop(hit.transform.gameObject);
+
+        // Case 3: Standing on the ground / on the hoop without a ball
+        Grounded = didCollide && hit.transform.CompareTag("Surface");
     }
 
     private bool IsPullingPlayer() {
@@ -93,25 +101,35 @@ public class CharacterController : MonoBehaviour {
             ball.transform.parent = transform;
             ball.Target = ballBottomPos + Vector3.up * balls.Count * ballHeightDiff;
             balls.Add(ball);
-            ScoreSystem.UpdateMultiplier(1);
+            UpdateGrounded();
+            if (!Grounded) ScoreSystem.UpdateMultiplier(1);
             ScoreSystem.UpdateScore(100);
         }
     }
 
     void OnCollisionEnter(Collision collision) {
-        if (isHoop(collision.gameObject)) {
-            HoopController hoop = collision.gameObject.GetComponentInParent<HoopController>();
-            if (balls.Count > 0) {
-                hoop.HandleDunk(balls);
-                ExplodeAwayFrom(hoop);
-                ResetHeldBalls();
-                gun.DestroyHook();
-                ScoreSystem.UpdateScore(300);
-            }
+        OnDunk(collision.gameObject);
+    }
+
+    /** Remove balls and explode away from the hoop */
+    void OnDunk(GameObject collisionObject) {
+        if (isHoop(collisionObject) && balls.Count > 0) {
+            // Start a grace period to stop the multiplier resetting
+            gracePeriodRemaining = gracePeriod;
+
+            // Find the associated hoop to explode away from
+            HoopController hoop = collisionObject.GetComponentInParent<HoopController>();
+            hoop.HandleDunk(balls);
+            ExplodeAwayFrom(hoop);
+
+            ResetHeldBalls();
+            gun.DestroyHook();
+            ScoreSystem.UpdateScore(300);
         }
     }
 
     bool isHoop(GameObject gameObject) {
+        if (gameObject == null) return false;
         return (gameObject.name == "Torus" || gameObject.name == "Hoop Inside");
     }
 
