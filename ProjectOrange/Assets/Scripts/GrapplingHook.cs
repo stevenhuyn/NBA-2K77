@@ -30,15 +30,22 @@ public class GrapplingHook : MonoBehaviour {
 
         Vector3 direction = transform.position - Gun.transform.position;
         for (int i = 0; i <= lineSegments; i++) {
-            pathNodes[i] = Gun.transform.position + (direction * i/lineSegments);
+            pathNodes[i] = Gun.transform.position + (direction * ((float) i/lineSegments));
         }
         line.SetPositions(pathNodes);
 
 
         //Update reference vectors
-        Vector4 up = Camera.main.transform.up;
-        line.material.SetVector("_Up", up);
+        line.material.SetVector("_Up", Camera.main.transform.up);
         line.material.SetVector("_GunLocation", Gun.transform.position);
+        line.material.SetVector("_HookLocation", transform.position);
+
+        if (Stuck){
+            line.material.SetFloat("_Amplitude", 0.0f);
+        } else {
+            line.material.SetFloat("_Amplitude", 1.0f);
+        }
+
     }
     void FixedUpdate() {
         if (Stuck) {

@@ -7,6 +7,8 @@ Shader "Unlit/RopeShader"
 		_MainTex ("Texture", 2D) = "white" {}
 		_Up ("Up Vector", Vector) = (0,0,0,0)
 		_GunLocation ("Gun Location", Vector) = (0,0,0,0)
+		_HookLocation ("Hook Location", Vector) = (0,0,0,0)
+		_Amplitude ("Amplitude", float) = 0.5
 	}
 	SubShader
 	{
@@ -23,6 +25,13 @@ Shader "Unlit/RopeShader"
 			uniform sampler2D _MainTex;
 			float4 _Up;
 			float4 _GunLocation;
+			float4 _HookLocation;
+			float _Amplitude;
+
+			float normaliseAmplitude(float d)
+			{
+				return (-0.3f/(d + 1.0f)) + 0.3f;
+			}
 
 			struct vertIn
 			{
@@ -42,8 +51,11 @@ Shader "Unlit/RopeShader"
 				//float4 displacement = float4(0.0f, sin(v.vertex.x * 10.0f), 0.0f, 0.0f); // Q4
 				v.vertex = mul(UNITY_MATRIX_M, v.vertex);
 
-				float lengthA  = distance(v.vertex, _GunLocation);
-				float4 displacement = sin(lengthA - 0.98f) * _Up;
+				float lengthA  = abs(distance(v.vertex, _GunLocation));
+				float hookDistance = abs(distance(v.vertex, _HookLocation));
+				float gunNorm = normaliseAmplitude(lengthA - 0.98f);
+				float hookNorm = normaliseAmplitude(hookDistance - 0.98f);
+				float4 displacement = min(gunNorm, hookNorm) * sin(lengthA - 0.98f + _Time[3]*5) * _Up * _Amplitude;
 				v.vertex += displacement;
 
 				vertOut o;
