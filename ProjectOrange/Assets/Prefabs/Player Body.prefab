@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8890891802925860276}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.57999986, y: -0.39199996, z: 1.754}
+  m_LocalPosition: {x: 0.57999986, y: -0.218, z: 1.241}
   m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
   m_Children:
   - {fileID: 8890891804261237608}
@@ -95,6 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grapplingHookPrefab: {fileID: 3656998199048275825, guid: f06b86c037fa5c74b9c9221cc90794d6,
     type: 3}
+  rotationSpeed: 1.5
 --- !u!1 &8890891803384392667
 GameObject:
   m_ObjectHideFlags: 0
