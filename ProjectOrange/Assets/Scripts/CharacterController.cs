@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mathf;
 
 /* Adapted from: https://github.com/jiankaiwang/FirstPersonController */
 
@@ -13,6 +14,8 @@ public class CharacterController : MonoBehaviour {
         groundDrag = 3, airDrag = 0;
     public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
     public bool Grounded { get; private set; }
+    public const float gracePeriod = 2.0f;
+    private float gracePeriodRemaining = 0.0f;
     private float distToGround;
     private List<Ball> balls = new List<Ball>();
     private new Rigidbody rigidbody;
@@ -39,11 +42,19 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
-    private bool IsGrounded() {
+    private void IsGrounded() {
         RaycastHit hit;
-        return
-            Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround + 0.1f)
-            && hit.transform.CompareTag("Surface");
+        Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround + 0.1f);
+        
+        // Short grace period if you're above a hoop holding a ball
+        if (gracePeriodRemaining == 0.0f) {
+            if (isHoop(hit.transform.gameObject)) {
+                gracePeriodRemaining = 2.0f;
+            } else {
+                gracePeriodRemaining = max(0.0f, gracePeriodRemaining);
+            }
+        }
+        return hit.transform.CompareTag("Surface"); || isHoop(hit.transform.gameObject);
     }
 
     private bool IsPullingPlayer() {
@@ -88,7 +99,7 @@ public class CharacterController : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.name == "Torus" || collision.gameObject.name == "Hoop Inside") {
+        if (isHoop(collision.gameObject)) {
             HoopController hoop = collision.gameObject.GetComponentInParent<HoopController>();
             if (balls.Count > 0) {
                 hoop.HandleDunk(balls);
@@ -98,6 +109,10 @@ public class CharacterController : MonoBehaviour {
                 ScoreSystem.UpdateScore(300);
             }
         }
+    }
+
+    bool isHoop(GameObject gameObject) {
+        return (gameObject.name == "Torus" || gameObject.name == "Hoop Inside");
     }
 
     void ResetHeldBalls() {
