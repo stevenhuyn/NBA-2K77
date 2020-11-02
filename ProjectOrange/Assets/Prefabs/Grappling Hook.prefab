@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 74320d99341bf8ca88eb641e814d0d03, type: 2}
+  - {fileID: 2100000, guid: a683b955b3d06e6429565831caff80f8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -109,10 +109,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 033acd5577d6dde42a176126b90fa907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootSpeed: 40
+  shootSpeed: 80
   playerPullSpeed: 15
   ballPullSpeed: 0.4
-  ballAcceleration: 0.01
+  ballAcceleration: 0.05
+  character: {fileID: 8890891803648090112, guid: 361e5a2faaa203c64a1d9e288bc976f3,
+    type: 3}
 --- !u!54 &3816073498085782883
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -147,7 +149,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 245b88bb3defb3b2b9e7850ba575c53e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -218,8 +220,8 @@ LineRenderer:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    numCornerVertices: 0
-    numCapVertices: 0
+    numCornerVertices: 90
+    numCapVertices: 90
     alignment: 0
     textureMode: 0
     shadowBias: 0.5
