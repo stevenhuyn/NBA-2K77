@@ -43,11 +43,11 @@ public class CharacterController : MonoBehaviour {
             rigidbody.AddForce(jumpSpeed * Vector3.up, ForceMode.Impulse);
         }
 
-        float minFovSpeed = 40.0f;
-        float maxFovSpeed = 60.0f;
+        float minFovSpeed = 30;
+        float maxFovSpeed = 60;
 
-        float minFov = 70.0f;
-        float maxFov = 75.0f;
+        float minFov = 70;
+        float maxFov = 80;
         
         float fov = Mathf.Lerp(minFov, maxFov, (rigidbody.velocity.magnitude - minFovSpeed) / (maxFovSpeed - minFovSpeed));
         Camera.main.fieldOfView = fov;
