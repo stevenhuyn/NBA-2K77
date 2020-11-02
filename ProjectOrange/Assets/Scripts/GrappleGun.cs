@@ -25,8 +25,13 @@ public class GrappleGun : MonoBehaviour {
         foreach (RaycastHit hit in Physics.SphereCastAll(Player.transform.position, aimAssistSize, transform.up)) {
             if (hit.transform.CompareTag("Ball")
                 && Vector3.Angle(transform.up, hit.transform.position - Player.transform.position) <= aimAssistMaxDegrees) {
-                hitBall = hit;
-                break;
+                // Make sure we actually have a straight line of sight to the ball
+                RaycastHit checkHit;
+                if (Physics.Raycast(Player.transform.position, hit.transform.position - Player.transform.position, out checkHit)
+                    && checkHit.transform.CompareTag("Ball")) {
+                    hitBall = hit;
+                    break;
+                }
             }
         }
         if (hitBall.HasValue) {
