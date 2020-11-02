@@ -13,6 +13,12 @@ public class GrapplingHook : MonoBehaviour {
     private Ball ball = null;
     private LineRenderer line = null;
 
+    private bool isTauting = false;
+    private int framesSinceTaut = 0;
+
+    // In physics count
+    private int tautAnimationLength = 8;
+
     void Start() {
         GetComponent<Rigidbody>().AddForce(transform.up * shootSpeed, ForceMode.Impulse);
         line = gameObject.GetComponent<LineRenderer>();
@@ -38,7 +44,7 @@ public class GrapplingHook : MonoBehaviour {
         line.material.SetVector("_HookLocation", transform.position);
 
         if (Stuck){
-            line.material.SetFloat("_Amplitude", 0.0f);
+            line.material.SetFloat("_Amplitude", Mathf.Lerp(1, 0, (float) framesSinceTaut / tautAnimationLength));
         } else {
             line.material.SetFloat("_Amplitude", 1.0f);
         }
@@ -61,14 +67,16 @@ public class GrapplingHook : MonoBehaviour {
                 transform.position = Vector3.MoveTowards(transform.position, Gun.Player.transform.position, ballSpeed);
             }
         }
-
+        framesSinceTaut++;
     }
 
     void OnTriggerEnter(Collider other) {
         if (!Stuck && !ball) {
             if (other.CompareTag("Surface")) {
+
                 // Stick into the wall and begin pulling on the player
                 Stuck = true;
+                framesSinceTaut = 0;
                 Destroy(GetComponent<Rigidbody>());
                 Gun.Player.GetComponent<Rigidbody>().useGravity = false;
             } else if (other.CompareTag("Ball")) {

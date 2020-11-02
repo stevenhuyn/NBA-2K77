@@ -55,7 +55,7 @@ Shader "Unlit/RopeShader"
 				float hookDistance = abs(distance(v.vertex, _HookLocation));
 				float gunNorm = normaliseAmplitude(lengthA - 0.98f);
 				float hookNorm = normaliseAmplitude(hookDistance - 0.98f);
-				float4 displacement = min(gunNorm, hookNorm) * sin(lengthA - 0.98f + _Time[3]*5) * _Up * _Amplitude;
+				float4 displacement = min(gunNorm, hookNorm) * sin(lengthA - 0.98f + _Time[3]*10) * _Up * _Amplitude;
 				v.vertex += displacement;
 
 				vertOut o;
