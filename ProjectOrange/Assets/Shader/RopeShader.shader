@@ -43,14 +43,14 @@ Shader "Unlit/RopeShader"
 
 
 				//float4 displacement = float4(0.0f, sin(v.vertex.x * 10.0f), 0.0f, 0.0f); // Q4
-				v.vertex = mul(UNITY_MATRIX_MV, v.vertex);
+				v.vertex = mul(UNITY_MATRIX_M, v.vertex);
 
 				float lengthA  = distance(v.vertex, _CameraLocation);
 				float4 displacement = sin(lengthA) * _Up;
 				v.vertex += displacement;
 
 				vertOut o;
-				o.vertex = mul(UNITY_MATRIX_P, v.vertex);
+				o.vertex = mul(UNITY_MATRIX_VP, v.vertex);
 				o.uv = v.uv;
 				return o;
 			}

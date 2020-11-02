@@ -24,7 +24,16 @@ public class GrapplingHook : MonoBehaviour {
 
     void Update() {
         // Draw the line to the gun
-        line.SetPositions(new [] {transform.position, Gun.transform.position});
+        int lineSegments = 100;
+        Vector3[] pathNodes = new Vector3[lineSegments];
+        line.positionCount = lineSegments;
+
+        Vector3 direction = Gun.transform.position - transform.position;
+        for (int i = 0; i < lineSegments; i++) {
+            pathNodes[i] = transform.position + (direction * i/lineSegments);
+        }
+        line.SetPositions(pathNodes);
+
 
         //Update reference vectors
         Vector4 up = Camera.main.transform.up;
