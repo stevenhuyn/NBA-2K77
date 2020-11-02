@@ -38,7 +38,10 @@ public class CharacterController : MonoBehaviour {
     }
 
     private bool IsGrounded() {
-        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+        RaycastHit hit;
+        return
+            Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround + 0.1f)
+            && hit.transform.CompareTag("Surface");
     }
 
     private bool IsPullingPlayer() {
