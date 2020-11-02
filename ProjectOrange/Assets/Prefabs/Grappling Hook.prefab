@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 74320d99341bf8ca88eb641e814d0d03, type: 2}
+  - {fileID: 2100000, guid: e8a7db8bb30ba7846922a11cebbe1a2f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,6 +113,8 @@ MonoBehaviour:
   playerPullSpeed: 15
   ballPullSpeed: 0.4
   ballAcceleration: 0.01
+  character: {fileID: 8890891803648090112, guid: 361e5a2faaa203c64a1d9e288bc976f3,
+    type: 3}
 --- !u!54 &3816073498085782883
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -147,7 +149,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 245b88bb3defb3b2b9e7850ba575c53e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -7,19 +7,29 @@ public class GrapplingHook : MonoBehaviour {
     public GrappleGun Gun { get; set; }
     public bool Stuck { get; private set; }
 
+    public CharacterController character;
+
     private float ballSpeed;
     private Ball ball = null;
     private LineRenderer line = null;
 
+    private Camera playerCamera;
     void Start() {
         GetComponent<Rigidbody>().AddForce(transform.up * shootSpeed, ForceMode.Impulse);
         line = gameObject.GetComponent<LineRenderer>();
         ballSpeed = ballPullSpeed;
+
+        playerCamera = character.transform.GetComponentInChildren<Camera>();
     }
 
     void Update() {
         // Draw the line to the gun
         line.SetPositions(new [] {transform.position, Gun.transform.position});
+
+        //Update reference vectors
+        Vector4 up = Camera.main.transform.up;
+        line.material.SetVector("_Up", up);
+        line.material.SetVector("_CameraLocation", playerCamera.transform.position);
     }
     void FixedUpdate() {
         if (Stuck) {
