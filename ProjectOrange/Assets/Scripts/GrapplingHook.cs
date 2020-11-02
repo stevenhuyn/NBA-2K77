@@ -12,8 +12,6 @@ public class GrapplingHook : MonoBehaviour {
     private float ballSpeed;
     private Ball ball = null;
     private LineRenderer line = null;
-
-    private bool isTauting = false;
     private int framesSinceTaut = 0;
 
     // In physics count
