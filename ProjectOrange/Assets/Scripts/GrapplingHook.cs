@@ -13,13 +13,10 @@ public class GrapplingHook : MonoBehaviour {
     private Ball ball = null;
     private LineRenderer line = null;
 
-    private Camera playerCamera;
     void Start() {
         GetComponent<Rigidbody>().AddForce(transform.up * shootSpeed, ForceMode.Impulse);
         line = gameObject.GetComponent<LineRenderer>();
         ballSpeed = ballPullSpeed;
-
-        playerCamera = character.transform.GetComponentInChildren<Camera>();
     }
 
     void Update() {
