@@ -97,8 +97,8 @@ MonoBehaviour:
     type: 3}
   crosshairNormalColor: {r: 0.6352941, g: 0.6352941, b: 0.6352941, a: 1}
   crosshairTargetingColor: {r: 1, g: 0.5882353, b: 0.20392159, a: 1}
-  aimAssistSize: 2
-  aimAssistMaxDegrees: 3
+  aimAssistSize: 3
+  aimAssistMaxDegrees: 2.7
 --- !u!1 &8890891803384392667
 GameObject:
   m_ObjectHideFlags: 0

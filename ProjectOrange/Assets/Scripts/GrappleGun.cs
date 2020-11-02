@@ -23,15 +23,16 @@ public class GrappleGun : MonoBehaviour {
         // Check if we're aiming at a ball
         RaycastHit? hitBall = null;
         foreach (RaycastHit hit in Physics.SphereCastAll(Player.transform.position, aimAssistSize, transform.up)) {
-            if (hit.transform.CompareTag("Ball")
-                && Vector3.Angle(transform.up, hit.transform.position - Player.transform.position) <= aimAssistMaxDegrees) {
-                // Make sure we actually have a straight line of sight to the ball
+            if (hit.transform.CompareTag("Ball")) {
+                // Rotate the maximum amount of degrees towards the target ball and check for line of sight
+                Vector3 shiftedDir = Vector3.RotateTowards(transform.up, hit.transform.position - Player.transform.position, Mathf.Deg2Rad * aimAssistMaxDegrees, 0);
                 RaycastHit checkHit;
-                if (Physics.Raycast(Player.transform.position, hit.transform.position - Player.transform.position, out checkHit)
+                if (Physics.Raycast(Player.transform.position, shiftedDir, out checkHit)
                     && checkHit.transform.CompareTag("Ball")) {
                     hitBall = hit;
                     break;
                 }
+                
             }
         }
         if (hitBall.HasValue) {
