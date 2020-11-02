@@ -94,6 +94,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grapplingHookPrefab: {fileID: 3656998199048275825, guid: f06b86c037fa5c74b9c9221cc90794d6,
     type: 3}
+  aimAssist: 1
+  aimAssistSize: 5
 --- !u!1 &8890891803384392667
 GameObject:
   m_ObjectHideFlags: 0

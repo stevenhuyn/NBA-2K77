@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GrappleGun : MonoBehaviour {
     public GameObject grapplingHookPrefab;
+    public bool aimAssist = true;
+    public float aimAssistSize = 1f;
     public CharacterController Player { get; private set; }
     public GameObject Hook { get; private set; }
 
@@ -18,7 +20,16 @@ public class GrappleGun : MonoBehaviour {
             Hook = Instantiate(grapplingHookPrefab);
             Hook.GetComponent<GrapplingHook>().Gun = this;
             Hook.transform.position = Player.transform.position;
-            Hook.transform.rotation = transform.rotation;
+            RaycastHit hit;
+            if (aimAssist
+                && Physics.SphereCast(Hook.transform.position, aimAssistSize, transform.forward, out hit)
+                && hit.transform.CompareTag("Ball")) {
+                // Aim towards the ball
+                Debug.Log("Aim assist!");
+                Hook.transform.rotation = Quaternion.LookRotation(hit.transform.position - Hook.transform.position);
+            } else {
+                Hook.transform.rotation = transform.rotation;
+            }
         } else if (Input.GetKeyUp(KeyCode.Mouse0)) {
             // Destroy the Hook if left click is released
             DestroyHook();
