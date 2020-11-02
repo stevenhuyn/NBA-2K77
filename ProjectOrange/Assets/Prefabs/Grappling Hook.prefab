@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 033acd5577d6dde42a176126b90fa907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootSpeed: 40
+  shootSpeed: 80
   playerPullSpeed: 15
   ballPullSpeed: 0.4
   ballAcceleration: 0.01
