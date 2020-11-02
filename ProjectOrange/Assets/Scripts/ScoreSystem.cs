@@ -60,14 +60,14 @@ public class ScoreSystem : MonoBehaviour
     }
 
     static public void UpdateScore(int delta) {
-        instance.StartCoroutine(instance.UpdateScoreSlowly(delta * instance.multiplier));
+        instance.StartCoroutine(instance.UpdateScoreSlowly(delta));
         instance.StartCoroutine(instance.PulseText(instance.scoreText));
         instance.StartCoroutine(instance.GlowText(instance.scoreText));
     }
 
     private IEnumerator UpdateScoreSlowly(int delta) {
         for (int i = 0; i < delta; i++) {
-            score++;
+            score += instance.multiplier;
             yield return new WaitForSeconds(0.01f);
         }
     }
