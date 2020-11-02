@@ -19,8 +19,6 @@ public class CharacterController : MonoBehaviour {
     private new Rigidbody rigidbody;
     private GrappleGun gun;
 
-    private Camera camera;
-
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         rigidbody = GetComponent<Rigidbody>();
@@ -28,7 +26,6 @@ public class CharacterController : MonoBehaviour {
         gun = GetComponentInChildren<GrappleGun>();
 
         Cursor.visible = false;
-        camera = GetComponentInChildren<Camera>();
     }
 
     void Update() {
@@ -48,8 +45,8 @@ public class CharacterController : MonoBehaviour {
         float minFov = 70.0f;
         float maxFov = 75.0f;
         
-        float fov = Mathf.Lerp(minFov, maxFov, (rigidbody.velocity.magnitude - minFovSpeed)/ (maxFovSpeed - minFovSpeed));
-        camera.fieldOfView = fov;
+        float fov = Mathf.Lerp(minFov, maxFov, (rigidbody.velocity.magnitude - minFovSpeed) / (maxFovSpeed - minFovSpeed));
+        Camera.main.fieldOfView = fov;
     }
 
     private bool IsGrounded() {
