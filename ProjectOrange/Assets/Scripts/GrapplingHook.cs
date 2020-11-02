@@ -28,9 +28,9 @@ public class GrapplingHook : MonoBehaviour {
         Vector3[] pathNodes = new Vector3[lineSegments + 1];
         line.positionCount = lineSegments + 1;
 
-        Vector3 direction = Gun.transform.position - transform.position;
+        Vector3 direction = transform.position - Gun.transform.position;
         for (int i = 0; i <= lineSegments; i++) {
-            pathNodes[i] = transform.position + (direction * i/lineSegments);
+            pathNodes[i] = Gun.transform.position + (direction * i/lineSegments);
         }
         line.SetPositions(pathNodes);
 
