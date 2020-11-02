@@ -112,7 +112,7 @@ MonoBehaviour:
   shootSpeed: 40
   playerPullSpeed: 15
   ballPullSpeed: 0.4
-  ballAcceleration: 0.01
+  ballAcceleration: 0.02
 --- !u!54 &3816073498085782883
 Rigidbody:
   m_ObjectHideFlags: 0

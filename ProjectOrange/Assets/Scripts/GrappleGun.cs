@@ -32,7 +32,6 @@ public class GrappleGun : MonoBehaviour {
                     hitBall = hit;
                     break;
                 }
-                
             }
         }
         if (hitBall.HasValue) {
@@ -49,11 +48,12 @@ public class GrappleGun : MonoBehaviour {
             Hook.transform.position = Player.transform.position;
             
             if (hitBall.HasValue) {
-                // Aim towards the ball
+                // Use aim assist to aim towards the ball
                 Hook.GetComponent<LineRenderer>().endColor = Color.red;
                 Hook.transform.LookAt(hitBall.Value.transform);
                 Hook.transform.Rotate(Vector3.right, 90);
             } else {
+                // Aim normally
                 Hook.transform.rotation = transform.rotation;
             }
         } else if (Input.GetKeyUp(KeyCode.Mouse0)) {
