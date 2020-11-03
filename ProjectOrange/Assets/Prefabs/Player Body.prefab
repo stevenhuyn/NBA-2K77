@@ -160,7 +160,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -387,11 +387,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpSpeed: 1.5
   ballHeightDiff: 0.8
-  groundSpeed: 12
-  airSpeed: 1.5
-  maxGroundSpeed: 10
-  maxAirSpeed: 60
-  brakeStrength: 20
+  groundSpeed: 15
+  airSpeed: 3
+  maxGroundSpeed: 15
+  maxAirSpeedGrappling: 50
+  maxAirSpeedNonGrappling: 30
+  brakeStrength: 15
   groundDrag: 5
   airDrag: 0
   ballBottomPos: {x: -0.8, y: -0.5, z: 0.7}
