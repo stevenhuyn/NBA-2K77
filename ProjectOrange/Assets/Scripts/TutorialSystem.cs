@@ -194,7 +194,7 @@ public class TutorialSystem : MonoBehaviour
                 break;
             }
             case Step.Score: {
-                instructionText.text = "Score points for picking up balls, flying and dunking them";
+                instructionText.text = "Score points for picking up balls, flying and dunking";
                 break;
             }
             case Step.Multiplier: {
