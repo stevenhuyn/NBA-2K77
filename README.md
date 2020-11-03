@@ -96,6 +96,14 @@ We used two Querying/Observational methods:
 - Think Aloud
 - Post Walkthrough Interview
 
+
+#### Think Aloud
+For our observational method, we gave the users a small set of instructions on how to play the game as well as an instruction to voice out their thoughts.
+
+From there, minimal input from the interviewer was given as users attempted to play through our levels. We noted down notable responses and collated them together.
+
+#### Post Walkthrough Interview
+
 The post walkthrough interview questions we used were:
 - Did the game feel too fast or too slow? How was the pace?
 - Was the game easy to understand?
@@ -109,6 +117,15 @@ Would you change any other aspect of the game?
 What new features would you like? 
 How do the controls compare to other games you’ve played?
 Do you have any other thoughts you would like to discuss?
+
+These questions were ordered in such a way that easier questions were at the start to warm up the individual while harder questions were sandwiched in the middle. Finally we finish off with easier questions at the end.
+
+### Feedback
+Through our observational/querying methodologies, we were able to pick up on common complaints and misunderstandings with the mechanics of our game. These included complaints about 'game feel' as well as visual clarity in general.
+
+#### Game felt too floaty
+A common complaint with our gameplay was that it felt very 'floaty'. Especially the jumping as well as the movement through the air. 
+TODO
 
 
 
