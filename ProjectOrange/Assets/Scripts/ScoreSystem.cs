@@ -12,6 +12,8 @@ public class ScoreSystem : MonoBehaviour
     public TextMeshProUGUI multiplierText;
 
     private GameObject player;
+    public Transform ScorePopup;
+    
     private int score = 0;
     private int multiplier = 1;
     private int frameCounter = 0;
@@ -49,6 +51,7 @@ public class ScoreSystem : MonoBehaviour
     static public void UpdateMultiplier(int delta) {
         instance.multiplier += delta;
         instance.StartCoroutine(instance.PulseText(instance.scoreText));
+        instance.StartCoroutine(instance.PulseText(instance.multiplierText));
     }
 
     static public void ResetMultiplier() {
@@ -56,9 +59,24 @@ public class ScoreSystem : MonoBehaviour
     }
 
     static public void UpdateScore(int delta) {
+        Transform scorePopup = Instantiate(instance.ScorePopup, instance.gameObject.transform);
+        scorePopup.GetComponent<ScorePopupScript>().score = instance.scoreText.transform;
+        scorePopup.GetComponent<TextMeshProUGUI>().text = string.Format("+{0}", delta);
+
         instance.StartCoroutine(instance.UpdateScoreSlowly(delta));
         instance.StartCoroutine(instance.PulseText(instance.scoreText));
         instance.StartCoroutine(instance.GlowText(instance.scoreText));
+    }
+
+    static public void Dunk(int amount) {
+        instance.StartCoroutine(instance.ProcessDunk(amount));
+    }
+
+    private IEnumerator ProcessDunk(int amount) {
+        for (int i = 0; i < amount; i++) {
+            UpdateScore(300);
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     private IEnumerator UpdateScoreSlowly(int delta) {
