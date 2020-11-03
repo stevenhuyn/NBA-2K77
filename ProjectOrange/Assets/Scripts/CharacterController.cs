@@ -14,11 +14,11 @@ public class CharacterController : MonoBehaviour {
     public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
     public bool Grounded { get; private set; }
     public const float gracePeriod = 0.2f;
-    private float gracePeriodRemaining = 0.0f;
+    public float gracePeriodRemaining { get; private set; } = 0.0f;
     private float distToGround;
     private List<Ball> balls = new List<Ball>();
     private new Rigidbody rigidbody;
-    private GrappleGun gun;
+    public GrappleGun gun { get; private set; }
 
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
@@ -105,6 +105,10 @@ public class CharacterController : MonoBehaviour {
             if (!Grounded) ScoreSystem.UpdateMultiplier(1);
             ScoreSystem.UpdateScore(100);
         }
+    }
+
+    public int GetBallNumber() {
+        return balls.Count;
     }
 
     void OnCollisionEnter(Collision collision) {

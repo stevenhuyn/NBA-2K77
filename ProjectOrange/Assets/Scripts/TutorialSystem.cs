@@ -10,13 +10,20 @@ public class TutorialSystem : MonoBehaviour
     private float updateDelayRemaining = 0.0f;
     private bool updateDelayed = false;
     private GameObject player;
+    private Rigidbody playerRigidbody;
+    private CharacterController playerCharacterController;
 
     enum Step {
         Moving,
         Jumping,
+        Grappling,
         BallCollection,
         BallGrappling,
-        
+        Swinging,
+        Dunking,
+        Score,
+        Multiplier,
+        Completed
     }
 
     private Step step; 
@@ -26,6 +33,8 @@ public class TutorialSystem : MonoBehaviour
         instructionText = this.GetComponent<TextMeshProUGUI>();
         instructionText.alignment = TextAlignmentOptions.Center;
         player = GameObject.FindWithTag("Player");
+        playerRigidbody = player.GetComponent<Rigidbody>();
+        playerCharacterController = player.GetComponent<CharacterController>();
         step = Step.Moving;
         UpdateText();
     }
@@ -43,18 +52,59 @@ public class TutorialSystem : MonoBehaviour
 
         switch(step) {
             case Step.Moving: {
-                Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
-                if (playerVelocity.x != 0 || playerVelocity.z != 0) {
+                Vector3 playerVelocity = playerRigidbody.velocity;
+                if (Mathf.Abs(playerVelocity.x) > 0.1 || Mathf.Abs(playerVelocity.z) > 0.1) {
                     BeginInstructionUpdate(defaultUpdateDelay);
                 }
                 break;
             }
             case Step.Jumping:
             {
-                Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
+                Vector3 playerVelocity = playerRigidbody.velocity;
                 if (playerVelocity.y > 0) {
                     BeginInstructionUpdate(defaultUpdateDelay);
                 }
+                break;
+            }
+            case Step.Grappling:
+            {
+                if (playerCharacterController.gun.Hook) {
+                    BeginInstructionUpdate(defaultUpdateDelay);
+                }
+                break;
+            }
+            case Step.BallCollection:
+            {
+                if (playerCharacterController.GetBallNumber() == 1) {
+                    BeginInstructionUpdate(defaultUpdateDelay);
+                }
+                break;
+            }
+            case Step.BallGrappling:
+            {
+                if (playerCharacterController.GetBallNumber() == 2) {
+                    BeginInstructionUpdate(defaultUpdateDelay);
+                }
+                break;
+            }
+            case Step.Swinging:
+            {
+                if (playerRigidbody.position.z <= -60 && playerRigidbody.position.y <= 20) {
+                    BeginInstructionUpdate(defaultUpdateDelay);
+                }
+                break;
+            }
+            case Step.Dunking:
+            {
+                    if (playerCharacterController.gracePeriodRemaining > 0.0f) {
+                        BeginInstructionUpdate(defaultUpdateDelay);
+                    }
+                    break;
+            }
+            case Step.Score:
+            case Step.Multiplier:
+            {
+                BeginInstructionUpdate(5.0f);
                 break;
             }
         }  
@@ -72,7 +122,28 @@ public class TutorialSystem : MonoBehaviour
                 step = Step.Jumping;
                 break;
             case Step.Jumping:
+                step = Step.Grappling;
+                break;
+            case Step.Grappling:
                 step = Step.BallCollection;
+                break;
+            case Step.BallCollection:
+                step = Step.BallGrappling;
+                break;
+            case Step.BallGrappling:
+                step = Step.Swinging;
+                break;
+            case Step.Swinging:
+                step = Step.Dunking;
+                break;
+            case Step.Dunking:
+                step = Step.Score;
+                break;
+            case Step.Score:
+                step = Step.Multiplier;
+                break;
+            case Step.Multiplier:
+                step = Step.Completed;
                 break;
         }
 
@@ -92,6 +163,34 @@ public class TutorialSystem : MonoBehaviour
             }
             case Step.BallCollection: {
                 instructionText.text = "Touch balls to pick them up";
+                break;
+            }
+            case Step.Grappling: {
+                instructionText.text = "Hold left click to fire your grappling hook";
+                break;
+            }
+            case Step.BallGrappling: {
+                instructionText.text = "Use the grappling hook to pull balls towards you";
+                break;
+            }
+            case Step.Swinging: {
+                instructionText.text = "Swing across to the other platform with your grappling hook";
+                break;
+            }
+            case Step.Dunking: {
+                instructionText.text = "Jump into the hoop to dunk your balls";
+                break;
+            }
+            case Step.Score: {
+                instructionText.text = "Score points for picking up balls, flying into balls and dunking them";
+                break;
+            }
+            case Step.Multiplier: {
+                instructionText.text = "Avoid touching the ground to build up your multiplier";
+                break;
+            }
+            case Step.Completed: {
+                instructionText.text = "When you're ready, hit Enter to return to the main menu";
                 break;
             }
         }
