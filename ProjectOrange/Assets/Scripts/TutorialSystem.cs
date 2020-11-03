@@ -80,7 +80,7 @@ public class TutorialSystem : MonoBehaviour
             }
             case Step.BallCollection:
             {
-                if (playerCharacterController.GetBallNumber() == 1) {
+                if (playerCharacterController.GetBallNumber() >= 1) {
                     BeginInstructionUpdate(defaultUpdateDelay);
                 }
                 break;
@@ -178,7 +178,7 @@ public class TutorialSystem : MonoBehaviour
                 break;
             }
             case Step.Grappling: {
-                instructionText.text = "Hold left click to fire your grappling hook";
+                instructionText.text = "Hold left click to shoot your grappling hook";
                 break;
             }
             case Step.BallGrappling: {
@@ -202,7 +202,7 @@ public class TutorialSystem : MonoBehaviour
                 break;
             }
             case Step.Completed: {
-                instructionText.text = "When you're ready, hit Enter to return to the main menu";
+                instructionText.text = "When you're ready, hit enter to return to the main menu";
                 break;
             }
         }
