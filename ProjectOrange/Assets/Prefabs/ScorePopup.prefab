@@ -169,4 +169,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b885e06ed24eb2842b6a1d100aba7a3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeLength: 120
+  lifeLength: 70
+  score: {fileID: 0}
+  startingVelocity: 0
+  acceleration: 0
+  jerk: 0.015
+  startFadeFrame: 35

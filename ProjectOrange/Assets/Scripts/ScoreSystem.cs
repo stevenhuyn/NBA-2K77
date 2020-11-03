@@ -64,6 +64,7 @@ public class ScoreSystem : MonoBehaviour
 
     static public void UpdateScore(int delta) {
         Transform scorePopup = Instantiate(instance.ScorePopup, instance.gameObject.transform);
+        scorePopup.GetComponent<ScorePopupScript>().score = instance.scoreText.transform;
         scorePopup.GetComponent<TextMeshProUGUI>().text = string.Format("+{0}", delta);
 
         instance.StartCoroutine(instance.UpdateScoreSlowly(delta));
