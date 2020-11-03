@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour {
-    public float shootSpeed = 40, playerPullSpeed = 20, ballPullSpeed = 0.4f, ballAcceleration = 0.1f;
+    public float shootSpeed = 40, playerPullSpeed = 20, playerJerk = 0.1f, ballPullSpeed = 0.4f, ballAcceleration = 0.1f;
     public GrappleGun Gun { get; set; }
     public bool Stuck { get; private set; }
 
@@ -54,7 +54,8 @@ public class GrapplingHook : MonoBehaviour {
         if (Stuck) {
             // Pull on the player until they reach us
             Vector3 dir = (transform.position - Gun.Player.transform.position).normalized;
-            Gun.Player.GetComponent<Rigidbody>().AddForce(dir * playerPullSpeed);
+            float force = playerPullSpeed + framesSinceTaut * playerJerk;
+            Gun.Player.GetComponent<Rigidbody>().AddForce(dir * force);
         } else if (ball) {
             if (ball.Target.HasValue) {
                 // Ball has been picked up by the player
