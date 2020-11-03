@@ -6,14 +6,17 @@ using TMPro;
 public class TutorialSystem : MonoBehaviour
 {
     public TextMeshProUGUI instructionText;
+    public const float defaultUpdateDelay = 0.8f;
+    private float updateDelayRemaining = 0.0f;
+    private bool updateDelayed = false;
     private GameObject player;
 
     enum Step {
         Moving,
         Jumping,
         BallCollection,
-        Swinging,
-        Scoring
+        BallGrappling,
+        
     }
 
     private Step step; 
@@ -24,21 +27,25 @@ public class TutorialSystem : MonoBehaviour
         instructionText.alignment = TextAlignmentOptions.Center;
         player = GameObject.FindWithTag("Player");
         step = Step.Moving;
-        UpdateInstruction();
+        UpdateText();
     }
 
     // Update is called once per frame
-    void Update() {
-        detectProgress();
+    void FixedUpdate() {
+        updateDelayRemaining = Mathf.Max(0.0f, updateDelayRemaining -= Time.deltaTime);
+        if (updateDelayRemaining == 0.0f && updateDelayed) UpdateInstruction();
+        print(updateDelayRemaining);
+        DetectProgress();
     }
 
-    private void detectProgress() {
+    private void DetectProgress() {
+        if (updateDelayRemaining > 0.0f) return;
+
         switch(step) {
             case Step.Moving: {
                 Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
-                if (playerVelocity.x > 0 || playerVelocity.z > 0) {
-                    step = Step.Jumping;
-                    UpdateInstruction();
+                if (playerVelocity.x != 0 || playerVelocity.z != 0) {
+                    BeginInstructionUpdate(defaultUpdateDelay);
                 }
                 break;
             }
@@ -46,15 +53,33 @@ public class TutorialSystem : MonoBehaviour
             {
                 Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
                 if (playerVelocity.y > 0) {
-                    step = Step.BallCollection;
-                    UpdateInstruction();
+                    BeginInstructionUpdate(defaultUpdateDelay);
                 }
                 break;
             }
         }  
     }
 
-    private void UpdateInstruction()
+    private void BeginInstructionUpdate(float delay) {
+        updateDelayRemaining = delay;
+        updateDelayed = true;
+    }
+
+    private void UpdateInstruction() {
+        updateDelayed = false;
+        switch(step) {
+            case Step.Moving:
+                step = Step.Jumping;
+                break;
+            case Step.Jumping:
+                step = Step.BallCollection;
+                break;
+        }
+
+        UpdateText();
+    }
+
+    private void UpdateText()
     {
         switch(step) {
             case Step.Moving: {
@@ -66,7 +91,7 @@ public class TutorialSystem : MonoBehaviour
                 break;
             }
             case Step.BallCollection: {
-                instructionText.text = "Walk to balls to pick them up";
+                instructionText.text = "Touch balls to pick them up";
                 break;
             }
         }
