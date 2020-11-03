@@ -47,7 +47,7 @@ public class CharacterController : MonoBehaviour {
         float maxFovSpeed = 60;
 
         float minFov = 70;
-        float maxFov = 80;
+        float maxFov = 90;
 
         float fovUpdateSpeed = 0.05f;
         
