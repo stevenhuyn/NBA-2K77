@@ -18,7 +18,6 @@ public class CharacterController : MonoBehaviour {
     public float gracePeriodRemaining { get; private set; } = 0.0f;
     public List<Ball> balls {get; private set; } = new List<Ball>();
     public GrappleGun gun { get; private set; }
-
     private float distToGround;
     private new Rigidbody rigidbody;
 
