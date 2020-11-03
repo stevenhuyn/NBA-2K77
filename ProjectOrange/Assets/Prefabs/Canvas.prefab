@@ -552,3 +552,5 @@ MonoBehaviour:
   player: {fileID: 0}
   scoreText: {fileID: 5029389386525954181}
   multiplierText: {fileID: 5029389387421698926}
+  ScorePopup: {fileID: 4954665762649802058, guid: 7c1b34e6aa21722439f5242e33a5c4ca,
+    type: 3}

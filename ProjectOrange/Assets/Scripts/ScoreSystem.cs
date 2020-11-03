@@ -13,6 +13,8 @@ public class ScoreSystem : MonoBehaviour
 
     public TextMeshProUGUI multiplierText;
 
+    public Transform ScorePopup;
+
     private int score = 0;
 
     private int multiplier = 1;
@@ -53,6 +55,7 @@ public class ScoreSystem : MonoBehaviour
     static public void UpdateMultiplier(int delta) {
         instance.multiplier += delta;
         instance.StartCoroutine(instance.PulseText(instance.scoreText));
+        instance.StartCoroutine(instance.PulseText(instance.multiplierText));
     }
 
     static public void ResetMultiplier() {
@@ -60,6 +63,7 @@ public class ScoreSystem : MonoBehaviour
     }
 
     static public void UpdateScore(int delta) {
+        Instantiate(instance.ScorePopup, instance.gameObject.transform);
         instance.StartCoroutine(instance.UpdateScoreSlowly(delta));
         instance.StartCoroutine(instance.PulseText(instance.scoreText));
         instance.StartCoroutine(instance.GlowText(instance.scoreText));
