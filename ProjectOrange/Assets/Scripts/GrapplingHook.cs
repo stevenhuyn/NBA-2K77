@@ -17,12 +17,6 @@ public class GrapplingHook : MonoBehaviour {
     // In physics count
     private int tautAnimationLength = 8;
 
-    private bool isTauting = false;
-    private int framesSinceTaut = 0;
-
-    // In physics count
-    private int tautAnimationLength = 8;
-
     void Start() {
         GetComponent<Rigidbody>().AddForce(transform.up * shootSpeed, ForceMode.Impulse);
         line = gameObject.GetComponent<LineRenderer>();
