@@ -72,6 +72,17 @@ public class ScoreSystem : MonoBehaviour
         instance.StartCoroutine(instance.GlowText(instance.scoreText));
     }
 
+    static public void Dunk(int amount) {
+        instance.StartCoroutine(instance.ProcessDunk(amount));
+    }
+
+    private IEnumerator ProcessDunk(int amount) {
+        for (int i = 0; i < amount; i++) {
+            UpdateScore(300);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     private IEnumerator UpdateScoreSlowly(int delta) {
         for (int i = 0; i < delta; i++) {
             score += instance.multiplier;
