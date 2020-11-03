@@ -73,7 +73,6 @@ public class GrapplingHook : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if (!Stuck && !ball) {
             if (other.CompareTag("Surface")) {
-
                 // Stick into the wall and begin pulling on the player
                 Stuck = true;
                 framesSinceTaut = 0;

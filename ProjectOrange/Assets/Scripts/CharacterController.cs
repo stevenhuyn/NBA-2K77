@@ -8,7 +8,7 @@ public class CharacterController : MonoBehaviour {
     public float
         jumpSpeed = 1.5f, ballHeightDiff = 0.8f,
         groundSpeed = 8, airSpeed = 1.5f,
-        maxGroundSpeed = 10, maxAirSpeed = 50,
+        maxGroundSpeed = 10, maxAirSpeedGrappling = 50, maxAirSpeedNonGrappling = 30,
         brakeStrength = 5,
         groundDrag = 3, airDrag = 0;
     public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
@@ -85,7 +85,10 @@ public class CharacterController : MonoBehaviour {
 
         // Cap movement speed
         float speed = rigidbody.velocity.magnitude;
-        float maxSpeed = Grounded ? maxGroundSpeed : maxAirSpeed;
+        float maxSpeed =
+            Grounded ? maxGroundSpeed
+            : gun.Hook.GetComponent<GrapplingHook>()?.Stuck == true ? maxAirSpeedGrappling
+            : maxAirSpeedNonGrappling;
         if (speed > maxSpeed) {
             // Apply force in reverse direction to slow player down
             float brakeSpeed = speed - maxSpeed;
