@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /* Adapted from: https://github.com/jiankaiwang/FirstPersonController */
 
@@ -41,6 +42,15 @@ public class CharacterController : MonoBehaviour {
             // Jump by adding force to the Rigidbody (so we handle gravity)
             rigidbody.AddForce(jumpSpeed * Vector3.up, ForceMode.Impulse);
         }
+
+        float minFovSpeed = 30;
+        float maxFovSpeed = 60;
+
+        float minFov = 70;
+        float maxFov = 80;
+        
+        float fov = Mathf.Lerp(minFov, maxFov, (rigidbody.velocity.magnitude - minFovSpeed) / (maxFovSpeed - minFovSpeed));
+        Camera.main.fieldOfView = fov;
     }
 
     private void UpdateGrounded() {
