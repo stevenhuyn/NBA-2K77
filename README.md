@@ -80,9 +80,9 @@ Project is created with:
 
 # Shader 1: Rope
 
-We use a shader to add a visual effect to the rope.
-
-more details later
+<p align="center">
+  <img src="Images/RopeShader.png"  width="300" >
+</p>
 
 # Shader 2
 
