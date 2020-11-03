@@ -9,6 +9,9 @@ public class FallingUI : MonoBehaviour {
     public float heightToStartFade = -100;
     public float heightToReset = -300;
 
+    void Start() {
+        character = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
+    }
 
     void Update() {
         UpdateOpacity();
