@@ -122,7 +122,7 @@ public class CharacterController : MonoBehaviour {
             hoop.HandleDunk(balls);
             ExplodeAwayFrom(hoop);
 
-            // ResetHeldBalls();
+            ResetHeldBalls();
             gun.DestroyHook();
             ScoreSystem.UpdateScore(300);
         }
@@ -135,7 +135,8 @@ public class CharacterController : MonoBehaviour {
 
     void ResetHeldBalls() {
         foreach (Ball ball in balls) {
-            ball.Reset();
+            // ball.Reset();
+            Destroy(ball.gameObject);
         }
         balls.Clear();
     }
