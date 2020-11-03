@@ -28,7 +28,7 @@ public class TutorialSystem : MonoBehaviour
         Completed
     }
 
-    private Step step; 
+    private Step step = Step.Welcome; 
 
     // Start is called before the first frame update
     void Start() {   
@@ -37,7 +37,6 @@ public class TutorialSystem : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerRigidbody = player.GetComponent<Rigidbody>();
         playerCharacterController = player.GetComponent<CharacterController>();
-        step = Step.Welcome;
         UpdateText();
     }
 
@@ -48,6 +47,7 @@ public class TutorialSystem : MonoBehaviour
         DetectProgress();
     }
 
+    /** Check success condition to go to the next step */
     private void DetectProgress() {
         if (updateDelayRemaining > 0.0f) return;
 
@@ -80,14 +80,14 @@ public class TutorialSystem : MonoBehaviour
             }
             case Step.BallCollection:
             {
-                if (playerCharacterController.GetBallNumber() >= 1) {
+                if (playerCharacterController.balls.Count >= 1) {
                     BeginInstructionUpdate(defaultUpdateDelay);
                 }
                 break;
             }
             case Step.BallGrappling:
             {
-                if (playerCharacterController.GetBallNumber() == 2) {
+                if (playerCharacterController.balls.Count == 2) {
                     BeginInstructionUpdate(defaultUpdateDelay);
                 }
                 break;
@@ -115,11 +115,13 @@ public class TutorialSystem : MonoBehaviour
         }  
     }
 
+    /** Begin a timer to move to the next instruction */
     private void BeginInstructionUpdate(float delay) {
         updateDelayRemaining = delay;
         updateDelayed = true;
     }
 
+    /** Increment the step enum */
     private void UpdateInstruction() {
         updateDelayed = false;
         switch(step) {
@@ -158,6 +160,7 @@ public class TutorialSystem : MonoBehaviour
         UpdateText();
     }
 
+    /** Update instruction based on current step */
     private void UpdateText()
     {
         switch(step) {

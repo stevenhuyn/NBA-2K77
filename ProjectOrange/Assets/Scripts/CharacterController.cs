@@ -16,10 +16,11 @@ public class CharacterController : MonoBehaviour {
     public bool Grounded { get; private set; }
     public const float gracePeriod = 0.2f;
     public float gracePeriodRemaining { get; private set; } = 0.0f;
-    private float distToGround;
-    private List<Ball> balls = new List<Ball>();
-    private new Rigidbody rigidbody;
+    public List<Ball> balls {get; private set; } = new List<Ball>();
     public GrappleGun gun { get; private set; }
+
+    private float distToGround;
+    private new Rigidbody rigidbody;
 
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
@@ -121,10 +122,6 @@ public class CharacterController : MonoBehaviour {
             if (!Grounded) ScoreSystem.UpdateMultiplier(1);
             ScoreSystem.UpdateScore(100);
         }
-    }
-
-    public int GetBallNumber() {
-        return balls.Count;
     }
 
     void OnCollisionEnter(Collision collision) {
