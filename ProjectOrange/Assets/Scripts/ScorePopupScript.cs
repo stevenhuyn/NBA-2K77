@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Coffee.UIExtensions;
+using TMPro;
 
 public class ScorePopupScript : MonoBehaviour
 {
@@ -23,6 +26,7 @@ public class ScorePopupScript : MonoBehaviour
 
     void FixedUpdate() {
         timeAlive++;
+        transform.GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, 1.0f - (float) timeAlive / lifeLength);
         if (timeAlive >= lifeLength) {
             Destroy(this.gameObject);
         }

@@ -63,7 +63,9 @@ public class ScoreSystem : MonoBehaviour
     }
 
     static public void UpdateScore(int delta) {
-        Instantiate(instance.ScorePopup, instance.gameObject.transform);
+        Transform scorePopup = Instantiate(instance.ScorePopup, instance.gameObject.transform);
+        scorePopup.GetComponent<TextMeshProUGUI>().text = string.Format("+{0}", delta);
+
         instance.StartCoroutine(instance.UpdateScoreSlowly(delta));
         instance.StartCoroutine(instance.PulseText(instance.scoreText));
         instance.StartCoroutine(instance.GlowText(instance.scoreText));
