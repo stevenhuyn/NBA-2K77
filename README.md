@@ -52,17 +52,17 @@ Remember that _"this document"_ should be `well written` and formatted **appropr
 | Student Name 3    | README Format      |  Amazing! |
 
 ## Explanation
-Our game is a first person shooter (FPS) that....
-
-You can use emojis :+1: but do not over use it, we are looking for professional work. If you would not add them in your job, do not use them here! :shipit:
+Our game is a basketball game set in the year 2077. In the future, only slam dunks are allowed and you are equipped with a grappling hook. Swing and dunk your way through multiple handcrafted levels set in a cyberpunk-esque universe. 
 
 # How to Play
+WASD for movement
+R to reset
+Left click to shoot out a grappling hook
 
+Objective: ?? 
 ## Technologies
 Project is created with:
 * Unity 2019.4.3f1
-* Ipsum version: 2.33
-* Ament library version: 999
 
 ## Modelling Objects and Entities
 
@@ -72,13 +72,45 @@ Project is created with:
 
 ## Shaders
 
-# Shader 1
+# Shader 1: Rope
+
+We use a shader to add a visual effect to the rope.
+
+more details later
 
 # Shader 2
 
 # Special Effects
 
 ## Querying and Observational Methods
+
+### Demographics
+- 21 Male Student
+- 21 Male Student
+- 21 Male Unemployed
+- 12 Male Student
+- 18 Male Uni Student
+
+### Methodology
+We used two Querying/Observational methods:
+- Think Aloud
+- Post Walkthrough Interview
+
+The post walkthrough interview questions we used were:
+- Did the game feel too fast or too slow? How was the pace?
+- Was the game easy to understand?
+- What pain points did you encounter during the game?
+  - Aiming?
+  - Movement?
+  - Ball dunking?
+Would you change any other aspect of the game?
+  - Visual/Clarity
+  - Gameplay
+What new features would you like? 
+How do the controls compare to other games you’ve played?
+Do you have any other thoughts you would like to discuss?
+
+
 
 ## Changes after Evaluation
 
