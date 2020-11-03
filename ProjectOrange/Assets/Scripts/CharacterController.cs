@@ -47,19 +47,20 @@ public class CharacterController : MonoBehaviour {
         float maxFovSpeed = 60;
 
         float minFov = 70;
-        float maxFov = 80;
+        float maxFov = 90;
 
         float fovUpdateSpeed = 0.05f;
         
         float targetFov = Mathf.Lerp(minFov, maxFov, (rigidbody.velocity.magnitude - minFovSpeed) / (maxFovSpeed - minFovSpeed));
         Camera.main.fieldOfView = Mathf.MoveTowards(Camera.main.fieldOfView, targetFov, fovUpdateSpeed);
+
     }
 
     private void UpdateGrounded() {
         // Draw a short downwards ray
         RaycastHit hit;
         bool didCollide = Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround + 0.1f);
-        
+
         // Case 1: Within the dunking grace period
         if (gracePeriodRemaining > 0.0f) {
             Grounded = false;
@@ -129,6 +130,7 @@ public class CharacterController : MonoBehaviour {
     /** Remove balls and explode away from the hoop */
     void OnDunk(GameObject collisionObject) {
         if (IsHoop(collisionObject) && balls.Count > 0) {
+            ScoreSystem.Dunk(balls.Count);
             // Start a grace period to stop the multiplier resetting
             gracePeriodRemaining = gracePeriod;
 
@@ -139,7 +141,7 @@ public class CharacterController : MonoBehaviour {
 
             ResetHeldBalls();
             gun.DestroyHook();
-            ScoreSystem.UpdateScore(300);
+
         }
     }
 
