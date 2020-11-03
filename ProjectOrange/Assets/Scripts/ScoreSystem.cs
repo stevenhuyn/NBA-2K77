@@ -8,17 +8,13 @@ using UnityEngine.UI;
 public class ScoreSystem : MonoBehaviour
 {
     static public ScoreSystem instance;
-    public Transform player;
     public TextMeshProUGUI scoreText;
-
     public TextMeshProUGUI multiplierText;
 
+    private GameObject player;
     private int score = 0;
-
     private int multiplier = 1;
-
     private int frameCounter = 0;
-
     private Color scoreColor;
 
     // Called when an instance awakes in the game
@@ -29,7 +25,7 @@ public class ScoreSystem : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
