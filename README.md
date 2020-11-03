@@ -94,7 +94,7 @@ more details later
 
 - 21 Male Student
 - 21 Male Student
-- 21 Male Unemployed
+- 21 Male Student
 - 12 Male Student
 - 18 Male Uni Student
 
