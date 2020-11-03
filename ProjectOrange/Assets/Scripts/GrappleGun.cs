@@ -5,14 +5,17 @@ using UnityEngine.UI;
 
 public class GrappleGun : MonoBehaviour {
     public GameObject grapplingHookPrefab;
+    public float rotationSpeed = 2;
     public Color crosshairNormalColor = new Color(0.6352941f, 0.6352941f, 0.6352941f);
     public Color crosshairTargetingColor = new Color(0.9716981f, 0.3745972f, 0.06875221f);
     public float aimAssistSize = 10f;
     public float aimAssistMaxDegrees = 10f;
+    
     public CharacterController Player { get; private set; }
     public GameObject Hook { get; private set; }
 
     private Image crosshairImage;
+    private Quaternion targetRotation;
 
     void Start() {
         Player = GetComponentInParent<CharacterController>();
@@ -22,10 +25,10 @@ public class GrappleGun : MonoBehaviour {
     void Update() {
         // Check if we're aiming at a ball
         RaycastHit? hitBall = null;
-        foreach (RaycastHit hit in Physics.SphereCastAll(Player.transform.position, aimAssistSize, transform.up)) {
+        foreach (RaycastHit hit in Physics.SphereCastAll(Player.transform.position, aimAssistSize, Camera.main.transform.forward)) {
             if (hit.transform.CompareTag("Ball")) {
                 // Rotate the maximum amount of degrees towards the target ball and check for line of sight
-                Vector3 shiftedDir = Vector3.RotateTowards(transform.up, hit.transform.position - Player.transform.position, Mathf.Deg2Rad * aimAssistMaxDegrees, 0);
+                Vector3 shiftedDir = Vector3.RotateTowards(Camera.main.transform.forward, hit.transform.position - Player.transform.position, Mathf.Deg2Rad * aimAssistMaxDegrees, 0);
                 RaycastHit checkHit;
                 if (Physics.Raycast(Player.transform.position, shiftedDir, out checkHit)
                     && checkHit.transform.CompareTag("Ball")) {
@@ -54,15 +57,25 @@ public class GrappleGun : MonoBehaviour {
                 Hook.transform.Rotate(Vector3.right, 90);
             } else {
                 // Aim normally
-                Hook.transform.rotation = transform.rotation;
+                Hook.transform.rotation = Camera.main.transform.rotation;
+                Hook.transform.Rotate(Vector3.right, 90);
             }
         } else if (Input.GetKeyUp(KeyCode.Mouse0)) {
             // Destroy the Hook if left click is released
             DestroyHook();
         }
-        if (!Hook) {
+        if (Hook) {
+            targetRotation = Quaternion.LookRotation(Hook.transform.position - transform.position);
+        } else {
             Player.GetComponent<Rigidbody>().useGravity = true;
+            targetRotation = Camera.main.transform.rotation;
         }
+
+        // Apply the rotation
+        // Have to rotate 90 degrees to the right because we use UP us the main direction, not FORWARD
+        transform.Rotate(-Vector3.right, 90);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed);
+        transform.Rotate(Vector3.right, 90);
     }
 
     public void DestroyHook() {
