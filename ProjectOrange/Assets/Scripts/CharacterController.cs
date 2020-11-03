@@ -47,7 +47,7 @@ public class CharacterController : MonoBehaviour {
         // Draw a short downwards ray
         RaycastHit hit;
         bool didCollide = Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround + 0.1f);
-        
+
         // Case 1: Within the dunking grace period
         if (gracePeriodRemaining > 0.0f) {
             Grounded = false;
@@ -122,7 +122,7 @@ public class CharacterController : MonoBehaviour {
             hoop.HandleDunk(balls);
             ExplodeAwayFrom(hoop);
 
-            ResetHeldBalls();
+            // ResetHeldBalls();
             gun.DestroyHook();
             ScoreSystem.UpdateScore(300);
         }
