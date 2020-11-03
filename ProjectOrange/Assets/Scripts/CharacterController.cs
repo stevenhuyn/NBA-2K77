@@ -65,7 +65,7 @@ public class CharacterController : MonoBehaviour {
         };
 
         // Case 2: Just collected a ball whilst standing on the hoop
-        if (didCollide && isHoop(hit.transform.gameObject) && (balls.Count > 0)) {
+        if (didCollide && IsHoop(hit.transform.gameObject) && (balls.Count > 0)) {
             Grounded = false;
             OnDunk(hit.transform.gameObject);
             return;
@@ -95,10 +95,17 @@ public class CharacterController : MonoBehaviour {
 
         // Cap movement speed
         float speed = rigidbody.velocity.magnitude;
-        float maxSpeed =
-            Grounded ? maxGroundSpeed
-            : gun.Hook.GetComponent<GrapplingHook>()?.Stuck == true ? maxAirSpeedGrappling
-            : maxAirSpeedNonGrappling;
+        float maxSpeed;
+        if (Grounded) {
+            maxSpeed = maxGroundSpeed;
+        } else {
+            var hook = gun.Hook;
+            if (hook && hook.GetComponent<GrapplingHook>().Stuck) {
+                maxSpeed = maxAirSpeedGrappling;
+            } else {
+                maxSpeed = maxAirSpeedNonGrappling;
+            }
+        }
         if (speed > maxSpeed) {
             // Apply force in reverse direction to slow player down
             float brakeSpeed = speed - maxSpeed;
@@ -126,7 +133,7 @@ public class CharacterController : MonoBehaviour {
 
     /** Remove balls and explode away from the hoop */
     void OnDunk(GameObject collisionObject) {
-        if (isHoop(collisionObject) && balls.Count > 0) {
+        if (IsHoop(collisionObject) && balls.Count > 0) {
             // Start a grace period to stop the multiplier resetting
             gracePeriodRemaining = gracePeriod;
 
@@ -141,7 +148,7 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
-    bool isHoop(GameObject gameObject) {
+    bool IsHoop(GameObject gameObject) {
         if (gameObject == null) return false;
         return (gameObject.name == "Torus" || gameObject.name == "Hoop Inside");
     }
