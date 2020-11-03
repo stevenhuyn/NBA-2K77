@@ -18,8 +18,7 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.R)) {
-            Scene scene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(scene.name, LoadSceneMode.Single);
+            ResetLevel();
         }
 
         if(Input.GetKeyDown(KeyCode.N)) {
@@ -35,5 +34,9 @@ public class LevelManager : MonoBehaviour
 
     public static string getLevelName() {
         return String.Format("lvl{0}", level);
+    }
+    public static void ResetLevel() {
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name, LoadSceneMode.Single);
     }
 }
