@@ -52,19 +52,6 @@ public class CharacterController : MonoBehaviour {
         float fov = Mathf.Lerp(minFov, maxFov, (rigidbody.velocity.magnitude - minFovSpeed) / (maxFovSpeed - minFovSpeed));
         Camera.main.fieldOfView = fov;
 
-        CheckFalling();
-    }
-
-    void CheckFalling() {
-        float heightToStartFade = -100;
-        float heightToReset = -300;
-        float opacityToSet = Mathf.Clamp(Mathf.InverseLerp(heightToStartFade, heightToReset, transform.position.y), 0, 1);
-
-        FallingUI.Get().UpdateOpacity(opacityToSet);
-
-        if (transform.position.y < heightToReset) {
-            LevelManager.ResetLevel();
-        }
     }
 
     private void UpdateGrounded() {
