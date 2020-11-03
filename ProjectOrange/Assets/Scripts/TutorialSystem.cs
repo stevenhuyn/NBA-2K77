@@ -12,8 +12,10 @@ public class TutorialSystem : MonoBehaviour
     private GameObject player;
     private Rigidbody playerRigidbody;
     private CharacterController playerCharacterController;
+    private const float eps = 0.2f;
 
     enum Step {
+        Welcome,
         Moving,
         Jumping,
         Grappling,
@@ -35,7 +37,7 @@ public class TutorialSystem : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerRigidbody = player.GetComponent<Rigidbody>();
         playerCharacterController = player.GetComponent<CharacterController>();
-        step = Step.Moving;
+        step = Step.Welcome;
         UpdateText();
     }
 
@@ -43,7 +45,6 @@ public class TutorialSystem : MonoBehaviour
     void FixedUpdate() {
         updateDelayRemaining = Mathf.Max(0.0f, updateDelayRemaining -= Time.deltaTime);
         if (updateDelayRemaining == 0.0f && updateDelayed) UpdateInstruction();
-        print(updateDelayRemaining);
         DetectProgress();
     }
 
@@ -51,9 +52,13 @@ public class TutorialSystem : MonoBehaviour
         if (updateDelayRemaining > 0.0f) return;
 
         switch(step) {
+            case Step.Welcome: {
+                BeginInstructionUpdate(1.5f);
+                break;
+            }
             case Step.Moving: {
                 Vector3 playerVelocity = playerRigidbody.velocity;
-                if (Mathf.Abs(playerVelocity.x) > 0.1 || Mathf.Abs(playerVelocity.z) > 0.1) {
+                if (Mathf.Abs(playerVelocity.x) > eps || Mathf.Abs(playerVelocity.z) > eps) {
                     BeginInstructionUpdate(defaultUpdateDelay);
                 }
                 break;
@@ -61,7 +66,7 @@ public class TutorialSystem : MonoBehaviour
             case Step.Jumping:
             {
                 Vector3 playerVelocity = playerRigidbody.velocity;
-                if (playerVelocity.y > 0.1) {
+                if (playerVelocity.y > eps) {
                     BeginInstructionUpdate(defaultUpdateDelay);
                 }
                 break;
@@ -118,6 +123,9 @@ public class TutorialSystem : MonoBehaviour
     private void UpdateInstruction() {
         updateDelayed = false;
         switch(step) {
+            case Step.Welcome:
+                step = Step.Moving;
+                break;
             case Step.Moving:
                 step = Step.Jumping;
                 break;
@@ -153,6 +161,10 @@ public class TutorialSystem : MonoBehaviour
     private void UpdateText()
     {
         switch(step) {
+            case Step.Welcome: {
+                instructionText.text = "Welcome, athlete!";
+                break;
+            }
             case Step.Moving: {
                 instructionText.text = "WASD to move";
                 break;
