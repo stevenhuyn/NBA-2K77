@@ -61,7 +61,7 @@ public class TutorialSystem : MonoBehaviour
             case Step.Jumping:
             {
                 Vector3 playerVelocity = playerRigidbody.velocity;
-                if (Mathf.Abs(playerVelocity.y) > 0.1) {
+                if (playerVelocity.y > 0.1) {
                     BeginInstructionUpdate(defaultUpdateDelay);
                 }
                 break;
