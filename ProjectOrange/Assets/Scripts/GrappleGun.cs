@@ -48,7 +48,7 @@ public class GrappleGun : MonoBehaviour {
             DestroyHook();
             Hook = Instantiate(grapplingHookPrefab);
             Hook.GetComponent<GrapplingHook>().Gun = this;
-            Hook.transform.position = Player.transform.position;
+            Hook.transform.position = Player.transform.position + Player.transform.forward * 0.5f;
             
             if (hitBall.HasValue) {
                 // Use aim assist to aim towards the ball
