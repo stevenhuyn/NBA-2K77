@@ -12,12 +12,14 @@ public class GrapplingHook : MonoBehaviour {
     private float ballSpeed;
     private Ball ball = null;
     private LineRenderer line = null;
-
-    private bool isTauting = false;
     private int framesSinceTaut = 0;
 
     // In physics count
     private int tautAnimationLength = 8;
+
+    // To attach the rope to the back of the hook
+    // Hardcoded sorry
+    private float hookOffset = 0.65f;
 
     void Start() {
         GetComponent<Rigidbody>().AddForce(transform.up * shootSpeed, ForceMode.Impulse);
@@ -31,7 +33,7 @@ public class GrapplingHook : MonoBehaviour {
         Vector3[] pathNodes = new Vector3[lineSegments + 1];
         line.positionCount = lineSegments + 1;
 
-        Vector3 direction = transform.position - Gun.transform.position;
+        Vector3 direction = (transform.position - hookOffset*transform.up) - Gun.transform.position;
         for (int i = 0; i <= lineSegments; i++) {
             pathNodes[i] = Gun.transform.position + (direction * ((float) i/lineSegments));
         }
@@ -41,7 +43,7 @@ public class GrapplingHook : MonoBehaviour {
         //Update reference vectors
         line.material.SetVector("_Up", Camera.main.transform.up);
         line.material.SetVector("_GunLocation", Gun.transform.position);
-        line.material.SetVector("_HookLocation", transform.position);
+        line.material.SetVector("_HookLocation", transform.position - hookOffset*transform.up);
 
         if (Stuck || ball){
             line.material.SetFloat("_Amplitude", Mathf.Lerp(1, 0, (float) framesSinceTaut / tautAnimationLength));
