@@ -95,17 +95,10 @@ public class CharacterController : MonoBehaviour {
 
         // Cap movement speed
         float speed = rigidbody.velocity.magnitude;
-        float maxSpeed;
-        if (Grounded) {
-            maxSpeed = maxGroundSpeed;
-        } else {
-            var hook = gun.Hook;
-            if (hook && hook.GetComponent<GrapplingHook>().Stuck) {
-                maxSpeed = maxAirSpeedGrappling;
-            } else {
-                maxSpeed = maxAirSpeedNonGrappling;
-            }
-        }
+        float maxSpeed =
+            Grounded ? maxGroundSpeed
+            : IsPullingPlayer() ? maxAirSpeedGrappling
+            : maxAirSpeedNonGrappling;
         if (speed > maxSpeed) {
             // Apply force in reverse direction to slow player down
             float brakeSpeed = speed - maxSpeed;
