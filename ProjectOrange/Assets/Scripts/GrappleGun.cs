@@ -23,21 +23,25 @@ public class GrappleGun : MonoBehaviour {
     }
 
     void Update() {
-        // Check if we're aiming at a ball
-        RaycastHit? hitBall = null;
-        foreach (RaycastHit hit in Physics.SphereCastAll(Player.transform.position, aimAssistSize, Camera.main.transform.forward)) {
-            if (hit.transform.CompareTag("Ball")) {
+        // Check if we're aiming at a ball or hoop
+        RaycastHit? targetHit = null;
+        var sphereHits = Physics.SphereCastAll(Player.transform.position, aimAssistSize, Camera.main.transform.forward);
+        foreach (RaycastHit hit in sphereHits) {
+            if (hit.transform.CompareTag("Ball") || HoopController.IsHoop(hit.transform.gameObject)) {
                 // Rotate the maximum amount of degrees towards the target ball and check for line of sight
-                Vector3 shiftedDir = Vector3.RotateTowards(Camera.main.transform.forward, hit.transform.position - Player.transform.position, Mathf.Deg2Rad * aimAssistMaxDegrees, 0);
+                Vector3 shiftedDir = Vector3.RotateTowards(
+                    Camera.main.transform.forward, hit.transform.position - Player.transform.position,
+                    Mathf.Deg2Rad * aimAssistMaxDegrees,
+                    0);
                 RaycastHit checkHit;
                 if (Physics.Raycast(Player.transform.position, shiftedDir, out checkHit)
-                    && checkHit.transform.CompareTag("Ball")) {
-                    hitBall = hit;
+                    && checkHit.transform.CompareTag("Ball") || HoopController.IsHoop(hit.transform.gameObject)) {
+                    targetHit = hit;
                     break;
                 }
             }
         }
-        if (hitBall.HasValue) {
+        if (targetHit.HasValue) {
             crosshairImage.color = crosshairTargetingColor;
         } else {
             crosshairImage.color = crosshairNormalColor;
@@ -50,10 +54,10 @@ public class GrappleGun : MonoBehaviour {
             Hook.GetComponent<GrapplingHook>().Gun = this;
             Hook.transform.position = Player.transform.position + Player.transform.forward * 0.5f;
             
-            if (hitBall.HasValue) {
+            if (targetHit.HasValue) {
                 // Use aim assist to aim towards the ball
                 Hook.GetComponent<LineRenderer>().endColor = Color.red;
-                Hook.transform.LookAt(hitBall.Value.transform);
+                Hook.transform.LookAt(targetHit.Value.transform);
                 Hook.transform.Rotate(Vector3.right, 90);
             } else {
                 // Aim normally
