@@ -283,7 +283,7 @@ MonoBehaviour:
   amplitude: 0.5
   speed: 9.3
   waveLength: 27
-  radius: 0.55
+  radius: 0.53
   radiusVertices: 30
   rings: 1
   material: {fileID: 2100000, guid: a8a7f823a1aa4684ea39a28989c4de0c, type: 2}

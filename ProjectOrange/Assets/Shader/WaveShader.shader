@@ -114,7 +114,7 @@ Shader "Unlit/WaveShader"
 				//float colorVal = (v.color.r + v.color.g + v.color.b) / 3;
 				float h = clamp(v.vertex.y, -_Amplitude * 3, _Amplitude * 3);
 				float c = clamp((v.vertex.y + _Amplitude * 3) / (2 * _Amplitude * 3), 0, 1);
-				float3 base_col = float3(0.25, 0.25, 0.25); // 255, 150, 52 => 1, 0.59, 0.2
+				float3 base_col = float3(0.5, 0.5, 0.5); // 255, 150, 52 => 1, 0.59, 0.2
 				o.color.rgb = lerp(base_col * 0.5, base_col, c);
 				o.color.a = 1;
 
@@ -129,9 +129,7 @@ Shader "Unlit/WaveShader"
 			// Implementation of the fragment shader
 			fixed4 frag(vertOut v) : SV_Target
 			{
-				return v.color;
-
-				/*// Our interpolated normal might not be of length 1
+				// Our interpolated normal might not be of length 1
 				float3 interpNormal = normalize(v.worldNormal);
 
 				// Calculate ambient RGB intensities
@@ -163,7 +161,7 @@ Shader "Unlit/WaveShader"
 				returnColor.rgb = amb.rgb + dif.rgb + spe.rgb;
 				returnColor.a = v.color.a;
 
-				return returnColor;*/
+				return returnColor;
 			}
 			ENDCG
 		}
