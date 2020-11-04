@@ -549,8 +549,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d477ff1d7cb65046ac5987ea76cfa44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   scoreText: {fileID: 5029389386525954181}
   multiplierText: {fileID: 5029389387421698926}
   ScorePopup: {fileID: 4954665762649802058, guid: 7c1b34e6aa21722439f5242e33a5c4ca,
+    type: 3}
+  MessagePopup: {fileID: 4496667187214844221, guid: 98c30960753edda4b80b0a68f55c529d,
     type: 3}

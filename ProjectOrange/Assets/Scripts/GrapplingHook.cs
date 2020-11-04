@@ -58,6 +58,8 @@ public class GrapplingHook : MonoBehaviour {
             Vector3 dir = (transform.position - Gun.Player.transform.position).normalized;
             float force = playerPullSpeed + framesSinceTaut * playerJerk;
             Gun.Player.GetComponent<Rigidbody>().AddForce(dir * force);
+            Gun.Player.GetComponent<Rigidbody>().MovePosition(Gun.Player.transform.position + 0.1f * dir);
+
         } else if (ball) {
             if (ball.Target.HasValue) {
                 // Ball has been picked up by the player
