@@ -66,7 +66,7 @@ public class TutorialSystem : MonoBehaviour
             case Step.Jumping:
             {
                 Vector3 playerVelocity = playerRigidbody.velocity;
-                if (playerVelocity.y > eps) {
+                if (Input.GetKeyDown("space")) {
                     BeginInstructionUpdate(defaultUpdateDelay);
                 }
                 break;
