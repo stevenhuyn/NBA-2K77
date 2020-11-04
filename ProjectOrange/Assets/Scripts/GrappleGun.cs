@@ -30,12 +30,14 @@ public class GrappleGun : MonoBehaviour {
             if (hit.transform.CompareTag("Ball") || HoopController.IsHoop(hit.transform.gameObject)) {
                 // Rotate the maximum amount of degrees towards the target ball and check for line of sight
                 Vector3 shiftedDir = Vector3.RotateTowards(
-                    Camera.main.transform.forward, hit.transform.position - Player.transform.position,
+                    Camera.main.transform.forward,
+                    hit.transform.position - Player.transform.position,
                     Mathf.Deg2Rad * aimAssistMaxDegrees,
                     0);
                 RaycastHit checkHit;
                 if (Physics.Raycast(Player.transform.position, shiftedDir, out checkHit)
-                    && checkHit.transform.CompareTag("Ball") || HoopController.IsHoop(hit.transform.gameObject)) {
+                    && (checkHit.transform.CompareTag("Ball")
+                        || HoopController.IsHoop(checkHit.transform.gameObject))) {
                     targetHit = hit;
                     break;
                 }
