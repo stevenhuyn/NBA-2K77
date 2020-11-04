@@ -17,7 +17,7 @@ public class TimerSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        time = 25;
+        time = 10;
         InvokeRepeating("Decement", 0, granularity);
     }
 
@@ -25,6 +25,11 @@ public class TimerSystem : MonoBehaviour
         gameObject.GetComponent<TextMeshProUGUI>().text = string.Format("{0:0.00}", time);
         if (time <= 20) {
             gameObject.GetComponent<TextMeshProUGUI>().color = Color.red;
+        }
+
+        if (time <= 0) {
+            CancelInvoke();
+            time = 0;
         }
     }
 
