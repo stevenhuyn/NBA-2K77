@@ -30,48 +30,6 @@ public class WaveScript : MonoBehaviour {
         meshRenderer.material.SetFloat("_Wavelength", waveLength);
     }
 
-    /*private Mesh CreateMesh() {
-        // Create a circular mesh
-        Mesh m = new Mesh();
-        m.name = "WaveCircle";
-        var vertices = new List<Vector3>();
-        var colors = new List<Color>();
-        var triangles = new List<int>();
-        Color currentColor = color;
-        currentColor.a = 0.7f;
-
-        // Add origin
-        Vector3 origin = Vector3.zero;
-        vertices.Add(origin);
-        colors.Add(currentColor);
-
-        for (int i = 0; i < radiusVertices; i++) {
-            float angle = i / radiusVertices * 2 * Mathf.PI;
-            Vector3 v = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle));
-            vertices.Add(v);
-
-            float c = currentColor.r + Random.Range(-0.1f, 0.1f);
-            currentColor = new Color(c, c, c);
-            colors.Add(currentColor);
-        }
-
-        /*for (int i = 1; i < radiusVertices; i++) {
-            triangles.Add(i);
-            triangles.Add(i + 1);
-            triangles.Add(0);
-        }*/
-
-        /*triangles.Add(radiusVertices);
-        triangles.Add(1);
-        triangles.Add(0);
-
-        m.vertices = vertices.ToArray();
-        m.colors = colors.ToArray();
-        m.triangles = triangles.ToArray();
-
-        return m;
-    }*/
-
     Mesh CreateMesh() {
         // Adapted from Workshop 2 Cone Mesh work
 
@@ -92,7 +50,7 @@ public class WaveScript : MonoBehaviour {
         }
 
         // Define the vertex colours
-        var colors = generateColors(vertices);
+        //var colors = generateColors(vertices);
 
         // Automatically define the triangles based on the number of vertices
         var triangles = new int[radiusVertices * rings * 3];
@@ -107,20 +65,18 @@ public class WaveScript : MonoBehaviour {
             triangles[3*j+1] = j + 1;
             triangles[3*j+2] = (r - 1) * radiusVertices + 1;
         }
-        Debug.Log(string.Join(", ", vertices));
-        Debug.Log(string.Join(", ", triangles));
 
         m.vertices = vertices;
-        m.colors = colors;
+        //m.colors = colors;
         m.triangles = triangles;
 
         return m;
     }
 
-    void Update() {
+    /*void Update() {
         var mesh = GetComponent<MeshFilter>().mesh;
         mesh.colors = generateColors(mesh.vertices);
-    }
+    }*/
 
     Color[] generateColors(Vector3[] vertices) {
         var colors = new Color[radiusVertices * rings + 1];
@@ -128,7 +84,7 @@ public class WaveScript : MonoBehaviour {
         for (int r = 1; r <= rings; r++) {
             for (int i = 1; i <= radiusVertices; i++) {
                 colors[i] = Random.ColorHSV(0, 1, 0, 0, 0.2f, 0.8f);
-                colors[i].a = 0f;
+                colors[i].a = 0.7f;
             }
         }
         return colors;

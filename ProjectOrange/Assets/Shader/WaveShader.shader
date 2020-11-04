@@ -111,11 +111,12 @@ Shader "Unlit/WaveShader"
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				
 				// Update the colors (in grayscale) based on vertex heights
-				float colorVal = (v.color.r + v.color.g + v.color.b) / 3;
+				//float colorVal = (v.color.r + v.color.g + v.color.b) / 3;
 				float h = clamp(v.vertex.y, -_Amplitude * 3, _Amplitude * 3);
-				float h_col = clamp((v.vertex.y + _Amplitude * 3) / (2 * _Amplitude * 3), 0, 1);
-				float c = (colorVal + h_col) / 2; 
-				o.color = fixed4(c, c, c, v.color.a);
+				float c = clamp((v.vertex.y + _Amplitude * 3) / (2 * _Amplitude * 3), 0, 1);
+				float3 base_col = float3(0.25, 0.25, 0.25); // 255, 150, 52 => 1, 0.59, 0.2
+				o.color.rgb = lerp(base_col * 0.5, base_col, c);
+				o.color.a = 1;
 
 				// Pass out the world vertex position and world normal to be interpolated
 				// in the fragment shader (and utilised)
