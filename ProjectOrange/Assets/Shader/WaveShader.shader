@@ -67,14 +67,27 @@ Shader "Unlit/WaveShader"
 			{
 				float4 vertex : SV_POSITION;
 				float4 color : COLOR;
-				float4 worldVertex : TEXCOORD0;
-				float3 worldNormal : TEXCOORD1;
+				//float4 worldVertex : TEXCOORD0;
+				//float3 worldNormal : TEXCOORD1;
 			};
 
 			// Implementation of the vertex shader
 			vertOut vert(vertIn v)
 			{
+				float d = length(float2(v.vertex.x, v.vertex.z));
+				float h = sin(d / _Wavelength * _Time.x * _Speed);
+				v.vertex.y += _Amplitude * h;
+
+
 				vertOut o;
+				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				float min_c = 0.5, max_c = 1.2;
+				float c = (h + 1 + min_c) / 2 * max_c;
+				float3 base_col = float3(1, 0.59, 0.2);
+				o.color.rgb = c * base_col;
+				return o;
+
+				/*vertOut o;
 				float3 p = v.vertex.xyz;
 
 				float3 tangent;
@@ -123,13 +136,14 @@ Shader "Unlit/WaveShader"
 				o.worldVertex = worldVertex;
 				o.worldNormal = worldNormal;
 
-				return o;
+				return o;*/
 			}
 
 			// Implementation of the fragment shader
 			fixed4 frag(vertOut v) : SV_Target
 			{
-				// Our interpolated normal might not be of length 1
+				return v.color;
+				/*// Our interpolated normal might not be of length 1
 				float3 interpNormal = normalize(v.worldNormal);
 
 				// Calculate ambient RGB intensities
@@ -161,7 +175,7 @@ Shader "Unlit/WaveShader"
 				returnColor.rgb = amb.rgb + dif.rgb + spe.rgb;
 				returnColor.a = v.color.a;
 
-				return returnColor;
+				return returnColor;*/
 			}
 			ENDCG
 		}
