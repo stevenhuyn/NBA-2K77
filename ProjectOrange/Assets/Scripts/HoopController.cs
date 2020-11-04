@@ -5,6 +5,8 @@ using UnityEngine;
 public class HoopController : MonoBehaviour {
     public new ParticleSystem particleSystem;
     public AudioClip explosion;
+    public bool disabled = false;
+
     public void HandleDunk(List<Ball> balls) {
         ParticleSystem particles;
         Vector3 particlePosition = gameObject.transform.position;
@@ -18,13 +20,12 @@ public class HoopController : MonoBehaviour {
     }
 
     void DeactivateHoop() {
-        // We'll probably need some flag here at some point so the point system can 
-        // adjust the score accordingly 
         Transform torus = transform.Find("Torus");
         Material mat = torus.GetComponent<Renderer>().material;
         mat.DisableKeyword("_EMISSION");
+        disabled = true;
     }
-    
+
     public static bool IsHoop(GameObject obj) {
         return obj && (obj.name == "Torus" || obj.name == "Hoop Inside");
     }
