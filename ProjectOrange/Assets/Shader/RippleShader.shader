@@ -7,6 +7,7 @@ Shader "Unlit/RippleShader"
 		_Amplitude("Amplitude of wave", Float) = 0.8
 		_Speed("Speed", Float) = 0.7
 		_Wavelength("Wavelength", Float) = 7
+		_Color("Color", Color) = (1, 0.59, 0.2)
 	}
 	SubShader
 	{
@@ -23,6 +24,7 @@ Shader "Unlit/RippleShader"
 			float _Amplitude;
 			float _Wavelength;
 			float _Speed;
+			float3 _Color;
 
 			struct vertIn
 			{
@@ -46,10 +48,9 @@ Shader "Unlit/RippleShader"
 
 				vertOut o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
-				float min_c = 0.5, max_c = 1.2;
+				float min_c = 0.5, max_c = 1.1;
 				float c = (h + 1 + min_c) / 2 * max_c;
-				float3 base_col = float3(1, 0.59, 0.2);
-				o.color.rgb = c * base_col;
+				o.color.rgb = c * _Color;
 				return o;
 			}
 

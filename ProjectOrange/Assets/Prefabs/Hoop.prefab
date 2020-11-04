@@ -282,9 +282,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1803d03eada8d4941805b1890c2474b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amplitude: 3
+  amplitude: 2
   speed: 1
   wavelength: 0.005
+  color: {r: 1, g: 0.51640856, b: 0.23113209, a: 1}
 --- !u!33 &1786363879123293265
 MeshFilter:
   m_ObjectHideFlags: 0
