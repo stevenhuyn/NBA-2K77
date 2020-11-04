@@ -122,17 +122,18 @@ Shader "Unlit/WaveShader"
 			// Implementation of the fragment shader
 			fixed4 frag(vertOut v) : SV_Target
 			{
-				// Our interpolated normal might not be of length 1
+				return v.color;
+				/*// Our interpolated normal might not be of length 1
 				float3 interpNormal = normalize(v.worldNormal);
 
 				// Calculate ambient RGB intensities
-				float Ka = 0.8;
+				float Ka = 2;
 				float3 amb = v.color.rgb * UNITY_LIGHTMODEL_AMBIENT.rgb * Ka;
 
 				// Calculate diffuse RBG reflections, we save the results of L.N because we will use it again
 				// (when calculating the reflected ray in our specular component)
 				float fAtt = 1;
-				float Kd = 1.3;
+				float Kd = 1.5;
 				float3 L = normalize(_PointLightPosition - v.worldVertex.xyz);
 				float LdotN = dot(L, interpNormal);
 				float3 dif = fAtt * _PointLightColor.rgb * Kd * v.color.rgb * saturate(LdotN);
@@ -154,7 +155,7 @@ Shader "Unlit/WaveShader"
 				returnColor.rgb = amb.rgb + dif.rgb + spe.rgb;
 				returnColor.a = v.color.a;
 
-				return returnColor;
+				return returnColor;*/
 			}
 			ENDCG
 		}

@@ -6,7 +6,9 @@ public class WaveScript : MonoBehaviour {
     public float amplitude = 0.05f;
     public float speed = 9.3f;
     public float waveLength = 27;
+    public float radius = 3;
     public int radiusVertices = 5;
+    public int rings = 2;
     public Material material;
 
     private Light pointLight;
@@ -78,36 +80,44 @@ public class WaveScript : MonoBehaviour {
 
         // Define the vertices. These are the "points" in 3D space that allow us to
         // construct 3D geometry (by connecting groups of 3 points into triangles).
-        var vertices = new Vector3[radiusVertices + 1];
+        var vertices = new Vector3[radiusVertices * rings + 1];
         vertices[0] = Vector3.zero; // centre
-        float angle = 0;
-        float radius = 1;
-        for (int i = 1; i <= radiusVertices; i++) {
-            vertices[i] = new Vector3(radius * Mathf.Cos(angle), 0, radius * Mathf.Sin(angle));
-            angle += Mathf.PI * 2 / radiusVertices;
+        for (int r = 1; r <= rings; r++) {
+            float angle = ((r - 1) % rings) * Mathf.PI / radiusVertices;
+            for (int i = (r - 1) * radiusVertices + 1; i <= r * radiusVertices; i++) {
+                float dist = radius * r / rings;
+                vertices[i] = new Vector3(dist * Mathf.Cos(angle), 0, dist * Mathf.Sin(angle));
+                angle += Mathf.PI * 2 / radiusVertices;
+            }
         }
 
         // Define the vertex colours
-        var colors = new Color[radiusVertices + 1];
-        Color currentColor = material.color;
-        colors[0] = currentColor;
-        for (int i = 1; i <= radiusVertices; i++) {
-            float c = currentColor.r + Random.Range(-0.1f, 0.1f);
-            currentColor = new Color(c, c, c);
-            colors[i] = currentColor;
+        var colors = new Color[radiusVertices * rings + 1];
+        //Color currentColor = material.color;
+        colors[0] = Random.ColorHSV();//currentColor;
+        for (int r = 1; r <= rings; r++) {
+            for (int i = 1; i <= radiusVertices; i++) {
+                //float c = currentColor.r + Random.Range(-0.1f, 0.1f);
+                //currentColor = new Color(c, c, c);
+                colors[i] = Random.ColorHSV();//new Color(0.5f, 0.5f, 0.5f, 0.7f);//;//currentColor;
+            }
         }
 
         // Automatically define the triangles based on the number of vertices
-        var triangles = new int[radiusVertices * 3];
-        int j;
-        for (j = 0; j < radiusVertices - 1; j += 1) {
-            triangles[3*j] = 0;
+        var triangles = new int[radiusVertices * rings * 3];
+        for (int r = 1; r <= rings; r++) {
+            int j;
+            for (j = (r - 1) * radiusVertices; j < r * radiusVertices - 1; j += 1) {
+                triangles[3*j] = Mathf.Max(0, j - radiusVertices + 1);
+                triangles[3*j+1] = j + 1;
+                triangles[3*j+2] = j + 2;
+            }
+            triangles[3*j] = Mathf.Max(0, j - radiusVertices + 1);
             triangles[3*j+1] = j + 1;
-            triangles[3*j+2] = j + 2;
+            triangles[3*j+2] = (r - 1) * radiusVertices + 1;
         }
-        triangles[3*j] = 0;
-        triangles[3*j+1] = j + 1;
-        triangles[3*j+2] = 1;
+        Debug.Log(string.Join(", ", vertices));
+        Debug.Log(string.Join(", ", triangles));
 
         m.vertices = vertices;
         m.colors = colors;
