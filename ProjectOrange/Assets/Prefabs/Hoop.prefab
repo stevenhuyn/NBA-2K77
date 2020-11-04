@@ -285,7 +285,9 @@ MonoBehaviour:
   amplitude: 2
   speed: 1
   wavelength: 0.005
-  color: {r: 1, g: 0.51640856, b: 0.23113209, a: 1}
+  color: {r: 1, g: 0.59, b: 0.2, a: 1}
+  colorMinValue: 0.2
+  colorMaxValue: 1.1
 --- !u!33 &1786363879123293265
 MeshFilter:
   m_ObjectHideFlags: 0
