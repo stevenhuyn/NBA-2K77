@@ -11,19 +11,23 @@ public class TimerSystem : MonoBehaviour
 
     private float granularity = 0.01f;
 
+    public float startingTime;
+
+    public float redThresholdTime;
+
     void Awake() {
         instance = this;
     }
     // Start is called before the first frame update
     void Start()
     {
-        time = 10;
+        time = startingTime;
         InvokeRepeating("Decement", 0, granularity);
     }
 
     void FixedUpdate() {
         gameObject.GetComponent<TextMeshProUGUI>().text = string.Format("{0:0.00}", time);
-        if (time <= 20) {
+        if (time <= redThresholdTime) {
             gameObject.GetComponent<TextMeshProUGUI>().color = Color.red;
         }
 
