@@ -47,7 +47,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleSystem: {fileID: 198856239026640498, guid: 9bba9cf244c53c5439505dfc96fdd11c,
     type: 3}
+  disabledParticleSystem: {fileID: 4802074500965677126, guid: d8bc0ac2e1629904db2ce82c458b0304,
+    type: 3}
   explosion: {fileID: 8300000, guid: e91d155a21baff083896bdaa13f6bed9, type: 3}
+  disabled: 0
+  disabledMaterial: {fileID: 2100000, guid: d2cc8a4544ea7a444a386aa7a3413648, type: 2}
 --- !u!1 &6301151019026579824
 GameObject:
   m_ObjectHideFlags: 0
