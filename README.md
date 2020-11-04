@@ -42,7 +42,7 @@ Remember that _"this document"_ should be `well written` and formatted **appropr
 - [Explanation of the game](#explanation-of-the-game)
 - [Technologies](#technologies)
 - [Using Images](#using-images)
-- [Code Snipets ](#code-snippets)
+- [Code Snippets ](#code-snippets)
 
 ## Team Members
 
@@ -58,19 +58,21 @@ Our game is a basketball game set in the year 2077. In the future, only slam dun
 
 # How to Play
 
-WASD for movement
-R to reset
-Left click to shoot out a grappling hook
+TK: Explain the main menu.
 
-Objective: ??
+A tutorial will guide you through the key game mechanics. We have implemented familiar first-person shooter controls: WASD to move, space to jump and left click to shoot your grappling hook. The grappling hook can be used to swing and pull balls towards you by continuing to hold down left click. Your crosshair will change colour when you are aiming at a hoop or ball.
+
+Once you're done with the tutorial, try to build up the highest score possible on each of our levels! Score points by picking up balls, flying and dunking. View your score and multiplier in the top-right.
 
 ## Technologies
 
-Project is created with:
-
-- Unity 2019.4.3f1
+Project is created with Unity 2019.4.3f1.
 
 ## Modelling Objects and Entities
+
+For development simplicity, the majority of our objects are unity primitives. We styled these with custom materials and post-processing effects. The hoop's torus was designed in Blender for our project.
+
+Complex entities, such as the hoop and player body, are a combination of multiple objects and colliders. We sourced grappling gun, skybox and particle effect materials from the Unity asset store.
 
 ## Graphics Pipeline
 
@@ -180,7 +182,8 @@ This was fixed by adding a tutorial level which guided the user through the cont
 There were several solutions that we came up with for making it easier to aim at balls. Firstly, we wanted to give users a larger margin of error. This was done by sending a larger hitbox in roughly a cone shape so that if the ball is under the reticle, the hook would move towards the ball. Secondly, we also experimented with giving the players feedback as to whether their hook would hit. This was achieved by changing the reticle colour when the hook would definitely hit the ball. These two methods combined turned out to feel significantly better.
 
 ## External Resources
-
+https://freesound.org/people/cydon/sounds/268557/
+https://freesound.org/people/HuvaaKoodia/sounds/77172/
 ## Individual Contributions
 
 ### Gatlee Kaw
