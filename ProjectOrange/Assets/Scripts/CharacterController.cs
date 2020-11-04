@@ -10,14 +10,14 @@ public class CharacterController : MonoBehaviour {
         maxGroundSpeed = 10, maxAirSpeedGrappling = 50, maxAirSpeedNonGrappling = 30,
         brakeStrength = 5,
         groundDrag = 3, airDrag = 0;
-    public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
+    public Vector3 ballBottomPos = new Vector3(-1.1f, -0.5f, 0.7f);
     public bool Grounded { get; private set; }
     public const float gracePeriod = 0.2f;
-    private float gracePeriodRemaining = 0.0f;
+    public float gracePeriodRemaining { get; private set; } = 0.0f;
+    public List<Ball> balls {get; private set; } = new List<Ball>();
+    public GrappleGun gun { get; private set; }
     private float distToGround;
-    private List<Ball> balls = new List<Ball>();
     private new Rigidbody rigidbody;
-    private GrappleGun gun;
 
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
@@ -48,7 +48,6 @@ public class CharacterController : MonoBehaviour {
         float maxFov = 90;
 
         float fovUpdateSpeed = 0.05f;
-        
         float targetFov = Mathf.Lerp(minFov, maxFov, (rigidbody.velocity.magnitude - minFovSpeed) / (maxFovSpeed - minFovSpeed));
         Camera.main.fieldOfView = Mathf.MoveTowards(Camera.main.fieldOfView, targetFov, fovUpdateSpeed);
 
@@ -128,18 +127,18 @@ public class CharacterController : MonoBehaviour {
     /** Remove balls and explode away from the hoop */
     void OnDunk(GameObject collisionObject) {
         if (HoopController.IsHoop(collisionObject) && balls.Count > 0) {
-            ScoreSystem.Dunk(balls.Count);
+
             // Start a grace period to stop the multiplier resetting
             gracePeriodRemaining = gracePeriod;
 
             // Find the associated hoop to explode away from
             HoopController hoop = collisionObject.GetComponentInParent<HoopController>();
+            ScoreSystem.Dunk(balls.Count, hoop.disabled);
             hoop.HandleDunk(balls);
             ExplodeAwayFrom(hoop);
 
             ResetHeldBalls();
             gun.DestroyHook();
-
         }
     }
 
