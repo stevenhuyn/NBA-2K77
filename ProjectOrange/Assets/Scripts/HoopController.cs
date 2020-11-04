@@ -17,11 +17,11 @@ public class HoopController : MonoBehaviour {
     }
 
     public void PlayParticles() {
-        ParticleSystem particles = disabled ? disabledParticleSystem : particleSystem;
+        ParticleSystem effect = disabled ? disabledParticleSystem : particleSystem;
         Vector3 particlePosition = gameObject.transform.position;
-        particleSystem = Object.Instantiate(particles, particlePosition, Quaternion.identity);
-        particleSystem.transform.parent = gameObject.transform.parent;
-        particles.Play();
+        ParticleSystem instance = Object.Instantiate(effect, particlePosition, Quaternion.identity);
+        instance.transform.parent = gameObject.transform.parent;
+        instance.Play();
     }
 
     void DeactivateHoop() {

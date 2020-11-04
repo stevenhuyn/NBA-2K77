@@ -46,7 +46,7 @@ ParticleSystem:
   cullingMode: 1
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -6205,8 +6205,8 @@ ParticleSystem:
         serializedVersion: 2
         key0: {r: 0.085, g: 1, b: 0.986, a: 1}
         key1: {r: 0.20392156, g: 0.46397513, b: 1, a: 0}
-        key2: {r: 0.5058824, g: 0.5058824, b: 0.5058824, a: 0}
-        key3: {r: 0.30919415, g: 0.32156864, b: 0.00784313, a: 0}
+        key2: {r: 0.32694018, g: 0.6383394, b: 0.745283, a: 0}
+        key3: {r: 0.19530971, g: 0.7264151, b: 0.5512552, a: 0}
         key4: {r: 0.0075649684, g: 0.17227963, b: 0.3207547, a: 0}
         key5: {r: 0.0075649684, g: 0.17227963, b: 0.3207547, a: 0}
         key6: {r: 0.0075649684, g: 0.17227963, b: 0.3207547, a: 0}
@@ -6214,7 +6214,7 @@ ParticleSystem:
         ctime0: 2792
         ctime1: 6700
         ctime2: 9980
-        ctime3: 44140
+        ctime3: 43754
         ctime4: 44911
         ctime5: 44911
         ctime6: 44911
@@ -9709,7 +9709,7 @@ ParticleSystem:
   cullingMode: 1
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -14521,7 +14521,7 @@ ParticleSystem:
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -15360,7 +15360,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 20
+        scalar: 13
         minScalar: 0
         maxCurve:
           serializedVersion: 2
@@ -16414,8 +16414,8 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0.004055023
-          value: 0.99222755
+          time: 0
+          value: 0.35850143
           inSlope: -0.5414034
           outSlope: -0.5414034
           tangentMode: 0
@@ -16441,8 +16441,8 @@ ParticleSystem:
           inWeight: 0.33621937
           outWeight: 0.42748368
         - serializedVersion: 3
-          time: 0.5736351
-          value: -0.97352517
+          time: 0.5486202
+          value: -1
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -16450,8 +16450,8 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.99477863
-          value: -1
+          time: 1
+          value: -0.99661255
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -16488,7 +16488,7 @@ ParticleSystem:
     speedModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 1.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
