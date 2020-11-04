@@ -6,7 +6,6 @@ public class GrapplingHook : MonoBehaviour {
     public float shootSpeed = 40, playerPullSpeed = 20, playerJerk = 0.2f, ballPullSpeed = 0.4f, ballAcceleration = 0.1f;
     public GrappleGun Gun { get; set; }
     public bool Stuck { get; private set; }
-
     public CharacterController character;
 
     private float ballSpeed;
@@ -35,17 +34,16 @@ public class GrapplingHook : MonoBehaviour {
 
         Vector3 direction = (transform.position - hookOffset*transform.up) - Gun.transform.position;
         for (int i = 0; i <= lineSegments; i++) {
-            pathNodes[i] = Gun.transform.position + (direction * ((float) i/lineSegments));
+            pathNodes[i] = Gun.transform.position + (direction * ((float) i / lineSegments));
         }
         line.SetPositions(pathNodes);
-
 
         //Update reference vectors
         line.material.SetVector("_Up", Camera.main.transform.up);
         line.material.SetVector("_GunLocation", Gun.transform.position);
         line.material.SetVector("_HookLocation", transform.position - hookOffset*transform.up);
 
-        if (Stuck || ball){
+        if (Stuck || ball) {
             line.material.SetFloat("_Amplitude", Mathf.Lerp(1, 0, (float) framesSinceTaut / tautAnimationLength));
         } else {
             line.material.SetFloat("_Amplitude", 1.0f);

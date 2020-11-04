@@ -23,21 +23,27 @@ public class GrappleGun : MonoBehaviour {
     }
 
     void Update() {
-        // Check if we're aiming at a ball
-        RaycastHit? hitBall = null;
-        foreach (RaycastHit hit in Physics.SphereCastAll(Player.transform.position, aimAssistSize, Camera.main.transform.forward)) {
-            if (hit.transform.CompareTag("Ball")) {
+        // Check if we're aiming at a ball or hoop
+        Vector3? targetDir = null;
+        var sphereHits = Physics.SphereCastAll(Player.transform.position, aimAssistSize, Camera.main.transform.forward);
+        foreach (RaycastHit hit in sphereHits) {
+            if (hit.transform.CompareTag("Ball") || HoopController.IsHoop(hit.transform.gameObject)) {
                 // Rotate the maximum amount of degrees towards the target ball and check for line of sight
-                Vector3 shiftedDir = Vector3.RotateTowards(Camera.main.transform.forward, hit.transform.position - Player.transform.position, Mathf.Deg2Rad * aimAssistMaxDegrees, 0);
+                Vector3 shiftedDir = Vector3.RotateTowards(
+                    Camera.main.transform.forward,
+                    hit.transform.position - Player.transform.position,
+                    Mathf.Deg2Rad * aimAssistMaxDegrees,
+                    0);
                 RaycastHit checkHit;
                 if (Physics.Raycast(Player.transform.position, shiftedDir, out checkHit)
-                    && checkHit.transform.CompareTag("Ball")) {
-                    hitBall = hit;
+                    && (checkHit.transform.CompareTag("Ball")
+                        || HoopController.IsHoop(checkHit.transform.gameObject))) {
+                    targetDir = shiftedDir;
                     break;
                 }
             }
         }
-        if (hitBall.HasValue) {
+        if (targetDir.HasValue) {
             crosshairImage.color = crosshairTargetingColor;
         } else {
             crosshairImage.color = crosshairNormalColor;
@@ -48,12 +54,12 @@ public class GrappleGun : MonoBehaviour {
             DestroyHook();
             Hook = Instantiate(grapplingHookPrefab);
             Hook.GetComponent<GrapplingHook>().Gun = this;
-            Hook.transform.position = Player.transform.position;
+            Hook.transform.position = Player.transform.position + Player.transform.forward * 0.5f;
             
-            if (hitBall.HasValue) {
-                // Use aim assist to aim towards the ball
+            if (targetDir.HasValue) {
+                // Use aim assist to aim towards the target
                 Hook.GetComponent<LineRenderer>().endColor = Color.red;
-                Hook.transform.LookAt(hitBall.Value.transform);
+                Hook.transform.rotation = Quaternion.LookRotation(targetDir.Value);
                 Hook.transform.Rotate(Vector3.right, 90);
             } else {
                 // Aim normally
