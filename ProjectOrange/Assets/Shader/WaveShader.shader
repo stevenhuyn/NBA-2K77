@@ -78,7 +78,7 @@ Shader "Unlit/WaveShader"
 				float3 p = v.vertex.xyz;
 
 				float3 tangent;
-				for (int i = 0; i< 3; i++) {
+				for (int i = 0; i < 3; i++) {
 					// Direction waves are travelling in 
 					// We overlay multiple waves in slightly different directions to give a more realistic appearance
 					float2 directionVector = normalize(float2(4, i));
@@ -107,9 +107,15 @@ Shader "Unlit/WaveShader"
 				float4 worldVertex = mul(unity_ObjectToWorld, v.vertex);
 				float3 worldNormal = normalize(mul(transpose((float3x3)unity_WorldToObject), normal));
 
-				// Transform vertex in world coordinates to camera coordinates, and pass colour
+				// Transform vertex in world coordinates to camera coordinates
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
-				o.color = v.color;
+				
+				// Update the colors (in grayscale) based on vertex heights
+				float colorVal = (v.color.r + v.color.g + v.color.b) / 3;
+				float h = clamp(v.vertex.y, -_Amplitude * 3, _Amplitude * 3);
+				float h_col = clamp((v.vertex.y + _Amplitude * 3) / (2 * _Amplitude * 3), 0, 1);
+				float c = (colorVal + h_col) / 2; 
+				o.color = fixed4(c, c, c, v.color.a);
 
 				// Pass out the world vertex position and world normal to be interpolated
 				// in the fragment shader (and utilised)
@@ -123,6 +129,7 @@ Shader "Unlit/WaveShader"
 			fixed4 frag(vertOut v) : SV_Target
 			{
 				return v.color;
+
 				/*// Our interpolated normal might not be of length 1
 				float3 interpNormal = normalize(v.worldNormal);
 

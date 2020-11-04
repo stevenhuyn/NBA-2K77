@@ -111,7 +111,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6301151019026579824}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -275,7 +275,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8111440550915059309}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1803d03eada8d4941805b1890c2474b9, type: 3}
   m_Name: 
@@ -284,6 +284,6 @@ MonoBehaviour:
   speed: 9.3
   waveLength: 27
   radius: 0.55
-  radiusVertices: 20
-  rings: 2
+  radiusVertices: 30
+  rings: 1
   material: {fileID: 2100000, guid: a8a7f823a1aa4684ea39a28989c4de0c, type: 2}

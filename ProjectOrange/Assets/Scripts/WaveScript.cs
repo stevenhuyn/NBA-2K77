@@ -83,7 +83,7 @@ public class WaveScript : MonoBehaviour {
         var vertices = new Vector3[radiusVertices * rings + 1];
         vertices[0] = Vector3.zero; // centre
         for (int r = 1; r <= rings; r++) {
-            float angle = ((r - 1) % rings) * Mathf.PI / radiusVertices;
+            float angle = -((r - 1) % rings) * 2 * Mathf.PI / radiusVertices;
             for (int i = (r - 1) * radiusVertices + 1; i <= r * radiusVertices; i++) {
                 float dist = radius * r / rings;
                 vertices[i] = new Vector3(dist * Mathf.Cos(angle), 0, dist * Mathf.Sin(angle));
@@ -92,16 +92,7 @@ public class WaveScript : MonoBehaviour {
         }
 
         // Define the vertex colours
-        var colors = new Color[radiusVertices * rings + 1];
-        //Color currentColor = material.color;
-        colors[0] = Random.ColorHSV();//currentColor;
-        for (int r = 1; r <= rings; r++) {
-            for (int i = 1; i <= radiusVertices; i++) {
-                //float c = currentColor.r + Random.Range(-0.1f, 0.1f);
-                //currentColor = new Color(c, c, c);
-                colors[i] = Random.ColorHSV();//new Color(0.5f, 0.5f, 0.5f, 0.7f);//;//currentColor;
-            }
-        }
+        var colors = generateColors(vertices);
 
         // Automatically define the triangles based on the number of vertices
         var triangles = new int[radiusVertices * rings * 3];
@@ -124,5 +115,22 @@ public class WaveScript : MonoBehaviour {
         m.triangles = triangles;
 
         return m;
+    }
+
+    void Update() {
+        var mesh = GetComponent<MeshFilter>().mesh;
+        mesh.colors = generateColors(mesh.vertices);
+    }
+
+    Color[] generateColors(Vector3[] vertices) {
+        var colors = new Color[radiusVertices * rings + 1];
+        colors[0] = material.color;
+        for (int r = 1; r <= rings; r++) {
+            for (int i = 1; i <= radiusVertices; i++) {
+                colors[i] = Random.ColorHSV(0, 1, 0, 0, 0.2f, 0.8f);
+                colors[i].a = 0f;
+            }
+        }
+        return colors;
     }
 }
