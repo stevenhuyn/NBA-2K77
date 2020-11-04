@@ -111,10 +111,6 @@ public class CharacterController : MonoBehaviour {
      * Note: This is idempotent (won't add the same ball twice).
      */
     public void GiveBall(Ball ball) {
-        
-        AudioSource audio = transform.Find("BallAudioSource").GetComponent<AudioSource>();
-        audio.pitch = St2pitch(ScoreSystem.GetMultiplier() /2);
-        audio.Play();
         if (!balls.Contains(ball)) {
             ball.transform.parent = transform;
             ball.Target = ballBottomPos + Vector3.up * balls.Count * ballHeightDiff;
@@ -123,16 +119,14 @@ public class CharacterController : MonoBehaviour {
             if (!Grounded) ScoreSystem.UpdateMultiplier(1);
             ScoreSystem.UpdateScore(100);
         }
+        PlayCollectAudio();
     }
 
-    private static float twelfthRootOfTwo = Mathf.Pow(2, 1.0f / 12);
-
-    public static float St2pitch(float st)
-
-    {
-
-            return Mathf.Clamp(Mathf.Pow(twelfthRootOfTwo, st), 0f, 4f);
-
+    private void PlayCollectAudio() {
+        AudioSource audio = transform.Find("BallAudioSource").GetComponent<AudioSource>();
+        float desiredSemitone = Math.Min(ScoreSystem.GetMultiplier()-4, 4);
+        audio.pitch = AudioUtils.St2pitch(desiredSemitone);
+        audio.Play();
     }
     void OnCollisionEnter(Collision collision) {
         OnDunk(collision.gameObject);
