@@ -282,12 +282,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1803d03eada8d4941805b1890c2474b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amplitude: 5
+  amplitude: 3
   speed: 1
-  waveLength: 0.005
-  radius: 0.53
-  radiusVertices: 30
-  rings: 1
+  wavelength: 0.005
 --- !u!33 &1786363879123293265
 MeshFilter:
   m_ObjectHideFlags: 0
