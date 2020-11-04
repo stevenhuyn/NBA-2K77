@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour {
-    public float shootSpeed = 40, playerPullSpeed = 20, playerJerk = 0.2f, ballPullSpeed = 0.4f, ballAcceleration = 0.1f;
+    public float
+        shootSpeed = 40,
+        playerPullSpeed = 20, playerJerk = 0.3f, playerHoopJerk = 5f,
+        ballPullSpeed = 0.4f, ballAcceleration = 0.1f;
     public GrappleGun Gun { get; set; }
     public bool Stuck { get; private set; }
-
     public CharacterController character;
 
+    private bool stuckInHoop = false;
     private float ballSpeed;
     private Ball ball = null;
     private LineRenderer line = null;
@@ -35,17 +38,16 @@ public class GrapplingHook : MonoBehaviour {
 
         Vector3 direction = (transform.position - hookOffset*transform.up) - Gun.transform.position;
         for (int i = 0; i <= lineSegments; i++) {
-            pathNodes[i] = Gun.transform.position + (direction * ((float) i/lineSegments));
+            pathNodes[i] = Gun.transform.position + (direction * ((float) i / lineSegments));
         }
         line.SetPositions(pathNodes);
 
-
-        //Update reference vectors
+        // Update reference vectors
         line.material.SetVector("_Up", Camera.main.transform.up);
         line.material.SetVector("_GunLocation", Gun.transform.position);
         line.material.SetVector("_HookLocation", transform.position - hookOffset*transform.up);
 
-        if (Stuck || ball){
+        if (Stuck || ball) {
             line.material.SetFloat("_Amplitude", Mathf.Lerp(1, 0, (float) framesSinceTaut / tautAnimationLength));
         } else {
             line.material.SetFloat("_Amplitude", 1.0f);
@@ -56,7 +58,7 @@ public class GrapplingHook : MonoBehaviour {
         if (Stuck) {
             // Pull on the player until they reach us
             Vector3 dir = (transform.position - Gun.Player.transform.position).normalized;
-            float force = playerPullSpeed + framesSinceTaut * playerJerk;
+            float force = playerPullSpeed + framesSinceTaut * (stuckInHoop ? playerHoopJerk : playerJerk);
             Gun.Player.GetComponent<Rigidbody>().AddForce(dir * force);
         } else if (ball) {
             if (ball.Target.HasValue) {
@@ -81,6 +83,9 @@ public class GrapplingHook : MonoBehaviour {
                 framesSinceTaut = 0;
                 Destroy(GetComponent<Rigidbody>());
                 Gun.Player.GetComponent<Rigidbody>().useGravity = false;
+                if (HoopController.IsHoop(other.gameObject)) {
+                    stuckInHoop = true;
+                }
             } else if (other.CompareTag("Ball")) {
                 framesSinceTaut = 0;
                 // Pull the ball towards the player

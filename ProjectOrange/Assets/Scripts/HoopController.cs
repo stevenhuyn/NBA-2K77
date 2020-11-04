@@ -15,4 +15,8 @@ public class HoopController : MonoBehaviour {
 
         AudioSource.PlayClipAtPoint(explosion, transform.position, 0.5f);
     }
+    
+    public static bool IsHoop(GameObject obj) {
+        return obj && (obj.name == "Torus" || obj.name == "Hoop Inside");
+    }
 }
