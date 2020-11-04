@@ -8,6 +8,9 @@ public class RippleScript : MonoBehaviour {
     public float colorMinValue = 0.2f, colorMaxValue = 1.1f;
 
     void Start() {
+        UpdateShader();
+    }
+    public void UpdateShader() {
         var meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.material.shader = Shader.Find("Unlit/RippleShader");
         meshRenderer.material.SetFloat("_Amplitude", amplitude);

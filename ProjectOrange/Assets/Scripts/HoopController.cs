@@ -27,13 +27,15 @@ public class HoopController : MonoBehaviour {
     void DeactivateHoop() {
         disabled = true;
         StartCoroutine(DelayDisableHoop());
-
     }
 
     IEnumerator DelayDisableHoop() {
         yield return new WaitForSeconds(1.5f);
         Transform torus = transform.Find("Torus");
         torus.GetComponent<Renderer>().material = disabledMaterial;
+        var hoopWave = transform.Find("Hoop Inside").transform.Find("Hoop Wave").GetComponent<RippleScript>();
+        hoopWave.color = Color.cyan;
+        hoopWave.UpdateShader();
     }
 
     public static bool IsHoop(GameObject obj) {
