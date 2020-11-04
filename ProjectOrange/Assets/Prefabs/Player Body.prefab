@@ -395,7 +395,7 @@ MonoBehaviour:
   brakeStrength: 15
   groundDrag: 5
   airDrag: 0
-  ballBottomPos: {x: -0.8, y: -0.5, z: 0.7}
+  ballBottomPos: {x: -1.1, y: -0.5, z: 0.7}
 --- !u!1 &8890891804261237611
 GameObject:
   m_ObjectHideFlags: 0

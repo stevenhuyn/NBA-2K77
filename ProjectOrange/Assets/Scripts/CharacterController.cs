@@ -12,7 +12,7 @@ public class CharacterController : MonoBehaviour {
         maxGroundSpeed = 10, maxAirSpeedGrappling = 50, maxAirSpeedNonGrappling = 30,
         brakeStrength = 5,
         groundDrag = 3, airDrag = 0;
-    public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
+    public Vector3 ballBottomPos = new Vector3(-1.1f, -50f, 0.9f);
     public bool Grounded { get; private set; }
     public const float gracePeriod = 0.2f;
     public float gracePeriodRemaining { get; private set; } = 0.0f;
