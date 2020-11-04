@@ -159,7 +159,6 @@ public class CharacterController : MonoBehaviour {
 
     void ExplodeAwayFrom(HoopController hoop) {
         Vector3 hoopPosition = hoop.gameObject.transform.position;
-        rigidbody.velocity = Vector3.zero;
         rigidbody.AddExplosionForce(300.0f, hoopPosition, 0.0f, 2.0f);
     }
 }
