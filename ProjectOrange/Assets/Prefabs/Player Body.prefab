@@ -390,7 +390,7 @@ MonoBehaviour:
   groundSpeed: 15
   airSpeed: 3
   maxGroundSpeed: 15
-  maxAirSpeedGrappling: 50
+  maxAirSpeedGrappling: 60
   maxAirSpeedNonGrappling: 30
   brakeStrength: 15
   groundDrag: 5

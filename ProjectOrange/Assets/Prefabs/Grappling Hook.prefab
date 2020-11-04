@@ -112,7 +112,7 @@ MonoBehaviour:
   shootSpeed: 80
   playerPullSpeed: 15
   playerJerk: 0.4
-  playerHoopJerk: 1.2
+  playerHoopJerk: 1.4
   ballPullSpeed: 0.4
   ballAcceleration: 0.05
   character: {fileID: 8890891803648090112, guid: 361e5a2faaa203c64a1d9e288bc976f3,
