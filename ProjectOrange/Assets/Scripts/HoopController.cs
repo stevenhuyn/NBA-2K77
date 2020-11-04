@@ -14,6 +14,15 @@ public class HoopController : MonoBehaviour {
         particles.Play();
 
         AudioSource.PlayClipAtPoint(explosion, transform.position, 0.5f);
+        DeactivateHoop();
+    }
+
+    void DeactivateHoop() {
+        // We'll probably need some flag here at some point so the point system can 
+        // adjust the score accordingly 
+        Transform torus = transform.Find("Torus");
+        Material mat = torus.GetComponent<Renderer>().material;
+        mat.DisableKeyword("_EMISSION");
     }
     
     public static bool IsHoop(GameObject obj) {
