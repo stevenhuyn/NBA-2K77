@@ -12,14 +12,14 @@ public class CharacterController : MonoBehaviour {
         maxGroundSpeed = 10, maxAirSpeedGrappling = 50, maxAirSpeedNonGrappling = 30,
         brakeStrength = 5,
         groundDrag = 3, airDrag = 0;
-    public Vector3 ballBottomPos = new Vector3(-0.8f, -0.5f, 0.7f);
+    public Vector3 ballBottomPos = new Vector3(-1.1f, -0.5f, 0.7f);
     public bool Grounded { get; private set; }
     public const float gracePeriod = 0.2f;
-    private float gracePeriodRemaining = 0.0f;
+    public float gracePeriodRemaining { get; private set; } = 0.0f;
+    public List<Ball> balls {get; private set; } = new List<Ball>();
+    public GrappleGun gun { get; private set; }
     private float distToGround;
-    private List<Ball> balls = new List<Ball>();
     private new Rigidbody rigidbody;
-    private GrappleGun gun;
 
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
