@@ -39,6 +39,8 @@ Shader "Unlit/WaveShader"
 	{
 		Pass
 		{
+			Cull Off
+
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
@@ -86,7 +88,7 @@ Shader "Unlit/WaveShader"
 					float f = k * (dot(directionVector, p.xz) - _Speed * _Time.y);
 					float newAmp = _Amplitude * (i+2/6);
 
-					v.vertex.x += newAmp * cos(f);
+					//v.vertex.x += newAmp * cos(f);
 					v.vertex.y += newAmp * sin(f);
 
 					tangent += normalize(float3(
