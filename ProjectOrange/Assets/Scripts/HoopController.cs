@@ -7,6 +7,8 @@ public class HoopController : MonoBehaviour {
     public AudioClip explosion;
     public bool disabled = false;
 
+    public Material disabledMaterial;
+
     public void HandleDunk(List<Ball> balls) {
         ParticleSystem particles;
         Vector3 particlePosition = gameObject.transform.position;
@@ -28,7 +30,7 @@ public class HoopController : MonoBehaviour {
     IEnumerator DelayDisableHoop() {
         yield return new WaitForSeconds(1.5f);
         Transform torus = transform.Find("Torus");
-        torus.GetComponent<Renderer>().material = transform.Find("Hoop Inside").GetComponent<Renderer>().material;
+        torus.GetComponent<Renderer>().material = disabledMaterial;
     }
 
     public static bool IsHoop(GameObject obj) {
