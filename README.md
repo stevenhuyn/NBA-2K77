@@ -182,7 +182,8 @@ This was fixed by adding a tutorial level which guided the user through the cont
 There were several solutions that we came up with for making it easier to aim at balls. Firstly, we wanted to give users a larger margin of error. This was done by sending a larger hitbox in roughly a cone shape so that if the ball is under the reticle, the hook would move towards the ball. Secondly, we also experimented with giving the players feedback as to whether their hook would hit. This was achieved by changing the reticle colour when the hook would definitely hit the ball. These two methods combined turned out to feel significantly better.
 
 ## External Resources
-
+https://freesound.org/people/cydon/sounds/268557/
+https://freesound.org/people/HuvaaKoodia/sounds/77172/
 ## Individual Contributions
 
 ### Gatlee Kaw
