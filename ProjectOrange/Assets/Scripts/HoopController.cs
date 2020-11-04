@@ -20,10 +20,15 @@ public class HoopController : MonoBehaviour {
     }
 
     void DeactivateHoop() {
-        Transform torus = transform.Find("Torus");
-        Material mat = torus.GetComponent<Renderer>().material;
-        mat.DisableKeyword("_EMISSION");
         disabled = true;
+        StartCoroutine(DelayDisableHoop());
+
+    }
+
+    IEnumerator DelayDisableHoop() {
+        yield return new WaitForSeconds(1.5f);
+        Transform torus = transform.Find("Torus");
+        torus.GetComponent<Renderer>().material = transform.Find("Hoop Inside").GetComponent<Renderer>().material;
     }
 
     public static bool IsHoop(GameObject obj) {
