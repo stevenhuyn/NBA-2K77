@@ -4,21 +4,24 @@ using UnityEngine;
 
 public class HoopController : MonoBehaviour {
     public new ParticleSystem particleSystem;
+    public ParticleSystem disabledParticleSystem;
     public AudioClip explosion;
     public bool disabled = false;
 
     public Material disabledMaterial;
 
     public void HandleDunk(List<Ball> balls) {
-        ParticleSystem particles;
-        Vector3 particlePosition = gameObject.transform.position;
-        particles = Object.Instantiate(particleSystem, particlePosition, Quaternion.identity);
-        particles.transform.parent = gameObject.transform.parent;
-        //particles.transform.SetParent(gameObject.transform);
-        particles.Play();
-
+        PlayParticles();
         AudioSource.PlayClipAtPoint(explosion, transform.position, 0.5f);
         DeactivateHoop();
+    }
+
+    public void PlayParticles() {
+        ParticleSystem particles = disabled ? disabledParticleSystem : particleSystem;
+        Vector3 particlePosition = gameObject.transform.position;
+        particleSystem = Object.Instantiate(particles, particlePosition, Quaternion.identity);
+        particleSystem.transform.parent = gameObject.transform.parent;
+        particles.Play();
     }
 
     void DeactivateHoop() {
