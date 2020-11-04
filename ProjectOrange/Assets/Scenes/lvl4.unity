@@ -1356,6 +1356,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1277462993613185908, guid: 9a9f552d7bc15e4439d7111aa6fc1144,
+        type: 3}
+      propertyPath: startingTime
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1277462993613185908, guid: 9a9f552d7bc15e4439d7111aa6fc1144,
+        type: 3}
+      propertyPath: redThresholdTime
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5029389386525954181, guid: 9a9f552d7bc15e4439d7111aa6fc1144,
         type: 3}
       propertyPath: m_textInfo.characterCount

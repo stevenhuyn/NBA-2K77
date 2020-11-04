@@ -11,9 +11,9 @@ public class TimerSystem : MonoBehaviour
 
     private float granularity = 0.01f;
 
-    public float startingTime;
+    public float startingTime = 30;
 
-    public float redThresholdTime;
+    public float redThresholdTime = 10;
 
     void Awake() {
         instance = this;
