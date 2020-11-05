@@ -22,6 +22,7 @@
 // Adapted further by Chris Ewin, 23 Sep 2013
 // Adapted further (again) by Alex Zable (port to Unity), 19 Aug 2016
 // Adapted further++ by Gatlee Kaw, 12 September 2020
+// Adapted further (again)++ by James Dyer, 4 November 2020
 
 //UNITY_SHADER_NO_UPGRADE
 
@@ -91,7 +92,8 @@ Shader "Unlit/RippleShader"
 					// Keep the centre looking consistently flat
 					normal = float3(0, -1, 0);
 				} else {
-					normalize(float3(
+					// Normalized cross product of df/dx and df/dz (partial derivatives)
+					normal = normalize(float3(
 						_Amplitude * cos(t) * freq / d * v.vertex.x,
 						-1,
 						_Amplitude * cos(t) * freq / d * v.vertex.z));
@@ -124,8 +126,6 @@ Shader "Unlit/RippleShader"
 			// Implementation of the fragment shader
 			fixed4 frag(vertOut v) : SV_Target
 			{
-				//return v.color;
-
 				// Our interpolated normal might not be of length 1
 				float3 interpNormal = normalize(v.worldNormal);
 

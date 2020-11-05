@@ -94,10 +94,77 @@ float normaliseAmplitude(float d)
 </p>
 
 <p align="center">
-  <img src="Images/RopeShader.png"  width="300" >
+  <img src="Images/RopeShader.png" width="300">
 </p>
 
-# Shader 2
+# Shader 2: Hoop Ripple
+
+<p align="center">
+  <img src="Gifs/HoopShader.gif" width="500">
+</p>
+
+Our second shader is for a wave/ripple-like effect for the inside surface of each hoop. This is achieved by displacing the height of each of the vertices on the surface of the hoop by a sine wave which is a function of the distance from the centre and the current time, generating a radially symmetric rippling effect.
+
+This is calculated in a vertex shader as follows:
+
+```
+// Apply a sine wave displacement based on distance to center
+float d = length(float2(v.vertex.x, v.vertex.z));
+float freq = 1.0 / _Wavelength;
+float offset = _Time.y * _Speed;
+float t = d * freq + offset;
+float h = sin(t);
+v.vertex.y = _Amplitude * h;
+```
+
+In order to allow for lighting to be calculated properly for the displaced vertices, the normals are also recalculated. If we consider the function we are applying to be `f(x, z)` mapping to an `(x, y, z)` point, we can get the following expression:
+
+`f(x, z) = (x, _Amplitude * sin(freq * d + offset), z)`
+
+In order to calculate the normal vector, we can take the cross product of the partial derivatives `df/dx` and `df/dz`. We have
+
+`df/dx = (1, _Amplitude * cos(t) * freq / d * x, 0)`
+
+and
+
+`df/dz = (0, _Amplitude * cos(t) * freq / d * z, 1)`
+
+where `t = d * freq + offset` as above.
+
+Taking the cross product gives us the vector:
+
+`(_Amplitude * cos(t) * freq / d * x, -1, _Amplitude * cos(t) * freq / d * z)`
+
+In addition, in order to prevent artifacts occuring near the centre of the mesh, we enforce that normals very near to the centre point strictly downwards, creating a small flat spot in the middle. This issue appeared to be due to an irregularity with our mesh, which was created by squashing a sphere down to be very thin and treating it as a disc.
+
+Overall, this leads us to the following:
+
+```
+// Calculate new normal
+float3 normal;
+if (d < 0.01) {
+  // Keep the centre looking consistently flat
+  normal = float3(0, -1, 0);
+} else {
+  // Normalized cross product of df/dx and df/dz (partial derivatives)
+  normalize(float3(
+    _Amplitude * cos(t) * freq / d * v.vertex.x,
+    -1,
+    _Amplitude * cos(t) * freq / d * v.vertex.z));
+}
+```
+
+In order to accentuate the overall rippling effect, we also vary the color of each vertex based on the height calculated from the sine wave. This is done by linearly interpolating a coefficient to multiply the color by between some set limits.
+
+```
+// Interpolate color based on adjusted height
+float c = lerp(_ColorMinValue, _ColorMaxValue, (h + 1) / 2);
+o.color.rgb = c * _Color;
+```
+
+Here the value of `h` is `sin(d * freq + offset)` as calculated previously.
+
+Finally, a Phong illumination model is applied in a pixel shader using code taken from the workshops to get some simple lighting effects.
 
 # Special Effects
 
