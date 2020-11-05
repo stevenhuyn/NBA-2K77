@@ -29,10 +29,10 @@ public class TutorialSystem : MonoBehaviour
         Completed
     }
 
-    private Step step = Step.Welcome; 
+    private Step step = Step.Welcome;
 
     // Start is called before the first frame update
-    void Start() {   
+    void Start() {
         instructionText = this.GetComponent<TextMeshProUGUI>();
         instructionText.alignment = TextAlignmentOptions.Center;
         player = GameObject.FindWithTag("Player");
@@ -114,7 +114,7 @@ public class TutorialSystem : MonoBehaviour
                 BeginInstructionUpdate(5.0f);
                 break;
             }
-        }  
+        }
     }
 
     /** Begin a timer to move to the next instruction */
@@ -214,7 +214,7 @@ public class TutorialSystem : MonoBehaviour
                 break;
             }
             case Step.Completed: {
-                instructionText.text = "When you're ready, hit enter to return to the main menu";
+                instructionText.text = "When you're ready, hit escape to go to the next level";
                 break;
             }
         }
