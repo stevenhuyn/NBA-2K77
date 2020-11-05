@@ -13,11 +13,8 @@ public class Ball : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        // transform.LookAt(Camera.main.transform.position);
-        //print("moving");
         if (Target.HasValue) {
-            transform.position = Target.Value;
-            //transform.localPosition = Vector3.MoveTowards(transform.localPosition, Target.Value, speed * Time.deltaTime);
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, Target.Value, speed * Time.deltaTime);
         }
     }
 
