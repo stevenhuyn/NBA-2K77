@@ -23,7 +23,7 @@ public class HoopController : MonoBehaviour {
         if (disabled) {
             AudioSource.PlayClipAtPoint(disabledExplosion, transform.position, 0.8f);
         } else {
-            AudioSource.PlayClipAtPoint(explosion, transform.position, 0.5f);
+            AudioSource.PlayClipAtPoint(explosion, transform.position, 5.0f);
         }
     }
 
