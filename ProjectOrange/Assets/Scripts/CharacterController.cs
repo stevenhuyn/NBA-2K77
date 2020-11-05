@@ -31,11 +31,6 @@ public class CharacterController : MonoBehaviour {
     void Update() {
         gracePeriodRemaining = Mathf.Max(0.0f, gracePeriodRemaining -= Time.deltaTime);
         UpdateGrounded();
-
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            // Turn on the cursor
-            Cursor.lockState = CursorLockMode.None;
-        }
         if (Input.GetKeyDown(KeyCode.Space) && Grounded) {
             // Jump by adding force to the Rigidbody (so we handle gravity)
             rigidbody.AddForce(jumpSpeed * Vector3.up, ForceMode.Impulse);
@@ -151,7 +146,11 @@ public class CharacterController : MonoBehaviour {
 
     void ResetHeldBalls() {
         foreach (Ball ball in balls) {
-            ball.Reset();
+            if (!MenuScript.isSandbox) {
+                Destroy(ball.gameObject);
+            } else {
+                ball.Reset();
+            }
         }
         balls.Clear();
     }

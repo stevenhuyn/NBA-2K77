@@ -21,13 +21,13 @@ public class TimerSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        time = startingTime;
+        time = MenuScript.isSandbox ? 0 : startingTime;
         InvokeRepeating("Decement", 0, granularity);
     }
 
     void FixedUpdate() {
         gameObject.GetComponent<TextMeshProUGUI>().text = string.Format("{0:0.00}", time);
-        if (time <= redThresholdTime) {
+        if (time <= redThresholdTime && !MenuScript.isSandbox) {
             gameObject.GetComponent<TextMeshProUGUI>().color = Color.red;
         }
 
@@ -38,6 +38,10 @@ public class TimerSystem : MonoBehaviour
     }
 
     void Decement() {
-        time -= granularity;
+        if (MenuScript.isSandbox) {
+            time += granularity;
+        } else {
+            time -= granularity;
+        }
     }
 }
