@@ -99,9 +99,6 @@ public class GrapplingHook : MonoBehaviour {
         } else if (Gun.Player.gameObject == other.gameObject) {
             // Self-destruct when touched by the player
             Destroy(gameObject);
-            if (ball) {
-                Gun.Player.GiveBall(ball);
-            }
         }
     }
 }
