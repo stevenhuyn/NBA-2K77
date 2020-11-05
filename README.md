@@ -63,10 +63,9 @@ Remember that _"this document"_ should be `well written` and formatted **appropr
       - [Post Walkthrough Interview](#post-walkthrough-interview)
     - [Feedback and Solutions](#feedback-and-solutions)
       - [The game felt too floaty](#the-game-felt-too-floaty)
-      - [Visual Noise from Skybox](#visual-noise-from-skybox)
+      - [Visual Noise from skybox](#visual-noise-from-skybox)
       - [Lack of instruction](#lack-of-instruction)
       - [Difficulties with aiming](#difficulties-with-aiming)
-- [TODO: fix this! aim assist is not implemented as a cone](#todo-fix-this-aim-assist-is-not-implemented-as-a-cone)
     - [Grappling to hoop results in players orbiting the hoop](#grappling-to-hoop-results-in-players-orbiting-the-hoop)
   - [Individual Contributions](#individual-contributions)
     - [Gatlee Kaw](#gatlee-kaw)
@@ -239,7 +238,7 @@ A common complaint with our gameplay was that it felt very 'floaty'. Especially 
 - This was fixed by tuning the physics to avoid floating too much
   _Image_
 
-#### Visual Noise from Skybox
+#### Visual Noise from skybox
 
 The skybox presented some issues with clarity. Since the skybox also featured a grid-like pattern of black and bright blue, it often made it difficult for players to make out the platforms against the similarly coloured backdrop.
 
@@ -247,17 +246,17 @@ This was solved by changing the backdrop to one which is more contrasting with t
 
 #### Lack of instruction
 
-Players mentioned that without us telling them the controls, there would be no way to discover the mechanics of the game.
-
-In response, we implemented a simple tutorial which which guided the user through the controls and objectives of the game in an interactive manner.
+Players mentioned that without us telling them the controls, there would be no way to discover the mechanics of the game. In response, we implemented a simple tutorial which which guided the user through the controls and objectives of the game in an interactive manner.
 
 #### Difficulties with aiming
 
-We observed that users often committed to grappling balls, expecting it to hit, and then were often disappointed or frustrated when they missed the ball. 
+We observed that users often committed to grappling balls, expecting it to hit, and then were often disappointed or frustrated when they missed the ball. Since the core gameplay is based around near-constant fast and dynamic movement, aiming at small targets like the balls is particularly difficult. Additionally, we didn't want difficulties with aiming to be prominent as we did not consider it to be the core drive behind the game concept - that being skillful movement and flow.
 
-# TODO: fix this! aim assist is not implemented as a cone
+To solve this, we implemented an "aim assist" feature to improve aiming usability and decrease the chance of a player missing a ball and interrupting the flow of gameplay.
 
-There were several solutions that we came up with for making it easier to aim at balls. Firstly, we wanted to give users a larger margin of error. This was done by sending a larger hitbox in roughly a cone shape so that if the ball is under the reticle, the hook would move towards the ball. Secondly, we also experimented with giving the players feedback as to whether their hook would hit. This was achieved by changing the reticle colour when the hook would definitely hit the ball. These two methods combined turned out to feel significantly better.
+This was implemented by first conducting a sphere cast, covering a fairly sizeable area in the general direction the player is looking, and checking if a ball is present. If this succeeds, the direction vector in which the player is looking is shifted a small amount of degrees (2-3) in the direction of the detected ball. (This number was chosen to match the size of the crosshair in the player's view). A raycast is then done in this direction to determine if the player has a direct line of sight to the ball. If this succeeds, the player's crosshair changes color to orange to clearly indicate that a shot hook would hit the target. If the player then fires a hook, the hook is aimed towards that point.
+
+After testing out this feature, we found that it greatly improved the general flow of the game, and extended it to apply to hoops as well. 
 
 ### Grappling to hoop results in players orbiting the hoop
 
@@ -265,7 +264,7 @@ Several players encountered an issue where they would attempt to grapple towards
 
 We had also found this issue while testing manually, and found that it greatly obstructed the gameplay, as it prevents you from easily reaching the hoop to dunk a ball, an essential part of the core gameplay loop.
 
-To fix it, we applied a positive jerk (rate of change of acceleration) to the pulling force. More simply, we made the pulling force increase the longer the player has been grappling. We set this value low for when grappling onto regular surfaces, but increased it greatly for the hoop specifically. This increasing force over time causes the player to "crash" out of orbit and hit the hoop very quickly in most instances. Even if they overshoot greatly, most of the time they will only complete a few revolutions before reaching the hoop, so we considered the problem to be solved.
+To fix this, we applied a positive jerk (rate of change of acceleration) to the pulling force. More simply, we made the pulling force increase the longer the player has been grappling. We set this value low for when grappling onto regular surfaces, but increased it greatly for the hoop specifically. This increasing force over time causes the player to "crash" out of orbit and hit the hoop very quickly in most instances. Even if they overshoot greatly, most of the time they will only complete a few revolutions before reaching the hoop, so we considered the problem to be solved.
 
 ## Individual Contributions
 
