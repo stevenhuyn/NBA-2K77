@@ -155,7 +155,7 @@ public class TutorialSystem : MonoBehaviour
                 step = Step.Disabled;
                 break;
             case Step.Disabled:
-                step = Step.Completed;
+                step = Step.Multiplier;
                 break;
             case Step.Multiplier:
                 step = Step.Completed;
