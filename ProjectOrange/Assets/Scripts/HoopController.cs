@@ -13,7 +13,10 @@ public class HoopController : MonoBehaviour {
     public void HandleDunk(List<Ball> balls) {
         PlayParticles();
         AudioSource.PlayClipAtPoint(explosion, transform.position, 0.5f);
-        DeactivateHoop();
+
+        if (!MenuScript.isSandbox) {
+            DeactivateHoop();
+        }
     }
 
     public void PlayParticles() {
@@ -27,7 +30,6 @@ public class HoopController : MonoBehaviour {
     void DeactivateHoop() {
         disabled = true;
         StartCoroutine(DelayDisableHoop());
-
     }
 
     IEnumerator DelayDisableHoop() {

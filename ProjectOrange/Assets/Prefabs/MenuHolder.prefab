@@ -266,6 +266,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 557858178162476293, guid: 6c53f970255835045baa5b72605291fa,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 557858178162476293, guid: 6c53f970255835045baa5b72605291fa,
+        type: 3}
       propertyPath: m_Colors.m_NormalColor.r
       value: 0
       objectReference: {fileID: 0}
@@ -273,6 +278,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Colors.m_NormalColor.g
       value: 0.96862745
+      objectReference: {fileID: 0}
+    - target: {fileID: 557858178162476293, guid: 6c53f970255835045baa5b72605291fa,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8034532334762996346}
+    - target: {fileID: 557858178162476293, guid: 6c53f970255835045baa5b72605291fa,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: handleSandbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 557858178162476293, guid: 6c53f970255835045baa5b72605291fa,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 557858178162476293, guid: 6c53f970255835045baa5b72605291fa,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 557858178162476293, guid: 6c53f970255835045baa5b72605291fa,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 557858178208785485, guid: 6c53f970255835045baa5b72605291fa,
         type: 3}

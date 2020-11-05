@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5631818286301501122}
   - component: {fileID: 5631818286301501113}
   m_Layer: 5
-  m_Name: WhiteOut 1
+  m_Name: WhiteOut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,7 +60,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!114 &5631818286301501127
 MonoBehaviour:
@@ -110,8 +110,8 @@ CanvasGroup:
   m_GameObject: {fileID: 5631818286301501112}
   m_Enabled: 1
   m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &5631818286301501113
 MonoBehaviour:

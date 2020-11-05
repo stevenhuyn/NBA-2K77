@@ -138,8 +138,11 @@ public class CharacterController : MonoBehaviour {
     }
 
     void ResetHeldBalls() {
-        if (MenuScript.isSandbox) {
-            foreach (Ball ball in balls) {
+        Debug.Log(MenuScript.isSandbox);
+        foreach (Ball ball in balls) {
+            if (!MenuScript.isSandbox) {
+                Destroy(ball.gameObject);
+            } else {
                 ball.Reset();
             }
         }
