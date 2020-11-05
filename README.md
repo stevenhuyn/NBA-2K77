@@ -195,6 +195,9 @@ There were several solutions that we came up with for making it easier to aim at
 ## External Resources
 https://freesound.org/people/cydon/sounds/268557/
 https://freesound.org/people/HuvaaKoodia/sounds/77172/
+https://freesound.org/people/andersmmg/sounds/523422/
+https://freesound.org/people/vhschool2019/sounds/461118/
+https://freesound.org/people/martian/sounds/19262/
 ## Individual Contributions
 
 ### Gatlee Kaw
