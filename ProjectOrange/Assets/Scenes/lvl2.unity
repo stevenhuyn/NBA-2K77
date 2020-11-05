@@ -1546,6 +1546,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuHolder
       objectReference: {fileID: 0}
+    - target: {fileID: 8034532334762996346, guid: a97a27a56d50be04d961ca180e450480,
+        type: 3}
+      propertyPath: DoneText
+      value: 
+      objectReference: {fileID: 8034532333229650997}
     - target: {fileID: 8034532334762996347, guid: a97a27a56d50be04d961ca180e450480,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1603,3 +1608,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a97a27a56d50be04d961ca180e450480, type: 3}
+--- !u!1 &8034532333229650997 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3387214485980486275, guid: a97a27a56d50be04d961ca180e450480,
+    type: 3}
+  m_PrefabInstance: {fileID: 8034532333229650996}
+  m_PrefabAsset: {fileID: 0}
