@@ -80,7 +80,18 @@ Complex entities, such as the hoop and player body, are a combination of multipl
 
 ## Shaders
 
-# Shader 1: Rope
+# Shader 1: Grapple Shader
+
+```C
+float normaliseAmplitude(float d)
+{
+  return (-0.3f/(d + 1.0f)) + 0.3f;
+}
+```
+
+<p align="center">
+  <img src="Images/RopeDiagram.png"  width="300" >
+</p>
 
 <p align="center">
   <img src="Images/RopeShader.png"  width="300" >
