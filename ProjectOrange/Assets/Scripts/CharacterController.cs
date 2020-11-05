@@ -32,6 +32,12 @@ public class CharacterController : MonoBehaviour {
         gracePeriodRemaining = Mathf.Max(0.0f, gracePeriodRemaining -= Time.deltaTime);
         UpdateGrounded();
         UpdateWindAudio();
+      
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            // Turn on the cursor
+            Cursor.lockState = CursorLockMode.None;
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && Grounded) {
             // Jump by adding force to the Rigidbody (so we handle gravity)
             rigidbody.AddForce(jumpSpeed * Vector3.up, ForceMode.Impulse);
@@ -70,7 +76,7 @@ public class CharacterController : MonoBehaviour {
             Grounded = false;
             OnDunk(hit.transform.gameObject);
             return;
-        }
+        } 
 
         // Case 3: Standing on the ground / on the hoop without a ball
         Grounded = didCollide && hit.transform.CompareTag("Surface");
@@ -81,6 +87,8 @@ public class CharacterController : MonoBehaviour {
     }
 
     void FixedUpdate() {
+        UpdateGrounded();
+      
         float moveSpeed = Grounded ? groundSpeed : airSpeed;
         rigidbody.drag = Grounded && !IsPullingPlayer() ? groundDrag : airDrag;
 
@@ -135,7 +143,6 @@ public class CharacterController : MonoBehaviour {
     /** Remove balls and explode away from the hoop */
     void OnDunk(GameObject collisionObject) {
         if (HoopController.IsHoop(collisionObject) && balls.Count > 0) {
-
             // Start a grace period to stop the multiplier resetting
             gracePeriodRemaining = gracePeriod;
 

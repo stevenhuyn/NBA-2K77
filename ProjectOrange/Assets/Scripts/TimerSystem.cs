@@ -15,14 +15,17 @@ public class TimerSystem : MonoBehaviour
 
     public float redThresholdTime = 10;
 
+    private bool hasSeenZero;
+
     void Awake() {
         instance = this;
     }
     // Start is called before the first frame update
     void Start()
     {
-        time = MenuScript.isSandbox ? 0 : startingTime;
+        time = MenuScript.isSandbox ? 0.01f : startingTime;
         InvokeRepeating("Decement", 0, granularity);
+        hasSeenZero = false;
     }
 
     void FixedUpdate() {
@@ -32,6 +35,11 @@ public class TimerSystem : MonoBehaviour
         }
 
         if (time <= 0) {
+            if (hasSeenZero == false) {
+                hasSeenZero = true;
+                ScoreSystem.ResetMultiplier();
+                ScoreSystem.UpdateMultiplier(-1);
+            }
             CancelInvoke();
             time = 0;
         }
@@ -43,5 +51,9 @@ public class TimerSystem : MonoBehaviour
         } else {
             time -= granularity;
         }
+    }
+
+    public static float GetTime() {
+        return instance.time;
     }
 }
