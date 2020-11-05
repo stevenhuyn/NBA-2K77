@@ -59,8 +59,14 @@ public class ScoreSystem : MonoBehaviour
     static public void UpdateScore(int delta) {
         Transform scorePopup = Instantiate(instance.ScorePopup, instance.gameObject.transform);
         scorePopup.GetComponent<ScorePopupScript>().score = instance.scoreText.transform;
-        scorePopup.transform.localScale = Mathf.Log10(delta/10f) * Vector3.one;
-        scorePopup.GetComponent<TextMeshProUGUI>().text = string.Format("+{0}", delta);
+
+        if (TimerSystem.GetTime() > 0) {
+            scorePopup.transform.localScale = Mathf.Log10(delta/10f) * Vector3.one;
+            scorePopup.GetComponent<TextMeshProUGUI>().text = string.Format("+{0}", delta);
+        } else {
+            scorePopup.transform.localScale = 0.5f * Vector3.one;
+            scorePopup.GetComponent<TextMeshProUGUI>().text = string.Format("+0");
+        }
 
         instance.StartCoroutine(instance.UpdateScoreSlowly(delta));
         instance.StartCoroutine(instance.PulseText(instance.scoreText));
@@ -80,7 +86,7 @@ public class ScoreSystem : MonoBehaviour
     }
 
     private IEnumerator UpdateScoreSlowly(int delta) {
-        for (int i = 0; i < delta; i++) {
+        for (int i = 0; i < 150; i++) {
             score += instance.multiplier;
             yield return new WaitForSeconds(0.01f);
         }
