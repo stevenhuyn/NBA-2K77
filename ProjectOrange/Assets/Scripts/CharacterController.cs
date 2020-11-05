@@ -48,7 +48,6 @@ public class CharacterController : MonoBehaviour {
         float maxFov = 90;
 
         float fovUpdateSpeed = 0.05f;
-        
         float targetFov = Mathf.Lerp(minFov, maxFov, (rigidbody.velocity.magnitude - minFovSpeed) / (maxFovSpeed - minFovSpeed));
         Camera.main.fieldOfView = Mathf.MoveTowards(Camera.main.fieldOfView, targetFov, fovUpdateSpeed);
 
@@ -135,18 +134,18 @@ public class CharacterController : MonoBehaviour {
     /** Remove balls and explode away from the hoop */
     void OnDunk(GameObject collisionObject) {
         if (HoopController.IsHoop(collisionObject) && balls.Count > 0) {
-            ScoreSystem.Dunk(balls.Count);
+
             // Start a grace period to stop the multiplier resetting
             gracePeriodRemaining = gracePeriod;
 
             // Find the associated hoop to explode away from
             HoopController hoop = collisionObject.GetComponentInParent<HoopController>();
+            ScoreSystem.Dunk(balls.Count, hoop.disabled);
             hoop.HandleDunk(balls);
             ExplodeAwayFrom(hoop);
 
             ResetHeldBalls();
             gun.DestroyHook();
-
         }
     }
 
