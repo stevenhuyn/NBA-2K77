@@ -23,6 +23,7 @@ public class TutorialSystem : MonoBehaviour
         BallGrappling,
         Swinging,
         Dunking,
+        Disabled,
         Score,
         Multiplier,
         Completed
@@ -106,6 +107,7 @@ public class TutorialSystem : MonoBehaviour
                     }
                     break;
             }
+            case Step.Disabled:
             case Step.Score:
             case Step.Multiplier:
             {
@@ -147,6 +149,9 @@ public class TutorialSystem : MonoBehaviour
                 step = Step.Dunking;
                 break;
             case Step.Dunking:
+                step = Step.Disabled;
+                break;
+            case Step.Disabled:
                 step = Step.Score;
                 break;
             case Step.Score:
@@ -194,6 +199,10 @@ public class TutorialSystem : MonoBehaviour
             }
             case Step.Dunking: {
                 instructionText.text = "Jump into the hoop to dunk your balls";
+                break;
+            }
+            case Step.Disabled: {
+                instructionText.text = "After a dunk, hoops turn blue offer less score";
                 break;
             }
             case Step.Score: {
