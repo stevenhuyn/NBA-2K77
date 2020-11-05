@@ -21,7 +21,7 @@ public class TimerSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        time = MenuScript.isSandbox ? 0 : startingTime;
+        time = MenuScript.isSandbox ? 0.01f : startingTime;
         InvokeRepeating("Decement", 0, granularity);
     }
 
@@ -32,6 +32,8 @@ public class TimerSystem : MonoBehaviour
         }
 
         if (time <= 0) {
+            ScoreSystem.ResetMultiplier();
+            ScoreSystem.UpdateMultiplier(-1);
             CancelInvoke();
             time = 0;
         }
