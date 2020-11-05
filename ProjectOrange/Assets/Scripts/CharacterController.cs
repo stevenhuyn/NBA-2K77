@@ -31,6 +31,7 @@ public class CharacterController : MonoBehaviour {
     void Update() {
         gracePeriodRemaining = Mathf.Max(0.0f, gracePeriodRemaining -= Time.deltaTime);
         UpdateGrounded();
+        UpdateWindAudio();
         if (Input.GetKeyDown(KeyCode.Space) && Grounded) {
             // Jump by adding force to the Rigidbody (so we handle gravity)
             rigidbody.AddForce(jumpSpeed * Vector3.up, ForceMode.Impulse);
@@ -48,6 +49,11 @@ public class CharacterController : MonoBehaviour {
 
     }
 
+    private void UpdateWindAudio () {
+        float audioVolume = Mathf.Clamp(Mathf.InverseLerp(10, 40, rigidbody.velocity.magnitude), 0, 1);
+        AudioSource audio = transform.Find("WindAudioSource").GetComponent<AudioSource>();
+        audio.volume = audioVolume;
+    }
     private void UpdateGrounded() {
         // Draw a short downwards ray
         RaycastHit hit;
