@@ -12,8 +12,7 @@ public class Ball : MonoBehaviour {
         startPosition = transform.position;
     }
 
-    void Update() {
-        // transform.LookAt(Camera.main.transform.position);
+    void FixedUpdate() {
         if (Target.HasValue) {
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, Target.Value, speed * Time.deltaTime);
         }
@@ -32,6 +31,5 @@ public class Ball : MonoBehaviour {
 
         transform.position = startPosition;
         Target = null;
-
     }
 }
