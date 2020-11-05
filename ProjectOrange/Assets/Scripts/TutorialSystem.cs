@@ -67,7 +67,7 @@ public class TutorialSystem : MonoBehaviour
             case Step.Jumping:
             {
                 Vector3 playerVelocity = playerRigidbody.velocity;
-                if (Input.GetKeyDown("space")) {
+                if (Input.GetKeyDown("space") || playerVelocity.y > 2f) {
                     BeginInstructionUpdate(defaultUpdateDelay);
                 }
                 break;
@@ -202,7 +202,7 @@ public class TutorialSystem : MonoBehaviour
                 break;
             }
             case Step.Disabled: {
-                instructionText.text = "After a dunk, hoops turn blue offer less score";
+                instructionText.text = "After a dunk, hoops turn blue and offer less score";
                 break;
             }
             case Step.Score: {
