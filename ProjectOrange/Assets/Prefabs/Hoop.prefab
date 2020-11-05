@@ -269,7 +269,7 @@ Transform:
   m_GameObject: {fileID: 8111440550915059309}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 55, y: 1, z: 55}
+  m_LocalScale: {x: 54, y: 1, z: 54}
   m_Children: []
   m_Father: {fileID: 6301151019026579831}
   m_RootOrder: 0
@@ -286,12 +286,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1803d03eada8d4941805b1890c2474b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amplitude: 1
-  speed: 3
+  amplitude: 2
+  speed: 2.5
   wavelength: 0.005
   color: {r: 1, g: 0.59, b: 0.2, a: 1}
   colorMinValue: 0.6
-  colorMaxValue: 1.2
+  colorMaxValue: 1.1
 --- !u!33 &1786363879123293265
 MeshFilter:
   m_ObjectHideFlags: 0
