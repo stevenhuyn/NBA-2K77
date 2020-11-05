@@ -14,8 +14,6 @@ Shader "Unlit/RopeShader"
 	{
 		Pass
 		{
-			Cull Off
-
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag

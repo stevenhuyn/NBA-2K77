@@ -27,7 +27,6 @@ public class HoopController : MonoBehaviour {
     void DeactivateHoop() {
         disabled = true;
         StartCoroutine(DelayDisableHoop());
-
         AudioSource.PlayClipAtPoint(explosion, transform.position, 0.8f);
     }
 
@@ -35,6 +34,9 @@ public class HoopController : MonoBehaviour {
         yield return new WaitForSeconds(1.5f);
         Transform torus = transform.Find("Torus");
         torus.GetComponent<Renderer>().material = disabledMaterial;
+        var hoopWave = transform.Find("Hoop Inside").transform.Find("Hoop Wave").GetComponent<RippleScript>();
+        hoopWave.color = new Color(0, 0.66f, 0.66f);
+        hoopWave.UpdateShader();
     }
 
     public static bool IsHoop(GameObject obj) {
