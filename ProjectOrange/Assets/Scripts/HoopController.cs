@@ -13,13 +13,13 @@ public class HoopController : MonoBehaviour {
 
     public void HandleDunk(List<Ball> balls) {
         PlayParticles();
-        }
-            DeactivateHoop();
-        if (!MenuScript.isSandbox) {
         PlayExplosion();
+        if (!MenuScript.isSandbox) {
+            DeactivateHoop();
+        }
     }
 
-    private void PlayExplosion () { 
+    private void PlayExplosion () {
         if (disabled) {
             AudioSource.PlayClipAtPoint(disabledExplosion, transform.position, 0.8f);
         } else {
