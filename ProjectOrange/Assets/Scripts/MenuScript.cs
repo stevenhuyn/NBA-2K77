@@ -132,12 +132,17 @@ public class MenuScript : MonoBehaviour
 
     public void handleLevelButton() {
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
-        Debug.Log(buttonName);
-        Debug.Log(buttonName.Substring(3));
         int level = Int32.Parse(buttonName.Substring(3));
         LevelManager.ChangeLevel(level);
         isSandbox = false;
         menuState = MenuState.LevelSelect;
         Time.timeScale = 1;
+    }
+
+    public void handleDone() {
+        menuState = MenuState.EscapeMenu;
+        EscapeMenu.enabled = true;
+        FinishMenu.enabled = false;
+        Time.timeScale = 0;
     }
 }
