@@ -10,7 +10,7 @@ public class GrappleGun : MonoBehaviour {
     public Color crosshairTargetingColor = new Color(0.9716981f, 0.3745972f, 0.06875221f);
     public float aimAssistSize = 10f;
     public float aimAssistMaxDegrees = 10f;
-    
+
     public CharacterController Player { get; private set; }
     public GameObject Hook { get; private set; }
 
@@ -49,13 +49,13 @@ public class GrappleGun : MonoBehaviour {
             crosshairImage.color = crosshairNormalColor;
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0)) {
+        if (Input.GetKeyDown(KeyCode.Mouse0) && MenuScript.menuState == MenuScript.MenuState.None) {
             // Shoot a new hook on left click
             DestroyHook();
             Hook = Instantiate(grapplingHookPrefab);
             Hook.GetComponent<GrapplingHook>().Gun = this;
             Hook.transform.position = Player.transform.position + Player.transform.forward * 0.5f;
-            
+
             if (targetDir.HasValue) {
                 // Use aim assist to aim towards the target
                 Hook.GetComponent<LineRenderer>().endColor = Color.red;

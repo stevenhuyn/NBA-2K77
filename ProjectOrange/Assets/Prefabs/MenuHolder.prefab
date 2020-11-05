@@ -554,7 +554,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Holder
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 557858178276800732, guid: 6c53f970255835045baa5b72605291fa, type: 3}
+    - {fileID: 557858178276800733, guid: 6c53f970255835045baa5b72605291fa, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6c53f970255835045baa5b72605291fa, type: 3}
 --- !u!224 &7511315438008887264 stripped
 RectTransform:

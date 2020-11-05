@@ -18,7 +18,7 @@ public class MenuScript : MonoBehaviour
 
     public static bool isSandbox = false;
 
-    enum MenuState
+    public enum MenuState
     {
         None,
         EscapeMenu,
@@ -26,7 +26,7 @@ public class MenuScript : MonoBehaviour
         LevelSelect
     }
 
-    private MenuState menuState;
+    public static MenuState menuState;
 
     private bool menuActive;
 
@@ -54,10 +54,12 @@ public class MenuScript : MonoBehaviour
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 menuState = MenuState.EscapeMenu;
+                Time.timeScale = 0;
             } else {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 menuState = MenuState.None;
+                Time.timeScale = 1;
             }
         }
     }
@@ -65,6 +67,8 @@ public class MenuScript : MonoBehaviour
     public void handleMenuPress() {
         SceneManager.LoadScene("mainmenu", LoadSceneMode.Single);
         isSandbox = false;
+        menuState = MenuState.None;
+        Time.timeScale = 1;
     }
 
     public void handleRestartPress() {
@@ -75,6 +79,7 @@ public class MenuScript : MonoBehaviour
     }
 
     public void handleNextLevel() {
+        Debug.Log("this got pressed right?");
         LevelManager.NextLevel();
         EscapeMenu.enabled = false;
         menuState = MenuState.None;
@@ -107,5 +112,6 @@ public class MenuScript : MonoBehaviour
         int level = Int32.Parse(buttonName.Substring(3));
         LevelManager.ChangeLevel(level);
         isSandbox = false;
+        menuState = MenuState.LevelSelect;
     }
 }
