@@ -34,7 +34,7 @@ public class HoopController : MonoBehaviour {
         Transform torus = transform.Find("Torus");
         torus.GetComponent<Renderer>().material = disabledMaterial;
         var hoopWave = transform.Find("Hoop Inside").transform.Find("Hoop Wave").GetComponent<RippleScript>();
-        hoopWave.color = Color.cyan;
+        hoopWave.color = new Color(0, 0.66f, 0.66f);
         hoopWave.UpdateShader();
     }
 
