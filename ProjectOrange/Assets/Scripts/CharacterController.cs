@@ -35,6 +35,7 @@ public class CharacterController : MonoBehaviour {
             // Turn on the cursor
             Cursor.lockState = CursorLockMode.None;
         }
+
         if (Input.GetKeyDown(KeyCode.Space) && Grounded) {
             // Jump by adding force to the Rigidbody (so we handle gravity)
             rigidbody.AddForce(jumpSpeed * Vector3.up, ForceMode.Impulse);
@@ -79,6 +80,8 @@ public class CharacterController : MonoBehaviour {
     }
 
     void FixedUpdate() {
+        UpdateGrounded();
+      
         float moveSpeed = Grounded ? groundSpeed : airSpeed;
         rigidbody.drag = Grounded && !IsPullingPlayer() ? groundDrag : airDrag;
 
@@ -103,7 +106,6 @@ public class CharacterController : MonoBehaviour {
             float brakeSpeed = speed - maxSpeed;
             rigidbody.AddForce(-rigidbody.velocity.normalized * brakeSpeed * brakeStrength);
         }
-        UpdateGrounded();
     }
 
     /* Add a ball to the stack the player is holding.
@@ -150,7 +152,11 @@ public class CharacterController : MonoBehaviour {
 
     void ResetHeldBalls() {
         foreach (Ball ball in balls) {
-            ball.Reset();
+            if (!MenuScript.isSandbox) {
+                Destroy(ball.gameObject);
+            } else {
+                ball.Reset();
+            }
         }
         balls.Clear();
     }
