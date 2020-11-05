@@ -134,7 +134,6 @@ public class CharacterController : MonoBehaviour {
     /** Remove balls and explode away from the hoop */
     void OnDunk(GameObject collisionObject) {
         if (HoopController.IsHoop(collisionObject) && balls.Count > 0) {
-            print("dunkingc");
             // Start a grace period to stop the multiplier resetting
             gracePeriodRemaining = gracePeriod;
 

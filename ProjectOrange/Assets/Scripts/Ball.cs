@@ -16,7 +16,6 @@ public class Ball : MonoBehaviour {
         // transform.LookAt(Camera.main.transform.position);
         //print("moving");
         if (Target.HasValue) {
-                    print("moving");
             transform.position = Target.Value;
             //transform.localPosition = Vector3.MoveTowards(transform.localPosition, Target.Value, speed * Time.deltaTime);
         }
@@ -24,14 +23,12 @@ public class Ball : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Player")) {
-            print("giving");
             other.GetComponent<CharacterController>().GiveBall(this);
         }
     }
 
     // Reset position of ball
     public void Reset() {
-        print("resetting");
         // Make object top level component
         transform.SetParent(null);
 
