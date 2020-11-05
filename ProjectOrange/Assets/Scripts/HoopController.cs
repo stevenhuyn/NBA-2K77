@@ -6,14 +6,23 @@ public class HoopController : MonoBehaviour {
     public new ParticleSystem particleSystem;
     public ParticleSystem disabledParticleSystem;
     public AudioClip explosion;
+    public AudioClip disabledExplosion;
     public bool disabled = false;
 
     public Material disabledMaterial;
 
     public void HandleDunk(List<Ball> balls) {
         PlayParticles();
-        AudioSource.PlayClipAtPoint(explosion, transform.position, 0.5f);
+        PlayExplosion();
         DeactivateHoop();
+    }
+
+    private void PlayExplosion () { 
+        if (disabled) {
+            AudioSource.PlayClipAtPoint(disabledExplosion, transform.position, 0.8f);
+        } else {
+            AudioSource.PlayClipAtPoint(explosion, transform.position, 0.5f);
+        }
     }
 
     public void PlayParticles() {
@@ -27,7 +36,6 @@ public class HoopController : MonoBehaviour {
     void DeactivateHoop() {
         disabled = true;
         StartCoroutine(DelayDisableHoop());
-        AudioSource.PlayClipAtPoint(explosion, transform.position, 0.8f);
     }
 
     IEnumerator DelayDisableHoop() {
