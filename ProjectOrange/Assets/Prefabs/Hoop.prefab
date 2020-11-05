@@ -50,6 +50,7 @@ MonoBehaviour:
   disabledParticleSystem: {fileID: 4802074500965677126, guid: d8bc0ac2e1629904db2ce82c458b0304,
     type: 3}
   explosion: {fileID: 8300000, guid: 241f29bfa8ef3161f802f758c7985171, type: 3}
+  disabledExplosion: {fileID: 8300000, guid: 527b061838606cf8c8e917f4cdde8f29, type: 3}
   disabled: 0
   disabledMaterial: {fileID: 2100000, guid: d2cc8a4544ea7a444a386aa7a3413648, type: 2}
 --- !u!1 &6301151019026579824
