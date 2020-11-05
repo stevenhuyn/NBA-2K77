@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour
 {
@@ -42,5 +43,18 @@ public class MenuScript : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
             }
         }
+    }
+
+    public void handleMenuPress() {
+        SceneManager.LoadScene("mainmenu", LoadSceneMode.Single);
+    }
+
+    public void handleRestartPress() {
+        LevelManager.ResetLevel();
+    }
+
+    public void handleNextLevel() {
+        Debug.Log(LevelManager.level);
+        LevelManager.NextLevel();
     }
 }

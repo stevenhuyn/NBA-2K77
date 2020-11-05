@@ -18,7 +18,7 @@ public class MainMenuButtons : MonoBehaviour
     }
 
     public void PressPlay() {
-        SceneManager.LoadScene("lvl1");
+        SceneManager.LoadScene("lvl1", LoadSceneMode.Single);
     }
 
 

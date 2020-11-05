@@ -17,19 +17,7 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R)) {
-            ResetLevel();
-        }
 
-        if(Input.GetKeyDown(KeyCode.N)) {
-            level++;
-            SceneManager.LoadScene(getLevelName(), LoadSceneMode.Single);
-        }
-
-        if(Input.GetKeyDown(KeyCode.B)) {
-            level--;
-            SceneManager.LoadScene(getLevelName(), LoadSceneMode.Single);
-        }
     }
 
     public static string getLevelName() {
@@ -38,5 +26,15 @@ public class LevelManager : MonoBehaviour
     public static void ResetLevel() {
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name, LoadSceneMode.Single);
+    }
+
+    public static void BackLevel() {
+        level--;
+        SceneManager.LoadScene(getLevelName(), LoadSceneMode.Single);
+    }
+
+    public static void NextLevel() {
+        level++;
+        SceneManager.LoadScene(getLevelName(), LoadSceneMode.Single);
     }
 }
