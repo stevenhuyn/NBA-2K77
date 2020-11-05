@@ -46,9 +46,8 @@ Shader "Unlit/RippleShader"
 			vertOut vert(vertIn v)
 			{
 				float d = length(float2(v.vertex.x, v.vertex.z));
-				float h = sin(d / _Wavelength * _Time.x * _Speed);
+				float h = sin(d / _Wavelength + _Time.y * _Speed);
 				v.vertex.y += _Amplitude * h;
-
 
 				vertOut o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
