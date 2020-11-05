@@ -118,8 +118,15 @@ public class CharacterController : MonoBehaviour {
             if (!Grounded) ScoreSystem.UpdateMultiplier(1);
             ScoreSystem.UpdateScore(100);
         }
+        PlayCollectAudio();
     }
 
+    private void PlayCollectAudio() {
+        AudioSource audio = transform.Find("BallAudioSource").GetComponent<AudioSource>();
+        float desiredSemitone = Math.Min(ScoreSystem.GetMultiplier()-4, 4);
+        audio.pitch = AudioUtils.St2pitch(desiredSemitone);
+        audio.Play();
+    }
     void OnCollisionEnter(Collision collision) {
         OnDunk(collision.gameObject);
     }
