@@ -73,7 +73,7 @@ public class MenuScript : MonoBehaviour
 
     public void handleRestartPress() {
         LevelManager.ResetLevel();
-        isSandbox = false;
+        if (LevelManager.level != 1) isSandbox = false;
         EscapeMenu.enabled = false;
         menuState = MenuState.None;
         Time.timeScale = 1;
