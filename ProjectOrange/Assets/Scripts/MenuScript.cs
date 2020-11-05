@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour
@@ -12,10 +14,23 @@ public class MenuScript : MonoBehaviour
     private GameObject Crosshair;
     private MouseLook mouseLookScript;
 
+    public GameObject[] LevelButtons;
+
+    enum MenuState
+    {
+        None,
+        EscapeMenu,
+        Finish,
+        LevelSelect
+    }
+
+    private MenuState menuState;
+
     private bool menuActive;
 
     void Start()
     {
+        menuState = MenuState.None;
         LevelSelect.worldCamera = Camera.main;
         EscapeMenu.worldCamera = Camera.main;
         FinishMenu.worldCamera = Camera.main;
@@ -24,7 +39,6 @@ public class MenuScript : MonoBehaviour
         FinishMenu.enabled = false;
         Crosshair = GameObject.Find("Crosshair");
         mouseLookScript = Camera.main.GetComponent<MouseLook>();
-        menuActive = false;
     }
 
     // Update is called once per frame
@@ -34,13 +48,14 @@ public class MenuScript : MonoBehaviour
             mouseLookScript.enabled = !mouseLookScript.enabled;
             EscapeMenu.enabled = !EscapeMenu.enabled;
             Crosshair.SetActive(!Crosshair.activeSelf);
-            menuActive = !menuActive;
-            if (menuActive) {
+            if (menuState == MenuState.None) {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+                menuState = MenuState.EscapeMenu;
             } else {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
+                menuState = MenuState.None;
             }
         }
     }
@@ -54,7 +69,26 @@ public class MenuScript : MonoBehaviour
     }
 
     public void handleNextLevel() {
-        Debug.Log(LevelManager.level);
         LevelManager.NextLevel();
+    }
+
+    public void handleLevelSelect() {
+        menuState = MenuState.LevelSelect;
+        LevelSelect.enabled = true;
+        EscapeMenu.enabled = false;
+    }
+
+    public void handleBack() {
+        menuState = MenuState.EscapeMenu;
+        LevelSelect.enabled = false;
+        EscapeMenu.enabled = true;
+    }
+
+    public void handleLevelButton() {
+        string buttonName = EventSystem.current.currentSelectedGameObject.name;
+        Debug.Log(buttonName);
+        Debug.Log(buttonName.Substring(3));
+        int level = Int32.Parse(buttonName.Substring(3));
+        LevelManager.ChangeLevel(level);
     }
 }

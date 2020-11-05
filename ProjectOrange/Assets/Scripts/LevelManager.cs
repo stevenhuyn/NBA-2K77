@@ -37,4 +37,9 @@ public class LevelManager : MonoBehaviour
         level++;
         SceneManager.LoadScene(getLevelName(), LoadSceneMode.Single);
     }
+
+    public static void ChangeLevel(int newLevel) {
+        level = newLevel;
+        SceneManager.LoadScene(getLevelName(), LoadSceneMode.Single);
+    }
 }
