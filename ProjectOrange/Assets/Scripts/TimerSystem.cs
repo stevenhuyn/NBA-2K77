@@ -15,6 +15,8 @@ public class TimerSystem : MonoBehaviour
 
     public float redThresholdTime = 10;
 
+    private bool hasSeenZero;
+
     void Awake() {
         instance = this;
     }
@@ -23,6 +25,7 @@ public class TimerSystem : MonoBehaviour
     {
         time = MenuScript.isSandbox ? 0.01f : startingTime;
         InvokeRepeating("Decement", 0, granularity);
+        hasSeenZero = false;
     }
 
     void FixedUpdate() {
@@ -32,8 +35,11 @@ public class TimerSystem : MonoBehaviour
         }
 
         if (time <= 0) {
-            ScoreSystem.ResetMultiplier();
-            ScoreSystem.UpdateMultiplier(-1);
+            if (hasSeenZero == false) {
+                hasSeenZero = true;
+                ScoreSystem.ResetMultiplier();
+                ScoreSystem.UpdateMultiplier(-1);
+            }
             CancelInvoke();
             time = 0;
         }
