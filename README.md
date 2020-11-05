@@ -143,6 +143,18 @@ if (d < 0.01) {
 }
 ```
 
+In order to accentuate the overall rippling effect, we also vary the color of each vertex based on the height calculated from the sine wave. This is done by linearly interpolating a coefficient to multiply the color by between some set limits.
+
+```
+// Interpolate color based on adjusted height
+float c = lerp(_ColorMinValue, _ColorMaxValue, (h + 1) / 2);
+o.color.rgb = c * _Color;
+```
+
+Here the value of `h` is `sin(d * freq + offset)` as calculated previously.
+
+Finally, a Phong illumination model is applied in a pixel shader using code taken from the workshops to get some simple lighting effects.
+
 # Special Effects
 
 ## Querying and Observational Methods
