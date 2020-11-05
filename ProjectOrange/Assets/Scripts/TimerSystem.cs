@@ -46,4 +46,8 @@ public class TimerSystem : MonoBehaviour
             time -= granularity;
         }
     }
+
+    public static float GetTime() {
+        return instance.time;
+    }
 }
