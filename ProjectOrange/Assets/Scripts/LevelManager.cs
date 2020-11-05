@@ -41,5 +41,9 @@ public class LevelManager : MonoBehaviour
     public static void ChangeLevel(int newLevel) {
         level = newLevel;
         SceneManager.LoadScene(getLevelName(), LoadSceneMode.Single);
+
+        if (level == 1) {
+            MenuScript.isSandbox = true;
+        }
     }
 }
