@@ -52,7 +52,7 @@ Remember that _"this document"_ should be `well written` and formatted **appropr
   - [Graphics Pipeline](#graphics-pipeline)
   - [Camera Motion](#camera-motion)
   - [Shaders](#shaders)
-    - [Shader 1: Rope](#shader-1-rope)
+    - [Shader 1: Grappling Rope](#shader-1-grappling-rope)
     - [Shader 2: Hoop Ripple](#shader-2-hoop-ripple)
   - [Special Effects](#special-effects)
     - [Hoop Explosion Effect](#hoop-explosion-effect)
@@ -200,11 +200,15 @@ Finally, a Phong illumination model is applied in a pixel shader using code take
 
 ### Demographics
 
-- 21 Male Student
-- 21 Male Student
-- 21 Male Student
-- 12 Male Student
-- 18 Male Uni Student
+| \#  | Age | Gender | Occupation         |
+| --- | --- | ------ | ------------------ |
+| 1   | 21  | Male   | University Student |
+| 2   | 21  | Male   | University Student |
+| 3   | 21  | Male   | University Student |
+| 4   | 12  | Male   | School Student     |
+| 5   | 18  | Male   | University Student |
+
+Ideally, it would have been desirable to survey a larger number of people with much more diverse demographics in order to receive more varied feedback, but that was difficult to do given the current situation.
 
 ### Methodology
 
@@ -298,8 +302,8 @@ I mostly worked on creating and tuning the basic gameplay loop, including the mo
 
 ## External Resources
 
-https://freesound.org/people/cydon/sounds/268557/
-https://freesound.org/people/HuvaaKoodia/sounds/77172/
-https://freesound.org/people/andersmmg/sounds/523422/
-https://freesound.org/people/vhschool2019/sounds/461118/
-https://freesound.org/people/martian/sounds/19262/
+- https://freesound.org/people/cydon/sounds/268557/
+- https://freesound.org/people/HuvaaKoodia/sounds/77172/
+- https://freesound.org/people/andersmmg/sounds/523422/
+- https://freesound.org/people/vhschool2019/sounds/461118/
+- https://freesound.org/people/martian/sounds/19262/
