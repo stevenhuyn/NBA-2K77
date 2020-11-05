@@ -112,4 +112,7 @@ public class ScoreSystem : MonoBehaviour
         text.GetComponent<UIShadow>().effectColor = scoreColor;
         yield return new WaitForSeconds(0.001f);
     }
+    public static int GetMultiplier() {
+        return instance.multiplier;
+    }
 }

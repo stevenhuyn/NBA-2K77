@@ -6,16 +6,24 @@ public class HoopController : MonoBehaviour {
     public new ParticleSystem particleSystem;
     public ParticleSystem disabledParticleSystem;
     public AudioClip explosion;
+    public AudioClip disabledExplosion;
     public bool disabled = false;
 
     public Material disabledMaterial;
 
     public void HandleDunk(List<Ball> balls) {
         PlayParticles();
-        AudioSource.PlayClipAtPoint(explosion, transform.position, 0.5f);
-
-        if (!MenuScript.isSandbox) {
+        }
             DeactivateHoop();
+        if (!MenuScript.isSandbox) {
+        PlayExplosion();
+    }
+
+    private void PlayExplosion () { 
+        if (disabled) {
+            AudioSource.PlayClipAtPoint(disabledExplosion, transform.position, 0.8f);
+        } else {
+            AudioSource.PlayClipAtPoint(explosion, transform.position, 0.5f);
         }
     }
 
@@ -36,6 +44,9 @@ public class HoopController : MonoBehaviour {
         yield return new WaitForSeconds(1.5f);
         Transform torus = transform.Find("Torus");
         torus.GetComponent<Renderer>().material = disabledMaterial;
+        var hoopWave = transform.Find("Hoop Inside").transform.Find("Hoop Wave").GetComponent<RippleScript>();
+        hoopWave.color = new Color(0, 0.66f, 0.66f);
+        hoopWave.UpdateShader();
     }
 
     public static bool IsHoop(GameObject obj) {
