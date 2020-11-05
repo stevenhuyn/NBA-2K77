@@ -170,6 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7ef0a72654c0144ea96b2e6abcc0717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingTime: 20
+  redThresholdTime: 10
 --- !u!1 &2066548058782099451
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,8 +424,8 @@ MonoBehaviour:
   m_BlurFactor: 0
   m_EffectMode: 2
   m_ColorMode: 1
-  m_BlurMode: 2
-  m_AdvancedBlur: 0
+  m_BlurMode: 3
+  m_AdvancedBlur: 1
   m_ShadowBlur: 1
   m_ShadowStyle: 0
   m_ShadowColor: {r: 0, g: 0, b: 0, a: 1}
@@ -756,11 +758,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 1000
+  m_ReferencePixelsPerUnit: 400
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
