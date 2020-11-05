@@ -92,7 +92,8 @@ Shader "Unlit/RippleShader"
 					// Keep the centre looking consistently flat
 					normal = float3(0, -1, 0);
 				} else {
-					normalize(float3(
+					// Normalized cross product of df/dx and df/dz (partial derivatives)
+					normal = normalize(float3(
 						_Amplitude * cos(t) * freq / d * v.vertex.x,
 						-1,
 						_Amplitude * cos(t) * freq / d * v.vertex.z));
