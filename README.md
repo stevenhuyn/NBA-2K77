@@ -2,49 +2,20 @@
 
 # COMP30019 – Graphics and Interaction
 
-Final Electronic Submission (project): **4pm, Fri. 6 November**
-
-Do not forget **One member** of your group must submit a text file to the LMS (Canvas) by the due date which includes the commit ID of your final submission.
-
-You can add a link to your Gameplay Video here but you must have already submit it by **4pm, Sun. 25 October**
-
 # Project-2 README
 
-# TODO: clean up this first section
+# Game: NBA 2K77
 
-You must modify this `README.md` that describes your application, specifically what it does, how to use it, and how you evaluated and improved it.
-
-Remember that _"this document"_ should be `well written` and formatted **appropriately**. This is just an example of different formating tools available for you. For help with the format you can find a guide [here](https://docs.github.com/en/github/writing-on-github).
-
-**Get ready to complete all the tasks:**
-
-- [x] Read the handout for Project-2 carefully
-
-- [ ] Brief explanation of the game
-
-- [ ] How to use it (especially the user interface aspects)
-
-- [ ] How you modelled objects and entities
-
-- [ ] How you handled the graphics pipeline and camera motion
-
-- [ ] Descriptions of how the shaders work
-
-- [ ] Description of the querying and observational methods used, including: description of the participants (how many, demographics), description of the methodology (which techniques did you use, what did you have participants do, how did you record the data), and feedback gathered.
-
-- [ ] Document the changes made to your game based on the information collected during the evaluation.
-
-- [ ] A statement about any code/APIs you have sourced/used from the internet that is not your own.
-
-- [ ] A description of the contributions made by each member of the group.
+**Gameplay video:** [https://www.youtube.com/watch?v=-2TXDMclXc4](https://www.youtube.com/watch?v=-2TXDMclXc4).
 
 ## Table of Contents
 - [COMP30019 – Graphics and Interaction](#comp30019--graphics-and-interaction)
 - [Project-2 README](#project-2-readme)
-- [TODO: clean up this first section](#todo-clean-up-this-first-section)
+- [Game: NBA 2K77](#game-nba-2k77)
   - [Table of Contents](#table-of-contents)
   - [Explanation of the Game](#explanation-of-the-game)
     - [How to Play](#how-to-play)
+- [TODO: Explain the main menu.](#todo-explain-the-main-menu)
   - [Overall Design Goals](#overall-design-goals)
 - [TODO: describe our design concept + design pillars](#todo-describe-our-design-concept--design-pillars)
   - [Technologies](#technologies)
@@ -80,7 +51,7 @@ Our game is a basketball game set in the year 2077. In the future, only slam dun
 
 ### How to Play
 
-TK: Explain the main menu.
+# TODO: Explain the main menu.
 
 A tutorial will guide you through the key game mechanics. We have implemented familiar first-person shooter controls: WASD to move, space to jump and left click to shoot your grappling hook. The grappling hook can be used to swing and pull balls towards you by continuing to hold down left click. Your crosshair will change colour when you are aiming at a hoop or ball.
 
