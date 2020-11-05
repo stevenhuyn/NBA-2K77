@@ -100,6 +100,7 @@ public class MenuScript : MonoBehaviour
         LevelManager.ResetLevel();
     }
 
+    // Handles all the nextLevel menu buttons
     public void handleLevelButton() {
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
         Debug.Log(buttonName);
