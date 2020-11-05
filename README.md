@@ -86,7 +86,20 @@ Complex entities, such as the hoop and player body, are a combination of multipl
   <img src="Images/RopeShader.png"  width="300" >
 </p>
 
-# Shader 2
+# Shader 2: Hoop Ripple
+
+Our second shader is for a wave/ripple-like effect for the inside surface of each hoop. This is achieved by displacing the height of each of the vertices on the surface of the hoop by a sine wave which is a function of the distance from the centre, generating a radially symmetric rippling effect.
+
+```
+// Apply a sine wave displacement based on distance to center
+float d = length(float2(v.vertex.x, v.vertex.z));
+float freq = 1.0 / _Wavelength;
+float offset = _Time.y * _Speed;
+float t = d * freq + offset;
+float h = sin(t);
+v.vertex.y = _Amplitude * h;
+```
+
 
 # Special Effects
 
