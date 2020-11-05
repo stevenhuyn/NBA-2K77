@@ -138,8 +138,10 @@ public class CharacterController : MonoBehaviour {
     }
 
     void ResetHeldBalls() {
-        foreach (Ball ball in balls) {
-            ball.Reset();
+        if (MenuScript.isSandbox) {
+            foreach (Ball ball in balls) {
+                ball.Reset();
+            }
         }
         balls.Clear();
     }
