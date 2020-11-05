@@ -20,8 +20,8 @@ public class MainMenuButtons : MonoBehaviour
     public void PressPlay() {
         SceneManager.LoadScene("lvl1", LoadSceneMode.Single);
         MenuScript.isSandbox = true;
+        LevelManager.ChangeLevel(1);
     }
-
 
     public void Credits() {
         Debug.Log("NBA 2K");
