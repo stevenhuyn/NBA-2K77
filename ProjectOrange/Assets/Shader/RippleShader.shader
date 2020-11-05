@@ -86,22 +86,9 @@ Shader "Unlit/RippleShader"
 				v.vertex.y = _Amplitude * h;
 				
 				// Calculate new normal
-				//float3 tangent = float3(cos(t) * freq / d * v.vertex.x, cos(t), cos(t) * freq / d * v.vertex.z);
-				//float3 tangent = float3(v.vertex.x, cos(t), v.vertex.y);
-				
-				// Cross product of tangent with vector coming out of the curve
-				// Vector out of the curve is the cross product of vector from origin and vector going up
-				//float3 out_of_curve = cross(float3(v.vertex.x, 0, v.vertex.z), float3(0, 1, 0));
-				//float3 normal = normalize(cross(tangent, out_of_curve));
-
-				// Cross product of the partial derivatives for x and z
-				//float3 df_dx = float3(1, _Amplitude * cos(t) * freq / d * v.vertex.x, 0);
-				//float3 df_dz = float3(0, _Amplitude * cos(t) * freq / d * v.vertex.z, 1);
-				//float3 normal = normalize(cross(df_dx, df_dz));
-				// ^ same as [df_dx, -1, df_dz] normalized
 				float3 normal;
 				if (d < 0.01) {
-					// Flatten out of the middle of the ring always
+					// Keep the centre looking consistently flat
 					normal = float3(0, -1, 0);
 				} else {
 					normalize(float3(
@@ -143,19 +130,19 @@ Shader "Unlit/RippleShader"
 				float3 interpNormal = normalize(v.worldNormal);
 
 				// Calculate ambient RGB intensities
-				float Ka = 3;
+				float Ka = 2;
 				float3 amb = v.color.rgb * UNITY_LIGHTMODEL_AMBIENT.rgb * Ka;
 
 				// Calculate diffuse RBG reflections, we save the results of L.N because we will use it again
 				// (when calculating the reflected ray in our specular component)
 				float fAtt = 1;
-				float Kd = 1;
+				float Kd = 1.5;
 				float3 L = normalize(_PointLightPosition - v.worldVertex.xyz);
 				float LdotN = dot(L, interpNormal);
 				float3 dif = fAtt * _PointLightColor.rgb * Kd * v.color.rgb * saturate(LdotN);
 
 				// Calculate specular reflections
-				float Ks = 0.4;
+				float Ks = 0.8;
 				float specN = 20; // Values>>1 give tighter highlights
 				float3 V = normalize(_WorldSpaceCameraPos - v.worldVertex.xyz);
 				// Using classic reflection calculation:
