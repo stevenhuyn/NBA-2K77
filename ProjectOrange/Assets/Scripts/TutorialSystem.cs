@@ -146,16 +146,16 @@ public class TutorialSystem : MonoBehaviour
                 step = Step.Swinging;
                 break;
             case Step.Swinging:
+                step = Step.Score;
+                break;
+            case Step.Score:
                 step = Step.Dunking;
                 break;
             case Step.Dunking:
                 step = Step.Disabled;
                 break;
             case Step.Disabled:
-                step = Step.Score;
-                break;
-            case Step.Score:
-                step = Step.Multiplier;
+                step = Step.Completed;
                 break;
             case Step.Multiplier:
                 step = Step.Completed;
@@ -197,16 +197,16 @@ public class TutorialSystem : MonoBehaviour
                 instructionText.text = "Swing across to the other platform with your grappling hook";
                 break;
             }
+            case Step.Score: {
+                instructionText.text = "Score points for picking up balls, flying and dunking";
+                break;
+            }
             case Step.Dunking: {
                 instructionText.text = "Jump into the hoop to dunk your balls";
                 break;
             }
             case Step.Disabled: {
                 instructionText.text = "After a dunk, hoops turn blue and offer less score";
-                break;
-            }
-            case Step.Score: {
-                instructionText.text = "Score points for picking up balls, flying and dunking";
                 break;
             }
             case Step.Multiplier: {
