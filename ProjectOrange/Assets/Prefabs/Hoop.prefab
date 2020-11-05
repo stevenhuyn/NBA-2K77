@@ -290,7 +290,7 @@ MonoBehaviour:
   speed: 1
   wavelength: 0.005
   color: {r: 1, g: 0.59, b: 0.2, a: 1}
-  colorMinValue: 0.3
+  colorMinValue: 0.6
   colorMaxValue: 1.2
 --- !u!33 &1786363879123293265
 MeshFilter:

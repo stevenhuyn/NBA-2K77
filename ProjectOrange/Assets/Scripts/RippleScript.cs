@@ -7,12 +7,17 @@ public class RippleScript : MonoBehaviour {
     public Color color = new Color(1, 0.59f, 0.2f);
     public float colorMinValue = 0.2f, colorMaxValue = 1.1f;
 
+    private Light pointLight;
+
     void Start() {
+        pointLight = GameObject.Find("Directional Light").GetComponent<Light>();
         UpdateShader();
     }
     public void UpdateShader() {
         var meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.material.shader = Shader.Find("Unlit/RippleShader");
+        meshRenderer.material.SetColor("_PointLightColor", pointLight.color);
+        meshRenderer.material.SetVector("_PointLightPosition", pointLight.transform.position);
         meshRenderer.material.SetFloat("_Amplitude", amplitude);
         meshRenderer.material.SetFloat("_Speed", speed);
         meshRenderer.material.SetFloat("_Wavelength", wavelength);
