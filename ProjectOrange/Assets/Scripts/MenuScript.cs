@@ -76,6 +76,7 @@ public class MenuScript : MonoBehaviour
         isSandbox = false;
         EscapeMenu.enabled = false;
         menuState = MenuState.None;
+        Time.timeScale = 1;
     }
 
     public void handleNextLevel() {
@@ -84,6 +85,7 @@ public class MenuScript : MonoBehaviour
         EscapeMenu.enabled = false;
         menuState = MenuState.None;
         isSandbox = false;
+        Time.timeScale = 1;
     }
 
     public void handleLevelSelect() {
@@ -103,6 +105,7 @@ public class MenuScript : MonoBehaviour
         menuState = MenuState.None;
         isSandbox = true;
         LevelManager.ResetLevel();
+        Time.timeScale = 1;
     }
 
     public void handleLevelButton() {
@@ -113,5 +116,6 @@ public class MenuScript : MonoBehaviour
         LevelManager.ChangeLevel(level);
         isSandbox = false;
         menuState = MenuState.LevelSelect;
+        Time.timeScale = 1;
     }
 }
