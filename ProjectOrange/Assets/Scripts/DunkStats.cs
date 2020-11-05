@@ -27,12 +27,17 @@ public class DunkStats : MonoBehaviour
 
     // Gives number of hoops in scene that were cleared
     public static int NumberOfClearedHoops() {
-        return Array.FindAll<HoopController>(instance.allHoops, 
+        return Array.FindAll<HoopController>(instance.allHoops,
             h => h.disabled && h.gameObject.activeInHierarchy).Length;
     }
 
     // Gives number of balls that existed in the scene at Start() invocation
     public static int NumberOfBalls() {
         return instance.numBalls;
+    }
+
+    public static int BallsLeft() {
+        Ball[] balls = UnityEngine.Object.FindObjectsOfType<Ball>();
+        return  Array.FindAll<Ball>(balls, h => h.gameObject.activeInHierarchy).Length;
     }
 }

@@ -14,7 +14,7 @@ public class HoopController : MonoBehaviour {
     public void HandleDunk(List<Ball> balls) {
         PlayParticles();
         PlayExplosion();
-        if (!MenuScript.isSandbox) {
+        if (!MenuScript.isSandbox || LevelManager.level == 1) {
             DeactivateHoop();
         }
     }

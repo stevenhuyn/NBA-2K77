@@ -16,6 +16,8 @@ public class MenuScript : MonoBehaviour
 
     public GameObject[] LevelButtons;
 
+    public GameObject DoneText;
+
     public static bool isSandbox = false;
 
     public enum MenuState
@@ -49,19 +51,40 @@ public class MenuScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) {
             mouseLookScript.enabled = !mouseLookScript.enabled;
             EscapeMenu.enabled = !EscapeMenu.enabled;
-            Crosshair.SetActive(!Crosshair.activeSelf);
-            if (menuState == MenuState.None) {
+
+            if (menuState == MenuState.None || menuState == MenuState.Finish) {
+                Crosshair.SetActive(false);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 menuState = MenuState.EscapeMenu;
                 Time.timeScale = 0;
+                FinishMenu.enabled = false;
             } else {
+                Crosshair.SetActive(true);
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 menuState = MenuState.None;
                 Time.timeScale = 1;
             }
         }
+    }
+
+    void FixedUpdate() {
+        if (DunkStats.BallsLeft() == 0 && LevelManager.level != 1) {
+            StartCoroutine(FinishedGame());
+        }
+    }
+
+    IEnumerator FinishedGame() {
+        yield return new WaitForSeconds(3f);
+        menuState = MenuState.Finish;
+        LevelSelect.enabled = false;
+        EscapeMenu.enabled = false;
+        FinishMenu.enabled = true;
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Crosshair.SetActive(false);
     }
 
     public void handleMenuPress() {
@@ -109,12 +132,17 @@ public class MenuScript : MonoBehaviour
 
     public void handleLevelButton() {
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
-        Debug.Log(buttonName);
-        Debug.Log(buttonName.Substring(3));
         int level = Int32.Parse(buttonName.Substring(3));
         LevelManager.ChangeLevel(level);
         isSandbox = false;
         menuState = MenuState.LevelSelect;
         Time.timeScale = 1;
+    }
+
+    public void handleDone() {
+        menuState = MenuState.EscapeMenu;
+        EscapeMenu.enabled = true;
+        FinishMenu.enabled = false;
+        Time.timeScale = 0;
     }
 }
