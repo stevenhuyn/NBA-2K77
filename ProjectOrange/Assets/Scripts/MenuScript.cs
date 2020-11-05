@@ -80,7 +80,6 @@ public class MenuScript : MonoBehaviour
     }
 
     public void handleNextLevel() {
-        Debug.Log("this got pressed right?");
         LevelManager.NextLevel();
         EscapeMenu.enabled = false;
         menuState = MenuState.None;
