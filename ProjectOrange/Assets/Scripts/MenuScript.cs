@@ -16,6 +16,8 @@ public class MenuScript : MonoBehaviour
 
     public GameObject[] LevelButtons;
 
+    public static bool isSandbox;
+
     enum MenuState
     {
         None,
@@ -39,6 +41,7 @@ public class MenuScript : MonoBehaviour
         FinishMenu.enabled = false;
         Crosshair = GameObject.Find("Crosshair");
         mouseLookScript = Camera.main.GetComponent<MouseLook>();
+        isSandbox = false;
     }
 
     // Update is called once per frame
@@ -62,14 +65,17 @@ public class MenuScript : MonoBehaviour
 
     public void handleMenuPress() {
         SceneManager.LoadScene("mainmenu", LoadSceneMode.Single);
+        isSandbox = false;
     }
 
     public void handleRestartPress() {
         LevelManager.ResetLevel();
+        isSandbox = false;
     }
 
     public void handleNextLevel() {
         LevelManager.NextLevel();
+        isSandbox = false;
     }
 
     public void handleLevelSelect() {
@@ -84,11 +90,16 @@ public class MenuScript : MonoBehaviour
         EscapeMenu.enabled = true;
     }
 
+    public void handleSandbox() {
+        isSandbox = true;
+    }
+
     public void handleLevelButton() {
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
         Debug.Log(buttonName);
         Debug.Log(buttonName.Substring(3));
         int level = Int32.Parse(buttonName.Substring(3));
         LevelManager.ChangeLevel(level);
+        isSandbox = false;
     }
 }
