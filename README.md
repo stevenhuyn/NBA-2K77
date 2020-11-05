@@ -232,9 +232,13 @@ In response to the feedback that we received we implemented a multitude of chang
 - This was fixed by tuning the physics to avoid floating too much
   _Image_
 
-#### Grappling to ring results in players orbiting the ring
+#### Grappling to hoop results in players orbiting the hoop
 
-This was fixed by adding an --- (James do you want to explain?)
+Several players encountered an issue where they would attempt to grapple towards a hoop while having significant lateral velocity, which caused them to overshoot. Since the force being applied by the rope was constant, they then entered a stable elliptical orbit around the hoop, and kept swinging around in circles as long as they held down the button.
+
+We had also found this issue while testing manually, and found that it greatly obstructed the gameplay, as it prevents you from easily reaching the hoop to dunk a ball, an essential part of the core gameplay loop.
+
+To fix it, we applied a positive jerk (rate of change of acceleration) to the pulling force. More simply, we made the pulling force increase the longer the player has been grappling. We set this value low for when grappling onto regular surfaces, but increased it greatly for the hoop specifically. This increasing force over time causes the player to "crash" out of orbit and hit the hoop very quickly in most instances. Even if they overshoot greatly, most of the time they will only complete a few revolutions before reaching the hoop, so we considered the problem to be solved.
 
 #### Visual Noise from skybox
 
@@ -249,8 +253,10 @@ This was fixed by adding a tutorial level which guided the user through the cont
 There were several solutions that we came up with for making it easier to aim at balls. Firstly, we wanted to give users a larger margin of error. This was done by sending a larger hitbox in roughly a cone shape so that if the ball is under the reticle, the hook would move towards the ball. Secondly, we also experimented with giving the players feedback as to whether their hook would hit. This was achieved by changing the reticle colour when the hook would definitely hit the ball. These two methods combined turned out to feel significantly better.
 
 ## External Resources
+
 https://freesound.org/people/cydon/sounds/268557/
 https://freesound.org/people/HuvaaKoodia/sounds/77172/
+
 ## Individual Contributions
 
 ### Gatlee Kaw
@@ -260,6 +266,15 @@ https://freesound.org/people/HuvaaKoodia/sounds/77172/
 ### Matthew Lui
 
 ### James Dyer
+
+I mostly worked on creating and tuning the basic gameplay loop, including the movement and grappling mechanics. Over the course of the project, I implemented the following features:
+
+- The grappling hook (firing, pulling into walls, pulling balls towards you)
+- Spawning and collecting balls
+- Tuning basic movement and jumping
+- The crosshair and aim assist
+- Fixing issues we discovered with game feel in the movement and shooting mechanics
+- The ripple effect shader for the hoop interior
 
 ## Using Images
 
