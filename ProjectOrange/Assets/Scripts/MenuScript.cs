@@ -149,8 +149,8 @@ public class MenuScript : MonoBehaviour
     }
 
     private string GenerateFinishText() {
-        int hoopBonus = DunkStats.NumberOfClearedHoops() == DunkStats.NumberOfHoops() ? 1000 : 0;
-        int timerBonus = (int) TimerSystem.GetTime() * 100;
+        int hoopBonus = DunkStats.NumberOfClearedHoops() == DunkStats.NumberOfHoops() ? DunkStats.NumberOfHoops() * 1000 : 0;
+        int timerBonus = (int) TimerSystem.GetTime() * (DunkStats.NumberOfBalls() + 1) * 50;
         return string.Format(
 @"All Dunk Bonus: {0}
 TimeBonus: {1}
