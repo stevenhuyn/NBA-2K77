@@ -10,6 +10,8 @@ You can add a link to your Gameplay Video here but you must have already submit 
 
 # Project-2 README
 
+# TODO: clean up this first section
+
 You must modify this `README.md` that describes your application, specifically what it does, how to use it, and how you evaluated and improved it.
 
 Remember that _"this document"_ should be `well written` and formatted **appropriately**. This is just an example of different formating tools available for you. For help with the format you can find a guide [here](https://docs.github.com/en/github/writing-on-github).
@@ -36,33 +38,58 @@ Remember that _"this document"_ should be `well written` and formatted **appropr
 
 - [ ] A description of the contributions made by each member of the group.
 
-## Table of contents
+## Table of Contents
+- [COMP30019 – Graphics and Interaction](#comp30019--graphics-and-interaction)
+- [Project-2 README](#project-2-readme)
+- [TODO: clean up this first section](#todo-clean-up-this-first-section)
+  - [Table of Contents](#table-of-contents)
+  - [Explanation of the Game](#explanation-of-the-game)
+    - [How to Play](#how-to-play)
+  - [Overall Design Goals](#overall-design-goals)
+- [TODO: describe our design concept + design pillars](#todo-describe-our-design-concept--design-pillars)
+  - [Technologies](#technologies)
+  - [Modelling Objects and Entities](#modelling-objects-and-entities)
+  - [Graphics Pipeline](#graphics-pipeline)
+  - [Camera Motion](#camera-motion)
+  - [Shaders](#shaders)
+    - [Shader 1: Rope](#shader-1-rope)
+    - [Shader 2: Hoop Ripple](#shader-2-hoop-ripple)
+  - [Special Effects](#special-effects)
+    - [Hoop Explosion Effect](#hoop-explosion-effect)
+  - [Querying and Observational Methods](#querying-and-observational-methods)
+    - [Demographics](#demographics)
+    - [Methodology](#methodology)
+      - [Think Aloud](#think-aloud)
+      - [Post Walkthrough Interview](#post-walkthrough-interview)
+    - [Feedback and Solutions](#feedback-and-solutions)
+      - [The game felt too floaty](#the-game-felt-too-floaty)
+      - [Visual Noise from Skybox](#visual-noise-from-skybox)
+      - [Lack of instruction](#lack-of-instruction)
+      - [Difficulties with aiming](#difficulties-with-aiming)
+- [TODO: fix this! aim assist is not implemented as a cone](#todo-fix-this-aim-assist-is-not-implemented-as-a-cone)
+    - [Grappling to hoop results in players orbiting the hoop](#grappling-to-hoop-results-in-players-orbiting-the-hoop)
+  - [Individual Contributions](#individual-contributions)
+    - [Gatlee Kaw](#gatlee-kaw)
+    - [Steven Nguyen](#steven-nguyen)
+    - [Matthew Lui](#matthew-lui)
+    - [James Dyer](#james-dyer)
+  - [External Resources](#external-resources)
 
-- [Team Members](#team-members)
-- [Explanation of the game](#explanation-of-the-game)
-- [Technologies](#technologies)
-- [Using Images](#using-images)
-- [Code Snippets ](#code-snippets)
-
-## Team Members
-
-| Name           |     Task      |    State |
-| :------------- | :-----------: | -------: |
-| Student Name 1 |   MainScene   |     Done |
-| Student Name 2 |    Shader     |  Testing |
-| Student Name 3 | README Format | Amazing! |
-
-## Explanation
+## Explanation of the Game
 
 Our game is a basketball game set in the year 2077. In the future, only slam dunks are allowed and you are equipped with a grappling hook. Swing and dunk your way through multiple handcrafted levels set in a cyberpunk-esque universe.
 
-# How to Play
+### How to Play
 
 TK: Explain the main menu.
 
 A tutorial will guide you through the key game mechanics. We have implemented familiar first-person shooter controls: WASD to move, space to jump and left click to shoot your grappling hook. The grappling hook can be used to swing and pull balls towards you by continuing to hold down left click. Your crosshair will change colour when you are aiming at a hoop or ball.
 
 Once you're done with the tutorial, try to build up the highest score possible on each of our levels! Score points by picking up balls, flying and dunking. View your score and multiplier in the top-right.
+
+## Overall Design Goals
+
+# TODO: describe our design concept + design pillars
 
 ## Technologies
 
@@ -80,13 +107,13 @@ Complex entities, such as the hoop and player body, are a combination of multipl
 
 ## Shaders
 
-# Shader 1: Rope
+### Shader 1: Rope
 
 <p align="center">
   <img src="Images/RopeShader.png" width="300">
 </p>
 
-# Shader 2: Hoop Ripple
+### Shader 2: Hoop Ripple
 
 <p align="center">
   <img src="Gifs/HoopShader.gif" width="500">
@@ -96,7 +123,7 @@ Our second shader is for a wave/ripple-like effect for the inside surface of eac
 
 This is calculated in a vertex shader as follows:
 
-```
+```glsl
 // Apply a sine wave displacement based on distance to center
 float d = length(float2(v.vertex.x, v.vertex.z));
 float freq = 1.0 / _Wavelength;
@@ -124,11 +151,11 @@ Taking the cross product gives us the vector:
 
 `(_Amplitude * cos(t) * freq / d * x, -1, _Amplitude * cos(t) * freq / d * z)`
 
-In addition, in order to prevent artifacts occuring near the centre of the mesh, we enforce that normals very near to the centre point strictly downwards, creating a small flat spot in the middle. This issue appeared to be due to an irregularity with our mesh, which was created by squashing a sphere down to be very thin and treating it as a disc.
+In addition, in order to prevent artifacts occuring near the centre of the mesh, we enforce that normals very near to the centre face strictly downwards, creating a small flat spot in the middle. This issue appeared to be due to an irregularity with our mesh, which was created by squashing a sphere down to be very thin and treating it as a disc.
 
 Overall, this leads us to the following:
 
-```
+```glsl
 // Calculate new normal
 float3 normal;
 if (d < 0.01) {
@@ -145,7 +172,7 @@ if (d < 0.01) {
 
 In order to accentuate the overall rippling effect, we also vary the color of each vertex based on the height calculated from the sine wave. This is done by linearly interpolating a coefficient to multiply the color by between some set limits.
 
-```
+```glsl
 // Interpolate color based on adjusted height
 float c = lerp(_ColorMinValue, _ColorMaxValue, (h + 1) / 2);
 o.color.rgb = c * _Color;
@@ -155,7 +182,9 @@ Here the value of `h` is `sin(d * freq + offset)` as calculated previously.
 
 Finally, a Phong illumination model is applied in a pixel shader using code taken from the workshops to get some simple lighting effects.
 
-# Special Effects
+## Special Effects
+
+### Hoop Explosion Effect
 
 ## Querying and Observational Methods
 
@@ -199,63 +228,44 @@ The post walkthrough interview questions we used were:
 
 These questions were ordered in such a way that easier questions were at the start to warm up the individual while harder questions were sandwiched in the middle. Finally we finish off with easier questions at the end.
 
-### Feedback
+### Feedback and Solutions
 
-Through our observational/querying methodologies, we were able to pick up on common complaints and misunderstandings with the mechanics of our game. These included complaints about 'game feel' as well as visual clarity in general. Here are several of them.
+Through our observational/querying methodologies, we were able to pick up on common complaints and misunderstandings with the mechanics of our game. These included complaints about 'game feel' as well as visual clarity in general. Here is an overview of the most common points of feedback, along with the solutions we came up with.
 
-#### game felt too floaty
+#### The game felt too floaty
 
 A common complaint with our gameplay was that it felt very 'floaty'. Especially the jumping as well as the movement through the air.
 
-#### Grappling to ring results in players orbiting the ring
+- This was fixed by tuning the physics to avoid floating too much
+  _Image_
 
-When users grappled directly to the ring in an attempt to slam dunk their ball into it, it would often result in users orbiting the ring rather than hitting the ring and dunking it in. This was problematic and took users out of the experience
+#### Visual Noise from Skybox
 
-#### Visual Noise from skybox
+The skybox presented some issues with clarity. Since the skybox also featured a grid-like pattern of black and bright blue, it often made it difficult for players to make out the platforms against the similarly coloured backdrop.
 
-The skybox presented some issues with clarity. Since the skybox also featured a bright blue, it often made it difficult for players to make out the platforms against the similarly coloured backdrop.
+This was solved by changing the backdrop to one which is more contrasting with the platforms and other game objects. (Mostly black, as if in space, but above the Earth to avoid just being in a black void.)
 
 #### Lack of instruction
 
 Players mentioned that without us telling them the controls, there would be no way to discover the mechanics of the game.
 
+In response, we implemented a simple tutorial which which guided the user through the controls and objectives of the game in an interactive manner.
+
 #### Difficulties with aiming
 
-We observed that users often committed to grappling balls expecting it to hit and then were often disappointed or frustrated when it wouldn't hit.
+We observed that users often committed to grappling balls, expecting it to hit, and then were often disappointed or frustrated when they missed the ball. 
 
-## Changes after Evaluation
+# TODO: fix this! aim assist is not implemented as a cone
 
-In response to the feedback that we received we implemented a multitude of changes.
+There were several solutions that we came up with for making it easier to aim at balls. Firstly, we wanted to give users a larger margin of error. This was done by sending a larger hitbox in roughly a cone shape so that if the ball is under the reticle, the hook would move towards the ball. Secondly, we also experimented with giving the players feedback as to whether their hook would hit. This was achieved by changing the reticle colour when the hook would definitely hit the ball. These two methods combined turned out to feel significantly better.
 
-#### Game felt too floaty
-
-- This was fixed by tuning the physics to avoid floating too much
-  _Image_
-
-#### Grappling to hoop results in players orbiting the hoop
+### Grappling to hoop results in players orbiting the hoop
 
 Several players encountered an issue where they would attempt to grapple towards a hoop while having significant lateral velocity, which caused them to overshoot. Since the force being applied by the rope was constant, they then entered a stable elliptical orbit around the hoop, and kept swinging around in circles as long as they held down the button.
 
 We had also found this issue while testing manually, and found that it greatly obstructed the gameplay, as it prevents you from easily reaching the hoop to dunk a ball, an essential part of the core gameplay loop.
 
 To fix it, we applied a positive jerk (rate of change of acceleration) to the pulling force. More simply, we made the pulling force increase the longer the player has been grappling. We set this value low for when grappling onto regular surfaces, but increased it greatly for the hoop specifically. This increasing force over time causes the player to "crash" out of orbit and hit the hoop very quickly in most instances. Even if they overshoot greatly, most of the time they will only complete a few revolutions before reaching the hoop, so we considered the problem to be solved.
-
-#### Visual Noise from skybox
-
-We fixed this by modifying the skybox to be more contrasting.
-
-#### Lack of Instruction
-
-This was fixed by adding a tutorial level which guided the user through the controls and objectives of the game in an interactive manner.
-
-#### Difficulties with Aiming
-
-There were several solutions that we came up with for making it easier to aim at balls. Firstly, we wanted to give users a larger margin of error. This was done by sending a larger hitbox in roughly a cone shape so that if the ball is under the reticle, the hook would move towards the ball. Secondly, we also experimented with giving the players feedback as to whether their hook would hit. This was achieved by changing the reticle colour when the hook would definitely hit the ball. These two methods combined turned out to feel significantly better.
-
-## External Resources
-
-https://freesound.org/people/cydon/sounds/268557/
-https://freesound.org/people/HuvaaKoodia/sounds/77172/
 
 ## Individual Contributions
 
@@ -276,28 +286,7 @@ I mostly worked on creating and tuning the basic gameplay loop, including the mo
 - Fixing issues we discovered with game feel in the movement and shooting mechanics
 - The ripple effect shader for the hoop interior
 
-## Using Images
+## External Resources
 
-You can use images/gif by adding them to a folder in your repo:
-
-<p align="center">
-  <img src="Gifs/Q1-1.gif"  width="300" >
-</p>
-
-To create a gif from a video you can follow this [link](https://ezgif.com/video-to-gif/ezgif-6-55f4b3b086d4.mov).
-
-## Code Snippets
-
-You can include a code snippet here, but make sure to explain it!
-Do not just copy all your code, only explain the important parts.
-
-```c#
-public class firstPersonController : MonoBehaviour
-{
-    //This function run once when Unity is in Play
-     void Start ()
-    {
-      standMotion();
-    }
-}
-```
+https://freesound.org/people/cydon/sounds/268557/
+https://freesound.org/people/HuvaaKoodia/sounds/77172/
