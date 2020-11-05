@@ -12,7 +12,7 @@ public class ScoreSystem : MonoBehaviour
     public TextMeshProUGUI multiplierText;
     private GameObject player;
     public Transform ScorePopup;
-    private int score = 0;
+    public int score = 0;
     private int multiplier = 1;
     private int frameCounter = 0;
     private Color scoreColor;
@@ -114,5 +114,9 @@ public class ScoreSystem : MonoBehaviour
     }
     public static int GetMultiplier() {
         return instance.multiplier;
+    }
+
+    public static int GetScore() {
+        return instance.score;
     }
 }

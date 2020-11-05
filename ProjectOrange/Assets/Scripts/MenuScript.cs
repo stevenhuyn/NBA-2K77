@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class MenuScript : MonoBehaviour
 
     public GameObject[] LevelButtons;
 
-    public GameObject DoneText;
+    public Text DoneText;
 
     public static bool isSandbox = false;
 
@@ -85,6 +86,7 @@ public class MenuScript : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         Crosshair.SetActive(false);
+        DoneText.text = GenerateFinishText();
     }
 
     public void handleMenuPress() {
@@ -144,5 +146,24 @@ public class MenuScript : MonoBehaviour
         EscapeMenu.enabled = true;
         FinishMenu.enabled = false;
         Time.timeScale = 0;
+    }
+
+    private string GenerateFinishText() {
+        int hoopBonus = DunkStats.NumberOfClearedHoops() == DunkStats.NumberOfHoops() ? DunkStats.NumberOfHoops() * 1000 : 0;
+        int timerBonus = (int) TimerSystem.GetTime() * (DunkStats.NumberOfBalls() + 1) * 50;
+        return string.Format(
+@"All Dunk Bonus: {0}
+TimeBonus: {1}
+Score: {2}
+
+FINAL SCORE
+
+{3}
+",
+         hoopBonus,
+         timerBonus,
+         ScoreSystem.GetScore(),
+         hoopBonus + timerBonus + ScoreSystem.GetScore()
+         );
     }
 }
