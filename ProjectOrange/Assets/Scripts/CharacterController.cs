@@ -30,7 +30,6 @@ public class CharacterController : MonoBehaviour {
 
     void Update() {
         gracePeriodRemaining = Mathf.Max(0.0f, gracePeriodRemaining -= Time.deltaTime);
-        UpdateGrounded();
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
             // Turn on the cursor
@@ -69,7 +68,7 @@ public class CharacterController : MonoBehaviour {
             Grounded = false;
             OnDunk(hit.transform.gameObject);
             return;
-        }
+        } 
 
         // Case 3: Standing on the ground / on the hoop without a ball
         Grounded = didCollide && hit.transform.CompareTag("Surface");
@@ -104,6 +103,7 @@ public class CharacterController : MonoBehaviour {
             float brakeSpeed = speed - maxSpeed;
             rigidbody.AddForce(-rigidbody.velocity.normalized * brakeSpeed * brakeStrength);
         }
+        UpdateGrounded();
     }
 
     /* Add a ball to the stack the player is holding.
@@ -134,7 +134,7 @@ public class CharacterController : MonoBehaviour {
     /** Remove balls and explode away from the hoop */
     void OnDunk(GameObject collisionObject) {
         if (HoopController.IsHoop(collisionObject) && balls.Count > 0) {
-
+            print("dunkingc");
             // Start a grace period to stop the multiplier resetting
             gracePeriodRemaining = gracePeriod;
 
