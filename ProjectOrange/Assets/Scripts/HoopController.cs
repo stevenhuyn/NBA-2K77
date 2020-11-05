@@ -13,8 +13,10 @@ public class HoopController : MonoBehaviour {
 
     public void HandleDunk(List<Ball> balls) {
         PlayParticles();
+        }
+            DeactivateHoop();
+        if (!MenuScript.isSandbox) {
         PlayExplosion();
-        DeactivateHoop();
     }
 
     private void PlayExplosion () { 
