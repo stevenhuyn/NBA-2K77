@@ -19,6 +19,8 @@ public class MenuScript : MonoBehaviour
 
     public Text DoneText;
 
+    public Text FinalScoreText;
+
     public static bool isSandbox = false;
 
     public enum MenuState
@@ -86,7 +88,8 @@ public class MenuScript : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         Crosshair.SetActive(false);
-        DoneText.text = GenerateFinishText();
+        AssignTexts();
+
     }
 
     public void handleMenuPress() {
@@ -148,22 +151,27 @@ public class MenuScript : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    private string GenerateFinishText() {
+    private void AssignTexts() {
         int hoopBonus = DunkStats.NumberOfClearedHoops() == DunkStats.NumberOfHoops() ? DunkStats.NumberOfHoops() * 1000 : 0;
         int timerBonus = (int) TimerSystem.GetTime() * (DunkStats.NumberOfBalls() + 1) * 50;
-        return string.Format(
+        string template = string.Format(
 @"All Dunk Bonus: {0}
 TimeBonus: {1}
 Score: {2}
 
-FINAL SCORE
 
-{3}
+
+
+
+
+FINAL SCORE
 ",
          hoopBonus,
          timerBonus,
-         ScoreSystem.GetScore(),
-         hoopBonus + timerBonus + ScoreSystem.GetScore()
+         ScoreSystem.GetScore()
          );
+
+        DoneText.text = template;
+        FinalScoreText.text = string.Format("{0}", hoopBonus + timerBonus + ScoreSystem.GetScore());
     }
 }
