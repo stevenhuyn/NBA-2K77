@@ -106,7 +106,18 @@ Complex entities, such as the hoop and player body, are a combination of multipl
 
 ## Shaders
 
-### Shader 1: Rope
+### Shader 1: Grappling Rope
+
+```glsl
+float normaliseAmplitude(float d)
+{
+  return (-0.3f/(d + 1.0f)) + 0.3f;
+}
+```
+
+<p align="center">
+  <img src="Images/RopeDiagram.png"  width="300" >
+</p>
 
 <p align="center">
   <img src="Images/RopeShader.png" width="300">
@@ -289,3 +300,6 @@ I mostly worked on creating and tuning the basic gameplay loop, including the mo
 
 https://freesound.org/people/cydon/sounds/268557/
 https://freesound.org/people/HuvaaKoodia/sounds/77172/
+https://freesound.org/people/andersmmg/sounds/523422/
+https://freesound.org/people/vhschool2019/sounds/461118/
+https://freesound.org/people/martian/sounds/19262/

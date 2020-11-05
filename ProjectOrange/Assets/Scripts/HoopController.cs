@@ -27,6 +27,7 @@ public class HoopController : MonoBehaviour {
     void DeactivateHoop() {
         disabled = true;
         StartCoroutine(DelayDisableHoop());
+        AudioSource.PlayClipAtPoint(explosion, transform.position, 0.8f);
     }
 
     IEnumerator DelayDisableHoop() {
