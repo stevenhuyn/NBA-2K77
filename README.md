@@ -60,7 +60,7 @@ You are Kobe Sakurai the Second, hot-headed and ready to make up for your father
 
 ### How to Play
 
-To start the game from Unity, open the ```mainmenu``` scene and press play. 
+To start the game from Unity, open the ```mainmenu``` scene and press play. We recommend the aspect ratio is set to 16:9.
 
 A tutorial will guide you through the key game mechanics. We have implemented familiar first-person shooter controls: WASD to move, space to jump, left click to shoot your grappling hook and escape to pause. By holding down left click, your grappling hook can be used to swing or pull balls towards you. The crosshair will change colour when you are aiming at a hoop or ball.
 
