@@ -187,7 +187,7 @@ To make it pull taut once the hook is attached, added a property to the shader `
 #### Here is the final result!
 
 <p align="center">
-  <img src="Images/RopeShader.png" width="300">
+  <img src="Images/grapple_rope_demo.gif">
 </p>
 
 ### Shader 2: Hoop Ripple
