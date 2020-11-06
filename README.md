@@ -99,13 +99,13 @@ Both of our shaders are primarily vertex shaders. These apply per-vertex positio
 We used Unity's post-processing stack in our rendering pipeline. It applies full-screen filters and effects before the image is displayed on screen. We use post-processing for ambient occlusion, bloom, vignette, colour grading & grain. We also made the menu system canvases render in world so that the post processing could affect it, but also had the Score UI just be an overlay, which appears to be rendered after the post processing as it is not affected.
 
 <p align="center">
-  <img src="Images/without_post_processing.png" width="auto">
+  <img src="Images/without_post_processing.png" width="500">
   <br>
   Without post-processing.
 </p>
 
 <p align="center">
-  <img src="Images/with_post_processing.png" width="auto">
+  <img src="Images/with_post_processing.png" width="500">
   <br>
   With post-processing.
 </p>
@@ -267,7 +267,7 @@ Finally, a Phong illumination model is applied in a pixel shader using code take
 ## Particle Systems
 
 <p align="center">
-  <img src="Gifs/orange_hoop_explosion_demo.gif"  width="300" >
+  <img src="Gifs/orange_hoop_explosion_demo.gif"  width="500" >
   <br>
   The dunk effect.
 </p>
@@ -277,7 +277,7 @@ The explosion effect plays when balls are dunked and the player is thrown away f
 The smoke puff randomly emits a small number of puffs within a spherical region. We adjusted the color over lifetime to fade to lower hues of red with increasing transparency as the puffs dissipate.
 
 <p align="center">
-  <img src="Images/col_gradient.png"  width="300" >
+  <img src="Images/col_gradient.png"  width="500" >
   <br>
   The smoke puff's colour over lifetime.
 </p>
@@ -287,7 +287,7 @@ The shockwave spawns a circular disk at the base of the explosion, increases in 
 Finally, the movement of the electric embers is dictated by a velocity over lifetime curve. We emit a large number from a hemisphere, with positive radial velocity. To give the effect of the embers flying back and the hoop 'resetting', the velocity over lifetime curve is set to drop to negative, which brings them back towards the center.
 
 <p align="center">
-  <img src="Images/vel_over_lifetime.png"  width="300" >
+  <img src="Images/vel_over_lifetime.png"  width="500" >
   <br>
   The ember's velocity over lifetime.
 </p>
@@ -295,7 +295,7 @@ Finally, the movement of the electric embers is dictated by a velocity over life
 The explosion effect on deactivated hoops is muted, with fewer emitted particles and lower velocity. 
 
 <p align="center">
-  <img src="Gifs/blue_hoop_explosion_demo.gif"  width="300" >
+  <img src="Gifs/blue_hoop_explosion_demo.gif"  width="500" >
 </p>
 
 ## Querying and Observational Methods
@@ -370,7 +370,7 @@ We observed that users often committed to a ball grapple, expecting it to hit, a
 To solve this, we implemented an "aim assist" feature to improve aiming usability and decrease the chance of a player missing a ball and interrupting the flow of gameplay.
 
 <p align="center">
-  <img src="Gifs/aim_assist_demo.gif" width="300" >
+  <img src="Gifs/aim_assist_demo.gif" width="500" >
   <br>
   Aim assist on a ball.
 </p>
@@ -384,7 +384,7 @@ After testing out this feature, we found that it greatly improved the general fl
 The skybox presented some issues with clarity. Since the skybox featured a similar grid-like pattern of black and bright blue to the platforms, it often made it difficult for players to make out the platforms against the backdrop.
 
 <p align="center">
-  <img src="Images/old_skybox.png" width="300" >
+  <img src="Images/old_skybox.png" width="500" >
   <br>
   The previous skybox.
 </p>
@@ -406,7 +406,7 @@ Players mentioned that without us telling them the controls, there would be no w
 Several players encountered an issue where they would attempt to grapple towards a hoop while having significant lateral velocity, which caused them to overshoot. Since the force being applied by the rope was constant, they then entered into a stable elliptical orbit around the hoop, and kept swinging around in circles as long as they held down the button.
 
 <p align="center">
-  <img src="Gifs/orbiting_bug.gif" width="300" >
+  <img src="Gifs/orbiting_bug.gif" width="500" >
   <br>
   Demonstration of the orbiting effect.
 </p>
