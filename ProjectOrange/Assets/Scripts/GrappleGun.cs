@@ -16,6 +16,7 @@ public class GrappleGun : MonoBehaviour {
 
     private Image crosshairImage;
     private Quaternion targetRotation;
+    public AudioSource gunSound;
 
     void Start() {
         Player = GetComponentInParent<CharacterController>();
@@ -66,9 +67,11 @@ public class GrappleGun : MonoBehaviour {
                 Hook.transform.rotation = Camera.main.transform.rotation;
                 Hook.transform.Rotate(Vector3.right, 90);
             }
+            gunSound.Play();
         } else if (Input.GetKeyUp(KeyCode.Mouse0)) {
             // Destroy the Hook if left click is released
             DestroyHook();
+            gunSound.Stop();
         }
         if (Hook) {
             targetRotation = Quaternion.LookRotation(Hook.transform.position - transform.position);
@@ -84,10 +87,22 @@ public class GrappleGun : MonoBehaviour {
         transform.Rotate(Vector3.right, 90);
     }
 
+    private void UpdateGunPitch() {
+        GrapplingHook hook = Hook.GetComponent<GrapplingHook>();
+        if(hook.Stuck) {
+            gunSound.pitch = 1.2f;
+        } else {
+            gunSound.pitch = 1.0f;
+        }
+    }
     public void DestroyHook() {
         if (Hook) {
             Destroy(Hook);
             Hook = null;
         }
+    }
+
+    private void PlayHum() {
+        gunSound.Play();
     }
 }

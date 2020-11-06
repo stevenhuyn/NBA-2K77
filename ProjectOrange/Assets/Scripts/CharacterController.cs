@@ -19,6 +19,8 @@ public class CharacterController : MonoBehaviour {
     private float distToGround;
     private new Rigidbody rigidbody;
 
+    public float windVolume = 1.0f;
+
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         rigidbody = GetComponent<Rigidbody>();
@@ -30,7 +32,9 @@ public class CharacterController : MonoBehaviour {
 
     void Update() {
         gracePeriodRemaining = Mathf.Max(0.0f, gracePeriodRemaining -= Time.deltaTime);
-
+        UpdateGrounded();
+        UpdateWindAudio();
+      
         if (Input.GetKeyDown(KeyCode.Escape)) {
             // Turn on the cursor
             Cursor.lockState = CursorLockMode.None;
@@ -53,6 +57,11 @@ public class CharacterController : MonoBehaviour {
 
     }
 
+    private void UpdateWindAudio () {
+        float audioVolume = Mathf.Clamp(Mathf.InverseLerp(10, 40, rigidbody.velocity.magnitude), 0, 1);
+        AudioSource audio = transform.Find("WindAudioSource").GetComponent<AudioSource>();
+        audio.volume = audioVolume * windVolume;
+    }
     private void UpdateGrounded() {
         // Draw a short downwards ray
         RaycastHit hit;
@@ -141,6 +150,8 @@ public class CharacterController : MonoBehaviour {
 
             // Find the associated hoop to explode away from
             HoopController hoop = collisionObject.GetComponentInParent<HoopController>();
+            PlayExplosionAudio(hoop.disabled);
+            
             ScoreSystem.Dunk(balls.Count, hoop.disabled);
             hoop.HandleDunk(balls);
             ExplodeAwayFrom(hoop);
@@ -148,6 +159,17 @@ public class CharacterController : MonoBehaviour {
             ResetHeldBalls();
             gun.DestroyHook();
         }
+    }
+
+    private void PlayExplosionAudio(bool isDisabled) {
+        if (isDisabled) {
+            AudioSource audio = transform.Find("ExplosionBadAudioSource").GetComponent<AudioSource>(); 
+            audio.Play();
+        } else {
+            AudioSource audio = transform.Find("ExplosionGoodAudioSource").GetComponent<AudioSource>(); 
+            audio.Play();
+        }
+
     }
 
     void ResetHeldBalls() {

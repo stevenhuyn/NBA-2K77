@@ -13,7 +13,6 @@ public class HoopController : MonoBehaviour {
 
     public void HandleDunk(List<Ball> balls) {
         PlayParticles();
-        PlayExplosion();
         if (!MenuScript.isSandbox || LevelManager.level == 1) {
             DeactivateHoop();
         }
@@ -23,7 +22,7 @@ public class HoopController : MonoBehaviour {
         if (disabled) {
             AudioSource.PlayClipAtPoint(disabledExplosion, transform.position, 0.8f);
         } else {
-            AudioSource.PlayClipAtPoint(explosion, transform.position, 0.5f);
+            AudioSource.PlayClipAtPoint(explosion, transform.position, 5.0f);
         }
     }
 
