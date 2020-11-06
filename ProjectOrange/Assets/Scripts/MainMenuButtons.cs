@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuButtons : MonoBehaviour
 {
+    public Button DoneButton;
+    public Image CreditsImage;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,10 +27,16 @@ public class MainMenuButtons : MonoBehaviour
     }
 
     public void Credits() {
-        Debug.Log("NBA 2K");
+        CreditsImage.gameObject.SetActive(true);
+        DoneButton.gameObject.SetActive(true);
     }
 
     public void Exit() {
         Application.Quit();
+    }
+
+    public void Done() {
+        CreditsImage.gameObject.SetActive(false);
+        DoneButton.gameObject.SetActive(false);
     }
 }
