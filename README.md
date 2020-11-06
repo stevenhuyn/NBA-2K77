@@ -174,9 +174,9 @@ Let's have a look at all the parts of our final displacement function
 float4 displacement = min(gunNorm, hookNorm) * sin(lengthA - 0.98f + _Time[3]*10) * _Up * _Amplitude;
 ```
 
-`min(gunNorm, hookNorm)` modifies the magnitude of the Sine wave so that it is 0 close to hook or gun, but some constant c at max
-`sin(lengthA - 0.98f + _Time[3]*10) * _Up` This is the actual sine wave, wobbles vertically and with time.
-`_Amplitude` This is the property we pass in from `GrappleHook.cs` to manage the the animation of the hook becoming taut
+- `min(gunNorm, hookNorm)` modifies the magnitude of the Sine wave so that it is 0 close to hook or gun, but some constant c at max
+- `sin(lengthA - 0.98f + _Time[3]*10) * _Up` This is the actual sine wave, wobbles vertically and with time.
+- `_Amplitude` This is the property we pass in from `GrappleHook.cs` to manage the the animation of the hook becoming taut
 
 <p align="center">
   <img src="Images/RopeIter3.png" width="500">
