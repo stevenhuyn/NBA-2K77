@@ -142,8 +142,8 @@ public class MenuScript : MonoBehaviour
     public void handleLevelButton() {
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
         int level = Int32.Parse(buttonName.Substring(3));
-        LevelManager.ChangeLevel(level);
         isSandbox = false;
+        LevelManager.ChangeLevel(level);
         menuState = MenuState.LevelSelect;
         Time.timeScale = 1;
     }
