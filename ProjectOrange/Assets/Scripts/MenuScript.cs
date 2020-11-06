@@ -52,22 +52,26 @@ public class MenuScript : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            mouseLookScript.enabled = !mouseLookScript.enabled;
-            EscapeMenu.enabled = !EscapeMenu.enabled;
-
-            if (menuState == MenuState.None || menuState == MenuState.Finish) {
+            if (menuState == MenuState.None  || menuState == MenuState.Finish) { // Go to escape menu
+                mouseLookScript.enabled = true;
                 Crosshair.SetActive(false);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 menuState = MenuState.EscapeMenu;
                 Time.timeScale = 0;
                 FinishMenu.enabled = false;
-            } else {
+                EscapeMenu.enabled = true;
+                LevelSelect.enabled = false;
+            } else { // Close Menu, remove mouse
+                mouseLookScript.enabled = false;
                 Crosshair.SetActive(true);
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 menuState = MenuState.None;
                 Time.timeScale = 1;
+                LevelSelect.enabled = false;
+                EscapeMenu.enabled = false;
+                FinishMenu.enabled = false;
             }
         }
     }
