@@ -94,7 +94,7 @@ public class ScoreSystem : MonoBehaviour
 
     private IEnumerator PulseText(TextMeshProUGUI text) {
         for (float i = 1f; i <= 1.5f; i += 0.01f) {
-            text.rectTransform.localScale = new Vector3(i, i, i);
+            text.rectTransform.localScale = new Vector3(i, 1, i);
             yield return new WaitForSeconds(0.001f);
         }
 
