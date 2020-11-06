@@ -78,7 +78,7 @@ public class CharacterController : MonoBehaviour {
             Grounded = false;
             OnDunk(hit.transform.gameObject);
             return;
-        } 
+        }
 
         // Case 3: Standing on the ground / on the hoop without a ball
         Grounded = didCollide && hit.transform.CompareTag("Surface");
@@ -90,7 +90,7 @@ public class CharacterController : MonoBehaviour {
 
     void FixedUpdate() {
         UpdateGrounded();
-      
+
         float moveSpeed = Grounded ? groundSpeed : airSpeed;
         rigidbody.drag = Grounded && !IsPullingPlayer() ? groundDrag : airDrag;
 
@@ -126,7 +126,7 @@ public class CharacterController : MonoBehaviour {
             ball.Target = ballBottomPos + Vector3.up * balls.Count * ballHeightDiff;
             balls.Add(ball);
             UpdateGrounded();
-            if (!Grounded) ScoreSystem.UpdateMultiplier(1);
+            if (!Grounded && TimerSystem.GetTime() > 0) ScoreSystem.UpdateMultiplier(1);
             ScoreSystem.UpdateScore(100);
         }
         PlayCollectAudio();
