@@ -391,12 +391,6 @@ The skybox presented some issues with clarity. Since the skybox featured a simil
 
 This was solved by changing the backdrop to one which is more contrasting with the platforms and other game objects. (Mostly black, as if in space, but above the Earth to avoid just being in a black void.)
 
-#### Unexpected disconnection of the grappling hook
-
-One user noted that when attempting to hold themselves against the wall, it would disconnect. They noted that this felt bad since this limited strategies.
-
-As a result of their feedback, we decided to change it so that players can indefinitely hold themselves against the wall
-
 #### Lack of Instruction
 
 Players mentioned that without us telling them the controls, there would be no way to discover the mechanics of the game. In response, we implemented a simple tutorial which guided the user through the controls and objectives of the game in an interactive manner.
