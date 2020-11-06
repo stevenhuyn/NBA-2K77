@@ -99,13 +99,13 @@ Both of our shaders are primarily vertex shaders. These apply per-vertex positio
 We used Unity's post-processing stack in our rendering pipeline. It applies full-screen filters and effects before the image is displayed on screen. We use post-processing for ambient occlusion, bloom, vignette, colour grading & grain. We also made the menu system canvases render in world so that the post processing could affect it, but also had the Score UI just be an overlay, which appears to be rendered after the post processing as it is not affected.
 
 <p align="center">
-  <img src="Images/without_post_processing.png" width="300">
+  <img src="Images/without_post_processing.png" width="auto">
   <br>
   Without post-processing.
 </p>
 
 <p align="center">
-  <img src="Images/with_post_processing.png" width="300">
+  <img src="Images/with_post_processing.png" width="auto">
   <br>
   With post-processing.
 </p>
