@@ -60,14 +60,13 @@ You are Kobe Sakurai the Second, hot-headed and ready to make up for your father
 
 ### How to Play
 
-To start the game from Unity, open the ```mainmenu``` scene and press play. We recommend the aspect ratio is set to 16:9.
+To start the game from Unity, open the ```mainmenu``` scene and press play. 
 
 A tutorial will guide you through the key game mechanics. We have implemented familiar first-person shooter controls: WASD to move, space to jump, left click to shoot your grappling hook and escape to pause. By holding down left click, your grappling hook can be used to swing or pull balls towards you. The crosshair will change colour when you are aiming at a hoop or ball.
 
 Once you're done with the tutorial, try to build up the highest score possible on each of our levels! Score points by picking up balls, flying and dunking before the time runs out. To achieve the highest score, build up a score multiplier by picking up multiple balls without touching the ground. Your goal is to dunk all the balls in level. Be warned, if the timer goes to zero you can no longer get any more score.
 
-We offer 
-You can practice or just jam in your favourite levels in sandbox mode, where balls reset, hoops don't deactivate and the time limit is removed.
+You can practice or just jam in your favourite levels in **sandbox mode**, where balls reset, hoops don't deactivate and the time limit is removed.
 
 
 
