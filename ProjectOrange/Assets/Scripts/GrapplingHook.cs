@@ -96,9 +96,6 @@ public class GrapplingHook : MonoBehaviour {
                     GetComponent<Rigidbody>().velocity = Vector3.zero;
                 }
             }
-        } else if (Gun.Player.gameObject == other.gameObject) {
-            // Self-destruct when touched by the player
-            Destroy(gameObject);
         }
     }
 }
