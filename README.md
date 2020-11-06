@@ -62,11 +62,14 @@ You are Kobe Sakurai the Second, hot-headed and ready to make up for your father
 
 To start the game from Unity, open the ```mainmenu``` scene and press play. 
 
-A tutorial will guide you through the key game mechanics. We have implemented familiar first-person shooter controls: WASD to move, space to jump, left click to shoot your grappling hook and escape to pause. By holding down left click, your grappling hook can be used to swing and pull balls towards you. The crosshair will change colour when you are aiming at a hoop or ball.
+A tutorial will guide you through the key game mechanics. We have implemented familiar first-person shooter controls: WASD to move, space to jump, left click to shoot your grappling hook and escape to pause. By holding down left click, your grappling hook can be used to swing or pull balls towards you. The crosshair will change colour when you are aiming at a hoop or ball.
 
-Once you're done with the tutorial, try to build up the highest score possible on each of our levels! Score points by picking up balls, flying and dunking before the time runs out. To achieve the highest score, build up a score multiplier by picking up multiple balls without touching the ground.
+Once you're done with the tutorial, try to build up the highest score possible on each of our levels! Score points by picking up balls, flying and dunking before the time runs out. To achieve the highest score, build up a score multiplier by picking up multiple balls without touching the ground. Your goal is to dunk all the balls in level. Be warned, if the timer goes to zero you can no longer get any more score.
 
-You can practice your favourite levels in sandbox mode, where balls reset, hoops don't deactivate and the time limit is removed.
+We offer 
+You can practice or just jam in your favourite levels in sandbox mode, where balls reset, hoops don't deactivate and the time limit is removed.
+
+
 
 
 ## Design Pillars
@@ -110,19 +113,17 @@ We used Unity's post-processing stack in our rendering pipeline. It applies full
   With post-processing.
 </p>
 
-Multiple canvases: Steven?
-
 ## Camera Motion
 
 In game, the camera is rigged to the player body (actually a child of its transform). The camera rotates to follow the mouse in the standard style of first-person games.
 
-This camera style was chosen to be very intuitive, and more suited to gameplay involving aiming as compared to, say, a third-person perspective. The first-person perspective is also more immediate and conducive to immersion, which helps convey more direct experiences like the visceral experience of fast motion.
+This camera style was chosen to be very intuitive, and more suited to gameplay involving precision aiming as compared to, say, a third-person perspective. The first-person perspective is also more immediate and conducive to immersion, which helps convey more direct experiences like the visceral experience of fast motion.
 
 ## Shaders
 
 ### Shader 1: Grappling Rope
 
-We decided to apply iur first shaderto to the grappling hook. Our initial implementation of the grappling hook had a simple line renderer being drawn between the player's gun and the hook.
+Our initial implementation of the grappling hook had a simple line renderer being drawn between the player's gun and the hook.
 
 <p align="center">
   <img src="Images/RopeIter1.png" width="500">
@@ -133,15 +134,18 @@ However, this had a couple of negatives:
 - It looked uninteresting.
 - It didn't provide the user feedback when they had attached their hook to a surface. 
 
-We decided to add a vertex shader to displace each vertex in the liner renderer based on a function of the distance with the Sine function. This would make the rope have a wave appearance.
+We decided to add a custom vertex shader to displace each vertex in the liner renderer based on a function of the distance with the sine function. This would make the rope have a wave appearance. 
 
-The first implementation was done so rudimentarily as follows:
+The first implementation was done rudimentarily as follows:
 
 ```glsl
 float distanceFromGun  = abs(distance(v.vertex, _GunLocation));
 float displacement = sin(lengthA) * _Amplitude;
 v.vertex += displacement;
 ```
+
+This along with increasing the number of vertecies from of the line from 2 to 1000 resulted in:
+
 <p align="center">
   <img src="Images/RopeIter2.png" width="500">
 </p>
@@ -171,14 +175,14 @@ float hookNorm = normaliseAmplitude(hookDistance - 0.98f);
 
 Finally we have our displacement function, where we apply the `min` function over the values we calculated previously. This clamps the displacement to 0 at both ends of the rope, allowing us to connect the rope exactly to the tips of the gun and the hook.
 
-```
+```glsl
 float4 displacement = min(gunNorm, hookNorm) * sin(lengthA - 0.98f + _Time[3]*10) * _Up * _Amplitude;
 ```
 
 Breaking down each part of the displacement now:
-- `min(gunNorm, hookNorm)` modifies the magnitude of the Sine wave so that it is 0 close to hook or gun, but some constant c (determined at `normaliseAmplitude`) at max
+- `min(gunNorm, hookNorm)` modifies the magnitude of the Sine wave so that it is 0 close to hook or gun, but some constant c (determined at `normaliseAmplitude`) at maximum.
 - `sin(lengthA - 0.98f + _Time[3]*10) * _Up` This is the actual sine wave, which wobbles vertically with time.
-- `_Amplitude` This is the property we pass in from `GrappleHook.cs` to manage the animation of the hook becoming taut
+- `_Amplitude` This is the property we pass in from `GrappleHook.cs` to manage the animation of the hook becoming taut.
 
 Finally, this displacement is calculated for each vertex along the line of the rope: `v.vertex += displacement;`. With this we had achieved a very satisfying rope whipping effect.
 
@@ -186,7 +190,7 @@ Finally, this displacement is calculated for each vertex along the line of the r
   <img src="Images/RopeIter3.png" width="500">
 </p>
 
-Finally to elaborate on the taut animation i.e. making the rope pull taut once the hook is attached, the `_Amplitude` property was added. Once the hook is attached, inside the`GrappleHook.cs` script we linearly interpolate from 1 to 0 in  8 `FixedUpdate` frames, and pass it to the shader through the property. This eventually sets the displacement to 0, and thus make the shader render it as a simple straight line, signifying that the rope is taut.
+Finally to elaborate on the taut animation i.e. making the rope pull taut once the hook is attached, the `_Amplitude` property is adjusted. Once the hook is attached, inside the`GrappleHook.cs` script we linearly interpolate from 1 to 0 in  8 `FixedUpdate` frames, and pass it to the shader through the property. This eventually sets the displacement to 0, and thus make the shader render it as a simple straight line, signifying that the rope is taut.
 
 #### Here is the final result!
 
