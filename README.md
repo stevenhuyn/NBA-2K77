@@ -157,8 +157,6 @@ float normaliseAmplitude(float d)
 }
 ```
 
-The more novel part of using this function is that we use the minimum function to hook it up with both ends.
-
 ```glsl
 // Get distance of vertex on line from Gun and Hook
 float lengthA  = abs(distance(v.vertex, _GunLocation));
@@ -169,20 +167,23 @@ float hookDistance = abs(distance(v.vertex, _HookLocation));
 // This is good because it makes the Sine wave not grow with distance
 float gunNorm = normaliseAmplitude(lengthA - 0.98f);
 float hookNorm = normaliseAmplitude(hookDistance - 0.98f);
-
-// Use this clamped amptitude to modify the magnitude of the displacement
-// This will make the displacement = 0 if this vertex' distance is at the hook or gun
-// The min function is a little trick to normalise it for both ends
-float4 displacement = min(gunNorm, hookNorm) * sin(lengthA - 0.98f + _Time[3]*10) * _Up * _Amplitude;
-
-v.vertex += displacement;
 ```
+
+Let's have a look at all the parts of our final displacement function
+```
+float4 displacement = min(gunNorm, hookNorm) * sin(lengthA - 0.98f + _Time[3]*10) * _Up * _Amplitude;
+```
+`min(gunNorm, hookNorm)` modifies the magnitude of the Sine wave so that it is 0 close to hook or gun, but some constant c at max
+`sin(lengthA - 0.98f + _Time[3]*10) * _Up` This is the actual sine wave, wobbles vertically and with time.
+`_Amplitude` This is the property we pass in from `GrappleHook.cs` to manage the the animation of the hook becoming taut
 
 <p align="center">
   <img src="Images/RopeIter3.png" width="500">
 </p>
 
 To make it pull taut once the hook is attached, added a property to the shader `float _Amplitude`. Once the hook is attached, inside the`GrappleHook.cs` script we Lerp the amplitude from 1 - 0 within 8 frames, and pass it to the shader through the property. This makes the displacement = 0, and thus make the shader render it as a simple straight line, signifying that the rope is taut.
+
+#### Here is the final result!
 
 <p align="center">
   <img src="Images/RopeShader.png" width="300">
