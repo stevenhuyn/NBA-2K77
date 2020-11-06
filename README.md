@@ -6,7 +6,9 @@
 
 # Game: NBA 2K77
 
-# TODO: put Gatlee's photoshopped image here
+<p align="center">
+  <img src="Images/cyberpunk.png" width="300" >
+</p>
 
 **Gameplay video:** [https://www.youtube.com/watch?v=-2TXDMclXc4](https://www.youtube.com/watch?v=-2TXDMclXc4).
 
@@ -45,11 +47,7 @@
     - [James Dyer](#james-dyer)
   - [External Resources](#external-resources)
 
-<p align="center">
-  <img src="images/nba.    " width="300" >
-  <br>
-  Aim assist on a ball.
-</p>
+
 
 ## Explanation of the Game
 
