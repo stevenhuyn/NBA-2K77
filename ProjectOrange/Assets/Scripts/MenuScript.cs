@@ -53,7 +53,6 @@ public class MenuScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (menuState == MenuState.None  || menuState == MenuState.Finish) { // Go to escape menu
-                mouseLookScript.enabled = true;
                 Crosshair.SetActive(false);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
@@ -63,7 +62,6 @@ public class MenuScript : MonoBehaviour
                 EscapeMenu.enabled = true;
                 LevelSelect.enabled = false;
             } else { // Close Menu, remove mouse
-                mouseLookScript.enabled = false;
                 Crosshair.SetActive(true);
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
@@ -72,6 +70,14 @@ public class MenuScript : MonoBehaviour
                 LevelSelect.enabled = false;
                 EscapeMenu.enabled = false;
                 FinishMenu.enabled = false;
+            }
+
+            if (menuState == MenuState.None) {
+                mouseLookScript.enabled = true;
+                Cursor.lockState = CursorLockMode.Locked;
+            } else {
+                mouseLookScript.enabled = false;
+                Cursor.lockState = CursorLockMode.None;
             }
         }
     }
