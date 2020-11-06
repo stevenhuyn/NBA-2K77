@@ -7,7 +7,7 @@
 # Game: NBA 2K77
 
 <p align="center">
-  <img src="Images/cyberpunk.png" width="300" >
+  <img src="Images/cyberpunk.png">
 </p>
 
 **Gameplay video:** [https://www.youtube.com/watch?v=-2TXDMclXc4](https://www.youtube.com/watch?v=-2TXDMclXc4).
@@ -120,6 +120,36 @@ This camera style was chosen to be very intuitive, and more suited to gameplay i
 
 # TODO: explain shader 1
 
+Our first shader was decided to be applied to our grappling hook. Our initial implementation of the grappling hook had a simple line renderer being drawn between the player's gun and the hook.
+
+
+<p align="center">
+  <img src="Images/RopeIter1.png" width="500">
+</p>
+
+However, this had a couple negatives: 
+
+- It looked boring
+- It didn't provide the user feedback when they had attached their hook to a surface. 
+
+We decided to add a shader to the length of the line renderer. This would make the rope appear to 'whip' outwards and then pull taut when attaching to an object.
+
+The first implementation was done so rudimentarily as follows:
+
+```glsl
+float distanceFromGun  = abs(distance(v.vertex, _GunLocation));
+float displacement = _Amplitude * sin(lengthA * _Wavelength);
+```
+<p align="center">
+  <img src="Images/RopeIter2.png" width="500">
+</p>
+
+However, this made it so the rope did not attach to the hook or the gun. We wanted a function to modify the amplitude of the Sine wave when it is closer to both ends. Partically we were looking for a function that passed through the origin and approached a asymptote. The function that ended up having these properties was a variant of the hyperbola.
+
+<p align="center">
+  <img src="Images/RopeGraph.png" width="500">
+</p>
+
 ```glsl
 float normaliseAmplitude(float d)
 {
@@ -127,12 +157,37 @@ float normaliseAmplitude(float d)
 }
 ```
 
-<p align="center">
-  <img src="Images/RopeDiagram.png" width="300" >
-</p>
+```glsl
+// Get distance of vertex on line from Gun and Hook
+float lengthA  = abs(distance(v.vertex, _GunLocation));
+float hookDistance = abs(distance(v.vertex, _HookLocation));
+
+// Clamp the function to 0 if close to the gun or hook
+// Because of the nature of the function, they reach a value asymptopically for larger x
+// This is good because it makes the Sine wave not grow with distance
+float gunNorm = normaliseAmplitude(lengthA - 0.98f);
+float hookNorm = normaliseAmplitude(hookDistance - 0.98f);
+```
+
+Let's have a look at all the parts of our final displacement function
+```
+float4 displacement = min(gunNorm, hookNorm) * sin(lengthA - 0.98f + _Time[3]*10) * _Up * _Amplitude;
+```
+
+- `min(gunNorm, hookNorm)` modifies the magnitude of the Sine wave so that it is 0 close to hook or gun, but some constant c at max
+- `sin(lengthA - 0.98f + _Time[3]*10) * _Up` This is the actual sine wave, wobbles vertically and with time.
+- `_Amplitude` This is the property we pass in from `GrappleHook.cs` to manage the the animation of the hook becoming taut
 
 <p align="center">
-  <img src="Images/RopeShader.png" width="300">
+  <img src="Images/RopeIter3.png" width="500">
+</p>
+
+To make it pull taut once the hook is attached, added a property to the shader `float _Amplitude`. Once the hook is attached, inside the`GrappleHook.cs` script we Lerp the amplitude from 1 - 0 within 8 frames, and pass it to the shader through the property. This makes the displacement = 0, and thus make the shader render it as a simple straight line, signifying that the rope is taut.
+
+#### Here is the final result!
+
+<p align="center">
+  <img src="Images/grapple_rope_demo.gif">
 </p>
 
 ### Shader 2: Hoop Ripple
