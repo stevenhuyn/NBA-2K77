@@ -1,11 +1,8 @@
 **The University of Melbourne**
 
-# COMP30019 – Graphics and Interaction
+# Project 2 for Graphics and Interaction (COMP30019), 2020
 
-# Project-2 README
-
-# Game: NBA 2K77
-
+To play, [download the latest release](https://github.com/stevenhuyn/NBA-2K77/releases/tag/v0.1.0).
 <p align="center">
   <img src="Images/cyberpunk.png" width="auto" >
 </p>
